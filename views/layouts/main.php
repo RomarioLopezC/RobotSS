@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use dektrium\user\models\Profile;
 
 AppAsset::register($this);
 ?>
@@ -27,18 +28,27 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Servicio Social UADY',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+    if (!Yii::$app->user->isGuest) {
+        if (Yii::$app->user->can('admin')) {
+            echo $this->render('navAdmin');
+        }
+    }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            //['label' => 'Home', 'url' => ['/site/index']],
+            //['label' => 'About', 'url' => ['/site/about']],
+            //['label' => 'Contact', 'url' => ['/site/contact']],
+            !Yii::$app->user->isGuest ?
+            ['label' => "Bienvenido: ".Profile::findOne(Yii::$app->user->id)->name,
+                'url' => ['/user/profile']] :
+                ['label' => 'About', 'url' => ['/site/about']],
             Yii::$app->user->isGuest ?
                 ['label' => 'Sign in', 'url' => ['/user/security/login']] :
                 ['label' => 'Sign out (' . Yii::$app->user->identity->username . ')',
