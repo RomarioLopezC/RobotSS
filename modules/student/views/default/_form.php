@@ -11,36 +11,33 @@ use app\models\Faculty;
 ?>
 
 <div class="student-form">
-    <div class="col-md-4"></div>
-    <div class="col-md-8">
-        <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(); ?>
 
-        <?= $form->field($student, 'enrollment_id')->textInput() ?>
+    <?= $form->field($student, 'enrollment_id')->textInput() ?>
 
-        <?= $form->field($person, 'name')->textInput() ?>
+    <?= $form->field($person, 'name')->textInput() ?>
 
-        <?= $form->field($person, 'lastname')->textInput() ?>
+    <?= $form->field($person, 'lastname')->textInput() ?>
 
-        <?= $form->field($user, 'email')->textInput() ?>
+    <?= $form->field($user, 'email')->textInput() ?>
 
-        <?= $form->field($person, 'phone')->textInput() ?>
+    <?= $form->field($person, 'phone')->textInput() ?>
 
-        <?= $form->field($user, 'username')->textInput() ?>
+    <?= $form->field($user, 'username')->textInput() ?>
 
-        <?= $form->field($user, 'password')->passwordInput() ?>
+    <?= $form->field($user, 'password')->passwordInput() ?>
 
-        <?= $form->field($student, 'current_semester')->textInput() ?>
+    <?= $form->field($student, 'current_semester')->textInput() ?>
 
-        <?= $form->field($student, 'faculty_id')->dropDownList(
-            ArrayHelper::map(Faculty::find()->all(), 'id', 'name')
-        ) ?>
+    <?= $form->field($student, 'faculty_id')->dropDownList(
+        ArrayHelper::map(Faculty::find()->all(), 'id', 'name')
+    ) ?>
 
-        <div class="form-group">
-            <?= Html::submitButton($student->isNewRecord ? 'Create' : 'Update', ['class' => $student->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        </div>
-
-        <?php ActiveForm::end(); ?>
+    <div class="form-group">
+        <?= Html::submitButton($student->isNewRecord ? 'Create' : 'Update', ['class' => $student->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
+
+    <?php ActiveForm::end(); ?>
 
 
 </div>

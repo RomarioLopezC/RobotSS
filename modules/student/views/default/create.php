@@ -6,18 +6,23 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Student */
 
-$this->title = 'Create Student';
-$this->params['breadcrumbs'][] = ['label' => 'Students', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Solicitud cuenta de Alumno';
 ?>
 <div class="student-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
-        'student' => $student,
-        'person' => $person,
-        'user' => $user
-    ]) ?>
+    <div class="col-md-4">
+        <?= Html::img('images/uady-logo.jpg') ;?>
+    </div>
+
+    <div class="col-md-8">
+        <?= $this->render('_form', [
+            'student' => $student,
+            'person' => $person,
+            'user' => $user
+        ]) ?>
+    </div>
+
 
 </div>
