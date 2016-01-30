@@ -43,7 +43,7 @@ class SocialServiceManager extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'faculty_id' => 'Faculty ID',
+            'faculty_id' => 'Facultad',
         ];
     }
 
