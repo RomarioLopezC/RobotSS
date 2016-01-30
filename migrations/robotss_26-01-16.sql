@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.14
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 26-01-2016 a las 23:05:12
--- Versión del servidor: 5.6.26
--- Versión de PHP: 5.6.12
+-- Host: 127.0.0.1
+-- Generation Time: Jan 30, 2016 at 11:02 PM
+-- Server version: 10.1.9-MariaDB
+-- PHP Version: 5.6.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,19 +17,16 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `robotss`
+-- Database: `robotss`
 --
-CREATE DATABASE IF NOT EXISTS `robotss` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `robotss`;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `auth_assignment`
+-- Table structure for table `auth_assignment`
 --
 
-DROP TABLE IF EXISTS `auth_assignment`;
-CREATE TABLE IF NOT EXISTS `auth_assignment` (
+CREATE TABLE `auth_assignment` (
   `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `user_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` int(11) DEFAULT NULL
@@ -38,11 +35,10 @@ CREATE TABLE IF NOT EXISTS `auth_assignment` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `auth_item`
+-- Table structure for table `auth_item`
 --
 
-DROP TABLE IF EXISTS `auth_item`;
-CREATE TABLE IF NOT EXISTS `auth_item` (
+CREATE TABLE `auth_item` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `type` int(11) NOT NULL,
   `description` text COLLATE utf8_unicode_ci,
@@ -55,11 +51,10 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `auth_item_child`
+-- Table structure for table `auth_item_child`
 --
 
-DROP TABLE IF EXISTS `auth_item_child`;
-CREATE TABLE IF NOT EXISTS `auth_item_child` (
+CREATE TABLE `auth_item_child` (
   `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -67,11 +62,10 @@ CREATE TABLE IF NOT EXISTS `auth_item_child` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `auth_rule`
+-- Table structure for table `auth_rule`
 --
 
-DROP TABLE IF EXISTS `auth_rule`;
-CREATE TABLE IF NOT EXISTS `auth_rule` (
+CREATE TABLE `auth_rule` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `data` text COLLATE utf8_unicode_ci,
   `created_at` int(11) DEFAULT NULL,
@@ -81,17 +75,16 @@ CREATE TABLE IF NOT EXISTS `auth_rule` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `campus`
+-- Table structure for table `campus`
 --
 
-DROP TABLE IF EXISTS `campus`;
-CREATE TABLE IF NOT EXISTS `campus` (
+CREATE TABLE `campus` (
   `id` int(11) NOT NULL,
   `name` varchar(150) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `campus`
+-- Dumping data for table `campus`
 --
 
 INSERT INTO `campus` (`id`, `name`) VALUES
@@ -106,11 +99,10 @@ INSERT INTO `campus` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `degree`
+-- Table structure for table `degree`
 --
 
-DROP TABLE IF EXISTS `degree`;
-CREATE TABLE IF NOT EXISTS `degree` (
+CREATE TABLE `degree` (
   `id` int(11) NOT NULL,
   `faculty_id` int(11) NOT NULL,
   `name` varchar(150) COLLATE utf8_unicode_ci NOT NULL
@@ -119,11 +111,10 @@ CREATE TABLE IF NOT EXISTS `degree` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `faculty`
+-- Table structure for table `faculty`
 --
 
-DROP TABLE IF EXISTS `faculty`;
-CREATE TABLE IF NOT EXISTS `faculty` (
+CREATE TABLE `faculty` (
   `id` int(11) NOT NULL,
   `campus_id` int(11) NOT NULL,
   `code` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
@@ -131,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `faculty` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `faculty`
+-- Dumping data for table `faculty`
 --
 
 INSERT INTO `faculty` (`id`, `campus_id`, `code`, `name`) VALUES
@@ -157,17 +148,16 @@ INSERT INTO `faculty` (`id`, `campus_id`, `code`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `migration`
+-- Table structure for table `migration`
 --
 
-DROP TABLE IF EXISTS `migration`;
-CREATE TABLE IF NOT EXISTS `migration` (
+CREATE TABLE `migration` (
   `version` varchar(180) COLLATE utf8_unicode_ci NOT NULL,
   `apply_time` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `migration`
+-- Dumping data for table `migration`
 --
 
 INSERT INTO `migration` (`version`, `apply_time`) VALUES
@@ -184,11 +174,10 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `profile`
+-- Table structure for table `profile`
 --
 
-DROP TABLE IF EXISTS `profile`;
-CREATE TABLE IF NOT EXISTS `profile` (
+CREATE TABLE `profile` (
   `user_id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `public_email` varchar(255) DEFAULT NULL,
@@ -200,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `profile` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `profile`
+-- Dumping data for table `profile`
 --
 
 INSERT INTO `profile` (`user_id`, `name`, `public_email`, `gravatar_email`, `gravatar_id`, `location`, `website`, `bio`) VALUES
@@ -209,11 +198,10 @@ INSERT INTO `profile` (`user_id`, `name`, `public_email`, `gravatar_email`, `gra
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `project_manager`
+-- Table structure for table `project_manager`
 --
 
-DROP TABLE IF EXISTS `project_manager`;
-CREATE TABLE IF NOT EXISTS `project_manager` (
+CREATE TABLE `project_manager` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `organization` varchar(120) COLLATE utf8_unicode_ci NOT NULL
@@ -222,11 +210,10 @@ CREATE TABLE IF NOT EXISTS `project_manager` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `social_account`
+-- Table structure for table `social_account`
 --
 
-DROP TABLE IF EXISTS `social_account`;
-CREATE TABLE IF NOT EXISTS `social_account` (
+CREATE TABLE `social_account` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `provider` varchar(255) NOT NULL,
@@ -237,11 +224,10 @@ CREATE TABLE IF NOT EXISTS `social_account` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `social_service_manager`
+-- Table structure for table `social_service_manager`
 --
 
-DROP TABLE IF EXISTS `social_service_manager`;
-CREATE TABLE IF NOT EXISTS `social_service_manager` (
+CREATE TABLE `social_service_manager` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `faculty_id` int(11) NOT NULL
@@ -250,11 +236,10 @@ CREATE TABLE IF NOT EXISTS `social_service_manager` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `student`
+-- Table structure for table `student`
 --
 
-DROP TABLE IF EXISTS `student`;
-CREATE TABLE IF NOT EXISTS `student` (
+CREATE TABLE `student` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `degree_id` int(11) NOT NULL,
@@ -265,11 +250,10 @@ CREATE TABLE IF NOT EXISTS `student` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `token`
+-- Table structure for table `token`
 --
 
-DROP TABLE IF EXISTS `token`;
-CREATE TABLE IF NOT EXISTS `token` (
+CREATE TABLE `token` (
   `user_id` int(11) NOT NULL,
   `code` varchar(32) NOT NULL,
   `created_at` int(11) NOT NULL,
@@ -279,11 +263,10 @@ CREATE TABLE IF NOT EXISTS `token` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `user`
+-- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(25) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -296,27 +279,27 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
   `flags` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `password_hash`, `auth_key`, `confirmed_at`, `unconfirmed_email`, `blocked_at`, `registration_ip`, `created_at`, `updated_at`, `flags`) VALUES
 (1, 'davcocom', 'davcocom@hotmail.com', '$2y$10$E9yFjEa9J66pE9iJLAlesulPitZMekQhQFZd6MPheq.dyi8ISJ6BS', '9_2_8ZU00LZmXvNAq-06GxxpMu3B_h1Y', 1453795356, NULL, NULL, '::1', 1453795294, 1453795356, 0);
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `auth_assignment`
+-- Indexes for table `auth_assignment`
 --
 ALTER TABLE `auth_assignment`
   ADD PRIMARY KEY (`item_name`,`user_id`);
 
 --
--- Indices de la tabla `auth_item`
+-- Indexes for table `auth_item`
 --
 ALTER TABLE `auth_item`
   ADD PRIMARY KEY (`name`),
@@ -324,52 +307,52 @@ ALTER TABLE `auth_item`
   ADD KEY `idx-auth_item-type` (`type`);
 
 --
--- Indices de la tabla `auth_item_child`
+-- Indexes for table `auth_item_child`
 --
 ALTER TABLE `auth_item_child`
   ADD PRIMARY KEY (`parent`,`child`),
   ADD KEY `child` (`child`);
 
 --
--- Indices de la tabla `auth_rule`
+-- Indexes for table `auth_rule`
 --
 ALTER TABLE `auth_rule`
   ADD PRIMARY KEY (`name`);
 
 --
--- Indices de la tabla `campus`
+-- Indexes for table `campus`
 --
 ALTER TABLE `campus`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `degree`
+-- Indexes for table `degree`
 --
 ALTER TABLE `degree`
   ADD PRIMARY KEY (`id`),
   ADD KEY `faculty_id` (`faculty_id`);
 
 --
--- Indices de la tabla `faculty`
+-- Indexes for table `faculty`
 --
 ALTER TABLE `faculty`
   ADD PRIMARY KEY (`id`),
   ADD KEY `campus_id` (`campus_id`);
 
 --
--- Indices de la tabla `migration`
+-- Indexes for table `migration`
 --
 ALTER TABLE `migration`
   ADD PRIMARY KEY (`version`);
 
 --
--- Indices de la tabla `profile`
+-- Indexes for table `profile`
 --
 ALTER TABLE `profile`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Indices de la tabla `project_manager`
+-- Indexes for table `project_manager`
 --
 ALTER TABLE `project_manager`
   ADD PRIMARY KEY (`id`),
@@ -377,7 +360,7 @@ ALTER TABLE `project_manager`
   ADD KEY `user_id_2` (`user_id`);
 
 --
--- Indices de la tabla `social_account`
+-- Indexes for table `social_account`
 --
 ALTER TABLE `social_account`
   ADD PRIMARY KEY (`id`),
@@ -385,7 +368,7 @@ ALTER TABLE `social_account`
   ADD KEY `fk_user_account` (`user_id`);
 
 --
--- Indices de la tabla `social_service_manager`
+-- Indexes for table `social_service_manager`
 --
 ALTER TABLE `social_service_manager`
   ADD PRIMARY KEY (`id`),
@@ -394,7 +377,7 @@ ALTER TABLE `social_service_manager`
   ADD KEY `faculty_id` (`faculty_id`);
 
 --
--- Indices de la tabla `student`
+-- Indexes for table `student`
 --
 ALTER TABLE `student`
   ADD PRIMARY KEY (`id`),
@@ -403,13 +386,13 @@ ALTER TABLE `student`
   ADD KEY `faculty_id` (`faculty_id`);
 
 --
--- Indices de la tabla `token`
+-- Indexes for table `token`
 --
 ALTER TABLE `token`
   ADD UNIQUE KEY `token_unique` (`user_id`,`code`,`type`);
 
 --
--- Indices de la tabla `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
@@ -417,81 +400,96 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `user_unique_email` (`email`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `social_account`
+-- AUTO_INCREMENT for table `project_manager`
+--
+ALTER TABLE `project_manager`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `social_account`
 --
 ALTER TABLE `social_account`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `user`
+-- AUTO_INCREMENT for table `social_service_manager`
+--
+ALTER TABLE `social_service_manager`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `student`
+--
+ALTER TABLE `student`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `auth_assignment`
+-- Constraints for table `auth_assignment`
 --
 ALTER TABLE `auth_assignment`
   ADD CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `auth_item`
+-- Constraints for table `auth_item`
 --
 ALTER TABLE `auth_item`
   ADD CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `auth_item_child`
+-- Constraints for table `auth_item_child`
 --
 ALTER TABLE `auth_item_child`
   ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `degree`
+-- Constraints for table `degree`
 --
 ALTER TABLE `degree`
   ADD CONSTRAINT `degree_ibfk_1` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `faculty`
+-- Constraints for table `faculty`
 --
 ALTER TABLE `faculty`
   ADD CONSTRAINT `faculty_ibfk_1` FOREIGN KEY (`campus_id`) REFERENCES `campus` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `profile`
+-- Constraints for table `profile`
 --
 ALTER TABLE `profile`
   ADD CONSTRAINT `fk_user_profile` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
 
 --
--- Filtros para la tabla `project_manager`
+-- Constraints for table `project_manager`
 --
 ALTER TABLE `project_manager`
   ADD CONSTRAINT `project_manager_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `social_account`
+-- Constraints for table `social_account`
 --
 ALTER TABLE `social_account`
   ADD CONSTRAINT `fk_user_account` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
 
 --
--- Filtros para la tabla `social_service_manager`
+-- Constraints for table `social_service_manager`
 --
 ALTER TABLE `social_service_manager`
   ADD CONSTRAINT `social_service_manager_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `social_service_manager_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `student`
+-- Constraints for table `student`
 --
 ALTER TABLE `student`
   ADD CONSTRAINT `student_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -499,7 +497,7 @@ ALTER TABLE `student`
   ADD CONSTRAINT `student_ibfk_3` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `token`
+-- Constraints for table `token`
 --
 ALTER TABLE `token`
   ADD CONSTRAINT `fk_user_token` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;

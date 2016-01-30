@@ -2,6 +2,8 @@
 
 namespace app\modules\student\controllers;
 
+use app\models\Person;
+use app\models\User;
 use Yii;
 use app\models\Student;
 use app\models\StudentSearch;
@@ -60,13 +62,40 @@ class DefaultController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Student();
+        $student = new Student();
+        $user = new User();
+        $person = new Person();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+        if (Yii::$app->request->post()) {
+            $person->name = Yii::$app->request->post()['Person']['name'];
+            $person->lastname = Yii::$app->request->post()['Person']['lastname'];
+            $person->phone = Yii::$app->request->post()['Person']['phone'];
+            if($person->save(false)){
+                $user->username = Yii::$app->request->post()['User']['username'];
+                $user->password = Yii::$app->request->post()['User']['password'];
+                $user->email = Yii::$app->request->post()['User']['email'];
+                $user->person_id = $person->getPrimaryKey();
+                $user->scenario = 'connect';
+                if($user->register()){
+                    $student->load(Yii::$app->request->post());
+                    $student->user_id = $user->id;
+                    $student->save(false);
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->render('create', [
+                        'student' => $student,
+                        'user' => $user,
+                        'person' => $person
+                    ]);
+                }
+            }
+            return $this->redirect(['view', 'id' => $student->getPrimaryKey()]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'student' => $student,
+                'user' => $user,
+                'person' => $person
             ]);
         }
     }
@@ -79,13 +108,40 @@ class DefaultController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $student = Student::findOne($id);
+        $user = $student->getUser();
+        $person = $user->getPerson();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+        if (Yii::$app->request->post()) {
+            $person->name = Yii::$app->request->post()['Person']['name'];
+            $person->lastname = Yii::$app->request->post()['Person']['lastname'];
+            $person->phone = Yii::$app->request->post()['Person']['phone'];
+            if($person->save(false)){
+                $user->username = Yii::$app->request->post()['User']['username'];
+                $user->password = Yii::$app->request->post()['User']['password'];
+                $user->email = Yii::$app->request->post()['User']['email'];
+                $user->person_id = $person->getPrimaryKey();
+                $user->scenario = 'connect';
+                if($user->register()){
+                    $student->load(Yii::$app->request->post());
+                    $student->user_id = $user->id;
+                    $student->save(false);
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->render('create', [
+                        'student' => $student,
+                        'user' => $user,
+                        'person' => $person
+                    ]);
+                }
+            }
+            return $this->redirect(['view', 'id' => $student->getPrimaryKey()]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'student' => $student,
+                'user' => $user,
+                'person' => $person
             ]);
         }
     }

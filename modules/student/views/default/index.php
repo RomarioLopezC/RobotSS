@@ -27,7 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'user_id',
-            'degree_id',
             'faculty_id',
             'current_semester',
 

@@ -18,7 +18,7 @@ class StudentSearch extends Student
     public function rules()
     {
         return [
-            [['id', 'user_id', 'degree_id', 'faculty_id', 'current_semester'], 'integer'],
+            [['id', 'user_id', 'faculty_id', 'current_semester'], 'integer'],
         ];
     }
 
@@ -57,7 +57,6 @@ class StudentSearch extends Student
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'degree_id' => $this->degree_id,
             'faculty_id' => $this->faculty_id,
             'current_semester' => $this->current_semester,
         ]);

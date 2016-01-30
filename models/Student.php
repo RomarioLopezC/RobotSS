@@ -9,12 +9,11 @@ use Yii;
  *
  * @property integer $id
  * @property integer $user_id
- * @property integer $degree_id
  * @property integer $faculty_id
  * @property integer $current_semester
+ * @property string $enrollment_id
  *
  * @property User $user
- * @property Degree $degree
  * @property Faculty $faculty
  */
 class Student extends \yii\db\ActiveRecord
@@ -33,8 +32,10 @@ class Student extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'user_id', 'degree_id', 'faculty_id', 'current_semester'], 'required'],
-            [['id', 'user_id', 'degree_id', 'faculty_id', 'current_semester'], 'integer']
+            [['id', 'user_id', 'faculty_id', 'current_semester', 'enrollment_id'], 'required'],
+            [['id', 'user_id', 'faculty_id', 'current_semester'], 'integer'],
+            [['enrollment_id'], 'string', 'max' => 255],
+            [['enrollment_id'], 'unique']
         ];
     }
 
@@ -46,9 +47,9 @@ class Student extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'degree_id' => 'Degree ID',
-            'faculty_id' => 'Faculty ID',
-            'current_semester' => 'Current Semester',
+            'faculty_id' => 'Facultad',
+            'current_semester' => 'Semestre actual',
+            'enrollment_id' => 'Matricula',
         ];
     }
 
@@ -58,14 +59,6 @@ class Student extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDegree()
-    {
-        return $this->hasOne(Degree::className(), ['id' => 'degree_id']);
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use dektrium\user\models\User as BaseUser;
 /**
  * This is the model class for table "user".
  *
@@ -19,6 +19,7 @@ use Yii;
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $flags
+ * @property integer $person_id
  *
  * @property Profile $profile
  * @property ProjectManager[] $projectManagers
@@ -26,40 +27,46 @@ use Yii;
  * @property SocialServiceManager[] $socialServiceManagers
  * @property Student[] $students
  * @property Token[] $tokens
+ * @property Person $person
  */
-class User extends \yii\db\ActiveRecord {
+class User extends BaseUser
+{
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'user';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-            [['username', 'email', 'password_hash'], 'required'],
-            [['confirmed_at', 'blocked_at', 'created_at', 'updated_at', 'flags'], 'integer'],
+            [['username', 'email', 'password_hash', 'auth_key', 'created_at', 'updated_at'], 'required'],
+            [['confirmed_at', 'blocked_at', 'created_at', 'updated_at', 'flags', 'person_id'], 'integer'],
             [['username'], 'string', 'max' => 25],
             [['email', 'unconfirmed_email'], 'string', 'max' => 255],
             [['password_hash'], 'string', 'max' => 60],
             [['auth_key'], 'string', 'max' => 32],
             [['registration_ip'], 'string', 'max' => 45],
             [['username'], 'unique'],
-            [['email'], 'unique']
+            [['email'], 'unique'],
+            [['email'], 'email']
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => 'ID',
-            'username' => 'Username',
-            'email' => 'Email',
+            'username' => 'Nombre de usuario',
+            'email' => 'Correo electrónico',
             'password_hash' => 'Password Hash',
             'auth_key' => 'Auth Key',
             'confirmed_at' => 'Confirmed At',
@@ -69,50 +76,63 @@ class User extends \yii\db\ActiveRecord {
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'flags' => 'Flags',
+            'person_id' => 'Person ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProfile() {
+    public function getProfile()
+    {
         return $this->hasOne(Profile::className(), ['user_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProjectManagers() {
+    public function getProjectManagers()
+    {
         return $this->hasMany(ProjectManager::className(), ['user_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSocialAccounts() {
+    public function getSocialAccounts()
+    {
         return $this->hasMany(SocialAccount::className(), ['user_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSocialServiceManagers() {
+    public function getSocialServiceManagers()
+    {
         return $this->hasMany(SocialServiceManager::className(), ['user_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStudents() {
+    public function getStudents()
+    {
         return $this->hasMany(Student::className(), ['user_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTokens() {
+    public function getTokens()
+    {
         return $this->hasMany(Token::className(), ['user_id' => 'id']);
     }
 
-
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPerson()
+    {
+        return $this->hasOne(Person::className(), ['id' => 'person_id']);
+    }
 }
