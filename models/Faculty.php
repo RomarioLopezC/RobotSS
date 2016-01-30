@@ -46,8 +46,8 @@ class Faculty extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'campus_id' => 'Campus ID',
+            'id' => 'Facultad',
+            'campus_id' => 'Campus',
             'code' => 'Code',
             'name' => 'Name',
         ];
