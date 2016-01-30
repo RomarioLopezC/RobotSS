@@ -34,7 +34,10 @@ use app\models\Faculty;
     ) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($student->isNewRecord ? 'Create' : 'Update', ['class' => $student->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <div class="pull-right">
+            <?= Html::a('Cancelar', '#', ['class' => 'btn btn-danger']) ?>
+            <?= Html::submitButton($student->isNewRecord ? 'Completar solicitud' : 'Guardar', ['class' => 'btn btn-primary']) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>
