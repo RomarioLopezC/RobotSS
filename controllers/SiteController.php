@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\ProjectManagerForm;
+use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -91,9 +92,18 @@ class SiteController extends Controller {
 
         if ($model->load(Yii::$app->request->post())) {
 
+            $attr = Yii::$app->request->post('ProjectManagerForm');
 
+            $userAttr = [
+                'username' => $attr['name'],
+                'email' => $attr['email'],
+                'password_hash' => Yii::$app->getSecurity()->generatePasswordHash($attr['password']),
+            ];
 
-            Yii::$app->session->setFlash('success', 'asdasdasd');
+            $user = new User($userAttr);
+            $user->save();
+
+            Yii::$app->session->setFlash('success', 'Exito');
             return $this->refresh();
         }
 

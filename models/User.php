@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use dektrium\user\models\User as BaseUser;
+
 /**
  * This is the model class for table "user".
  *
@@ -29,23 +30,26 @@ use dektrium\user\models\User as BaseUser;
  * @property Token[] $tokens
  * @property Person $person
  */
-class User extends BaseUser
-{
+class User extends BaseUser {
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'user';
+    }
+
+    function scenarios() {
+        return [
+            'default' => ['username', 'email', 'password_hash', 'auth_key', 'created_at', 'updated_at'],
+        ];
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['username', 'email', 'password_hash', 'auth_key', 'created_at', 'updated_at'], 'required'],
+            [['username', 'email', 'password_hash'], 'required'],
             [['confirmed_at', 'blocked_at', 'created_at', 'updated_at', 'flags', 'person_id'], 'integer'],
             [['username'], 'string', 'max' => 25],
             [['email', 'unconfirmed_email'], 'string', 'max' => 255],
@@ -61,8 +65,7 @@ class User extends BaseUser
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'username' => 'Nombre de usuario',
@@ -83,56 +86,49 @@ class User extends BaseUser
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProfile()
-    {
+    public function getProfile() {
         return $this->hasOne(Profile::className(), ['user_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProjectManagers()
-    {
+    public function getProjectManagers() {
         return $this->hasMany(ProjectManager::className(), ['user_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSocialAccounts()
-    {
+    public function getSocialAccounts() {
         return $this->hasMany(SocialAccount::className(), ['user_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSocialServiceManagers()
-    {
+    public function getSocialServiceManagers() {
         return $this->hasMany(SocialServiceManager::className(), ['user_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStudents()
-    {
+    public function getStudents() {
         return $this->hasMany(Student::className(), ['user_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTokens()
-    {
+    public function getTokens() {
         return $this->hasMany(Token::className(), ['user_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPerson()
-    {
+    public function getPerson() {
         return $this->hasOne(Person::className(), ['id' => 'person_id']);
     }
 }
