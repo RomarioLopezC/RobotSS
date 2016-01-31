@@ -25,16 +25,19 @@ class ProjectManagerForm extends Model {
      */
     public function rules() {
         return [
-            // username and password are both required
-            [['name', 'lastName', 'email', 'phone', 'password', 'organization'], 'required'],
+            ['name', 'required', 'message' => 'El campo Nombre está vacío'],
+            ['lastName', 'required', 'message' => 'El campo Apellido está vacío'],
+            ['email', 'required', 'message' => 'El campo Correo electrónico está vacío'],
+            ['phone', 'required', 'message' => 'El campo Teléfono está vacío'],
+            ['password', 'required', 'message' => 'El campo Contraseña está vacío'],
+            ['organization', 'required', 'message' => 'El campo Organización está vacío'],
         ];
     }
 
     /**
      * @return array customized attribute labels
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'name' => 'Nombre',
             'lastName' => 'Apellido',

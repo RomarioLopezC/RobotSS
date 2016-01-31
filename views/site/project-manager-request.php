@@ -23,6 +23,18 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
     </div>
 
+    <?php if(Yii::$app->session->hasFlash('error')): ?>
+        <div class="alert alert-danger" role="alert">
+            <?= Yii::$app->session->getFlash('error'); ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if(Yii::$app->session->hasFlash('success')): ?>
+        <div class="alert alert-success" role="alert">
+            <?= Yii::$app->session->getFlash('success'); ?>
+        </div>
+    <?php endif; ?>
+
     <div class="row">
         <div class="col-lg-3">
             <?= Html::img('../images/uady-logo.jpg', ['class' => 'img-responsive']) ?>

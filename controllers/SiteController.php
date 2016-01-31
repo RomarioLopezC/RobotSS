@@ -88,6 +88,15 @@ class SiteController extends Controller {
 
     public function actionProjectManagerRequest() {
         $model = new ProjectManagerForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+
+
+
+            Yii::$app->session->setFlash('success', 'asdasdasd');
+            return $this->refresh();
+        }
+
         return $this->render('project-manager-request', [
             'model' => $model,
         ]);
