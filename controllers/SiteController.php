@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\ProjectManager;
 use app\models\ProjectManagerForm;
 use app\models\User;
 use Yii;
@@ -102,13 +103,21 @@ class SiteController extends Controller {
 
             $user = new User($userAttr);
 
-            if($user->save()){
+            $projectManagerAttr = [
+                'last_name' => $attr['lastName'],
+                'organization' => $attr['organization'],
+            ];
 
-                Yii::$app->session->setFlash('success', 'Exito');
+            $projectManager = new ProjectManager($projectManagerAttr);
+            $projectManager->setUser($user);
+
+            if($projectManager->validate()){
+                $projectManager->save();
+                Yii::$app->session->setFlash('success', 'Se envío un correo de confirmación. Por favor verifique su correo electrónico');
+            }else{
+                Yii::$app->session->setFlash('error', 'Ocurrió un error al guardar. Vuelve a intentar');
+                return $this->refresh();
             }
-
-            Yii::$app->session->setFlash('error', 'Ocurrió un error al guardar. Vuelve a intentar');
-            return $this->refresh();
         }
 
         return $this->render('project-manager-request', [
