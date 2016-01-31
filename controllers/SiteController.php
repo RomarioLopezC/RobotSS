@@ -101,9 +101,13 @@ class SiteController extends Controller {
             ];
 
             $user = new User($userAttr);
-            $user->save();
 
-            Yii::$app->session->setFlash('success', 'Exito');
+            if($user->save()){
+
+                Yii::$app->session->setFlash('success', 'Exito');
+            }
+
+            Yii::$app->session->setFlash('error', 'Ocurrió un error al guardar. Vuelve a intentar');
             return $this->refresh();
         }
 

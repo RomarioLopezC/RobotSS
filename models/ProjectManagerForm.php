@@ -1,9 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: USER
- * Date: 30/01/2016
- * Time: 11:39 AM
+ * Desarrolladores: Oscar
+ * Casos de Uso: GECU02
  */
 
 namespace app\models;
