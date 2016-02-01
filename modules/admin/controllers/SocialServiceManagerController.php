@@ -81,6 +81,7 @@ class SocialServiceManagerController extends Controller
                 $user->register();
                 $model->user_id = $user->id;
                 $model->save(false);
+                Yii::$app->getSession()->setFlash('success','Usuario creado con éxito');
                 return $this->redirect(['view', 'id' => $model->id]);
             }else{
                 $model->addErrors($user->errors);
