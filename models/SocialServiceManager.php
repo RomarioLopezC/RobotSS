@@ -16,6 +16,13 @@ use Yii;
  */
 class SocialServiceManager extends \yii\db\ActiveRecord
 {
+    public $name;
+    public $lastName;
+    public $email;
+    public $phone;
+    public $username;
+    public $password;
+
     /**
      * @inheritdoc
      */
@@ -30,8 +37,10 @@ class SocialServiceManager extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'user_id', 'faculty_id'], 'required'],
-            [['id', 'user_id', 'faculty_id'], 'integer']
+            [['faculty_id','name','lastName','username','password','email'], 'required'],
+            ['email', 'email'],
+            [['id', 'user_id', 'faculty_id'], 'integer'],
+            ['password', 'string', 'min' => 6]
         ];
     }
 
@@ -41,6 +50,12 @@ class SocialServiceManager extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'name' => 'Nombre',
+            'lastName' => 'Apellido',
+            'email' => 'Correo electrónico',
+            'phone' => 'Teléfono',
+            'password' => 'Contraseña',
+            'username' => 'Nombre de Usuario',
             'id' => 'ID',
             'user_id' => 'User ID',
             'faculty_id' => 'Facultad',
