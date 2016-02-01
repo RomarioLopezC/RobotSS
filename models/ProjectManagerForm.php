@@ -24,6 +24,7 @@ class ProjectManagerForm extends Model {
     public function rules() {
         return [
             ['name', 'required', 'message' => 'El campo Nombre está vacío'],
+            ['name', 'validateName'],
             ['lastName', 'required', 'message' => 'El campo Apellido está vacío'],
             ['email', 'required', 'message' => 'El campo Correo electrónico está vacío'],
             ['phone', 'required', 'message' => 'El campo Teléfono está vacío'],
@@ -46,5 +47,8 @@ class ProjectManagerForm extends Model {
         ];
     }
 
+    public function validateName(){
+
+    }
 
 }

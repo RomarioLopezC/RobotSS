@@ -8,8 +8,8 @@ class m160131_173842_create_project_manager_table extends Migration {
         $this->createTable('project_manager', [
             'id' => $this->primaryKey(),
             'last_name' => $this->string(255)->notNull(),
-            'user_id' => $this->integer(),
-            'organization' => $this->string(255)
+            'user_id' => $this->integer()->notNull(),
+            'organization' => $this->string(255)->notNull()
         ]);
     }
 

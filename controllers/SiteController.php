@@ -113,7 +113,11 @@ class SiteController extends Controller {
 
             if($projectManager->validate()){
                 $projectManager->save();
+
+                $this->sendActivationMail($attr['email']);
+
                 Yii::$app->session->setFlash('success', 'Se envío un correo de confirmación. Por favor verifique su correo electrónico');
+                return $this->refresh();
             }else{
                 Yii::$app->session->setFlash('error', 'Ocurrió un error al guardar. Vuelve a intentar');
                 return $this->refresh();
@@ -123,5 +127,14 @@ class SiteController extends Controller {
         return $this->render('project-manager-request', [
             'model' => $model,
         ]);
+    }
+
+    private function sendActivationMail($email) {
+        Yii::$app->mailer->compose()
+            ->setTo($email)
+            ->setFrom('pruebas.dev4@gmail.com')
+            ->setSubject('Mensaje de Activación de Usuario')
+            ->setHtmlBody('<b>Hola Mundo</b>')
+            ->send();
     }
 }
