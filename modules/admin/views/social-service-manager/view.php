@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\bootstrap\Alert;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\SocialServiceManager */
@@ -24,6 +25,17 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
+
+    <?php
+    foreach(Yii::$app->getSession()->getAllFlashes() as $key => $message) {
+        echo Alert::widget([
+            'options' => [
+                'class' => 'alert-'.$key,
+            ],
+            'body' => $message,
+        ]);
+    }
+    ?>
 
     <?= DetailView::widget([
         'model' => $model,
