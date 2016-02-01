@@ -8,6 +8,7 @@ use app\models\ProjectManagerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\bootstrap\Alert;
 
 /**
  * ProjectManagerController implements the CRUD actions for ProjectManager model.
@@ -96,9 +97,15 @@ class ProjectManagerController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($user_id)
     {
-        $this->findModel($id)->delete();
+        //$this->findModel($id)->delete();
+        Yii::$app->db->createCommand()->delete('project_manager', 'user_id ='.$user_id.'')->execute();
+        Yii::$app->db->createCommand()->delete('user', 'id ='.$user_id.'')->execute();
+        echo Alert::widget([
+
+            'body' => 'El usuario se eliminó exitosamente!'
+        ]);
 
         return $this->redirect(['index']);
     }

@@ -19,11 +19,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'user_id') ?>
 
-    <?= $form->field($model, 'degree_id') ?>
-
     <?= $form->field($model, 'faculty_id') ?>
 
     <?= $form->field($model, 'current_semester') ?>
+
+    <?= $form->field($model, 'enrollment_id') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

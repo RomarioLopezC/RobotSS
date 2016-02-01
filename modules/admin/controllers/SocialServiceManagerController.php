@@ -8,6 +8,7 @@ use app\models\SocialServiceManagerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\bootstrap\Alert;
 
 /**
  * SocialServiceManagerController implements the CRUD actions for SocialServiceManager model.
@@ -96,9 +97,16 @@ class SocialServiceManagerController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($user_id)
     {
-        $this->findModel($id)->delete();
+        //$this->findModel($user_id)->delete();
+        Yii::$app->db->createCommand()->delete('social_service_manager', 'user_id ='.$user_id.'')->execute();
+        Yii::$app->db->createCommand()->delete('user', 'id ='.$user_id.'')->execute();
+        echo Alert::widget([
+
+            'body' => 'El usuario se eliminó exitosamente!'
+        ]);
+
 
         return $this->redirect(['index']);
     }

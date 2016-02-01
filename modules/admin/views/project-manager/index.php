@@ -28,7 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'organization',
 
             ['class' => 'yii\grid\ActionColumn',
-                'template' => '{delete}'
+                'template' => '{delete}',
+                'buttons'  => [
+                    'delete' => function($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'user_id' => $model['user_id']], [
+                            'title' => Yii::t('app', 'Delete'), 'data-confirm' => Yii::t('app', '¿Estas seguro que deseas eliminar?'),'data-method' => 'post']);
+                    }
+                ],
 
             ],
         ],
