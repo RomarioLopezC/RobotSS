@@ -19,7 +19,7 @@ class ProjectManagerSearch extends ProjectManager
     {
         return [
             [['id', 'user_id'], 'integer'],
-            [['organization'], 'safe'],
+            [['last_name', 'organization'], 'safe'],
         ];
     }
 
@@ -60,7 +60,8 @@ class ProjectManagerSearch extends ProjectManager
             'user_id' => $this->user_id,
         ]);
 
-        $query->andFilterWhere(['like', 'organization', $this->organization]);
+        $query->andFilterWhere(['like', 'last_name', $this->last_name])
+            ->andFilterWhere(['like', 'organization', $this->organization]);
 
         return $dataProvider;
     }
