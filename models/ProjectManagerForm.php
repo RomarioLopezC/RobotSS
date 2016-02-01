@@ -27,6 +27,7 @@ class ProjectManagerForm extends Model {
             ['name', 'validateName'],
             ['lastName', 'required', 'message' => 'El campo Apellido está vacío'],
             ['email', 'required', 'message' => 'El campo Correo electrónico está vacío'],
+            ['email', 'email', 'message' => 'El campo Correo electrónico es inválido'],
             ['phone', 'required', 'message' => 'El campo Teléfono está vacío'],
             ['password', 'required', 'message' => 'El campo Contraseña está vacío'],
             ['organization', 'required', 'message' => 'El campo Organización está vacío'],
