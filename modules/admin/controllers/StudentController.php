@@ -8,6 +8,7 @@ use app\models\StudentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\bootstrap\Alert;
 
 /**
  * StudentController implements the CRUD actions for Student model.
@@ -96,9 +97,11 @@ class StudentController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($user_id)
     {
-        $this->findModel($id)->delete();
+        //$this->findModel($id)->delete();
+        Yii::$app->db->createCommand()->delete('student', 'user_id ='.$user_id.'')->execute();
+        Yii::$app->db->createCommand()->delete('user', 'id ='.$user_id.'')->execute();
 
         return $this->redirect(['index']);
     }

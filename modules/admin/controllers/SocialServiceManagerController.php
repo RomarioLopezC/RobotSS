@@ -2,12 +2,15 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\Person;
+use dektrium\user\models\User;
 use Yii;
 use app\models\SocialServiceManager;
 use app\models\SocialServiceManagerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\bootstrap\Alert;
 
 /**
  * SocialServiceManagerController implements the CRUD actions for SocialServiceManager model.
@@ -62,13 +65,31 @@ class SocialServiceManagerController extends Controller
     {
         $model = new SocialServiceManager();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+            $person = new Person();
+            $person->name = $model->name;
+            $person->lastname = $model->lastName;
+            $person->phone = $model->phone;
+            $person->save(false);
+            $user = new User();
+            $user->username = $model->username;
+            $user->password = $model->password;
+            $user->email = $model->email;
+            $user->person_id = $person->id;
+            $user->scenario='register';
+            if ($user->validate(['username', 'password'])) {
+                $user->register();
+                $model->user_id = $user->id;
+                $model->save(false);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                $model->addErrors($user->errors);
+            }
         }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+
     }
 
     /**
@@ -96,9 +117,16 @@ class SocialServiceManagerController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($user_id)
     {
-        $this->findModel($id)->delete();
+        //$this->findModel($user_id)->delete();
+        Yii::$app->db->createCommand()->delete('social_service_manager', 'user_id ='.$user_id.'')->execute();
+        Yii::$app->db->createCommand()->delete('user', 'id ='.$user_id.'')->execute();
+        echo Alert::widget([
+
+            'body' => 'El usuario se eliminó exitosamente!'
+        ]);
+
 
         return $this->redirect(['index']);
     }
