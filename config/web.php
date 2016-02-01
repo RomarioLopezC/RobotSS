@@ -28,6 +28,13 @@ $config = [
         ],
     ],
     'components' => [
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@dektrium/user/views' => '@app/views/user'
+                ],
+            ],
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager'
         ],
