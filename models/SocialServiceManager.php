@@ -37,7 +37,7 @@ class SocialServiceManager extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['faculty_id','name','lastName','username','password','email'], 'required','message'=>'Campo requerido'],
+            [['faculty_id','name','lastName','username','password','email'], 'required','message'=>'El campo {attribute} está vacío'],
             ['email', 'email','message'=>'El campo Correo electrónico es inválido'],
             [['id', 'user_id', 'faculty_id'], 'integer'],
             ['password', 'string', 'min' => 6,'message'=>'Contraseña debe tener al menos 6 caracteres']
