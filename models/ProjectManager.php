@@ -51,20 +51,4 @@ class ProjectManager extends \yii\db\ActiveRecord {
     }
 
 
-    public function beforeSave($insert) {
-        if (parent::beforeSave($insert)) {
-            $this->user->save();
-            $this->user_id = $this->user->id;
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @param User $user
-     */
-    public function setUser($user) {
-        $this->user = $user;
-    }
-
 }

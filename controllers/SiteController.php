@@ -100,27 +100,19 @@ class SiteController extends Controller {
             $person->phone = $model->phone;
             $person->save(false); //Para que sirve el false?
 
-            $userAttr = [
-                'username' => $model->name,
-                'email' => $model->email,
-                'password_hash' => Yii::$app->getSecurity()->generatePasswordHash($model->password),
-                'person_id' => $person->id,
-            ];
+            $user = new User();
+            $user->username = $model->name;
+            $user->email = $model->email;
+            $user->password_hash = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+            $user->person_id = $person->id;
 
-            $user = new User($userAttr);
+            if ($user->validate()) {
+                $user->register();
 
-            $projectManagerAttr = [
-                'last_name' => $model->lastName,
-                'organization' => $model->organization,
-            ];
-
-            $projectManager = new ProjectManager($projectManagerAttr);
-            $projectManager->setUser($user);
-
-            if ($projectManager->validate()) {
+                $projectManager = new ProjectManager();
+                $projectManager->organization = $model->organization;
+                $projectManager->user_id = $user->id;
                 $projectManager->save();
-
-                $this->sendActivationMail('nike-o_94@hotmail.com');
 
                 Yii::$app->session->setFlash('success', 'Se envío un correo de confirmación. Por favor verifique su correo electrónico');
                 return $this->refresh();
@@ -135,12 +127,4 @@ class SiteController extends Controller {
         ]);
     }
 
-    private function sendActivationMail($email) {
-        Yii::$app->mailer->compose()
-            ->setTo($email)
-            ->setFrom('pruebas.dev4@gmail.com')
-            ->setSubject('Mensaje de Activación de Usuario')
-            ->setHtmlBody('<b>Hola Mundo</b>')
-            ->send();
-    }
 }

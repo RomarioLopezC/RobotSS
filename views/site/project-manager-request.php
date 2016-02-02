@@ -12,6 +12,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Alert;
 
 $this->title = 'Solicitud de Cuenta';
 $this->params['breadcrumbs'][] = $this->title;
@@ -23,17 +24,16 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
     </div>
 
-    <?php if(Yii::$app->session->hasFlash('error')): ?>
-        <div class="alert alert-danger" role="alert">
-            <?= Yii::$app->session->getFlash('error'); ?>
-        </div>
-    <?php endif; ?>
-
-    <?php if(Yii::$app->session->hasFlash('success')): ?>
-        <div class="alert alert-success" role="alert">
-            <?= Yii::$app->session->getFlash('success'); ?>
-        </div>
-    <?php endif; ?>
+    <?php
+    foreach(Yii::$app->getSession()->getAllFlashes() as $key => $message) {
+        echo Alert::widget([
+            'options' => [
+                'class' => 'alert-'.$key,
+            ],
+            'body' => $message,
+        ]);
+    }
+    ?>
 
     <div class="row">
         <div class="col-lg-3">
