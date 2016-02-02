@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Person;
 use app\models\ProjectManager;
 use app\models\ProjectManagerForm;
 use app\models\User;
@@ -93,32 +94,37 @@ class SiteController extends Controller {
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $attr = Yii::$app->request->post('ProjectManagerForm');
+            $person = new Person();
+            $person->name = $model->name;
+            $person->lastname = $model->lastName;
+            $person->phone = $model->phone;
+            $person->save(false); //Para que sirve el false?
 
             $userAttr = [
-                'username' => $attr['name'],
-                'email' => $attr['email'],
-                'password_hash' => Yii::$app->getSecurity()->generatePasswordHash($attr['password']),
+                'username' => $model->name,
+                'email' => $model->email,
+                'password_hash' => Yii::$app->getSecurity()->generatePasswordHash($model->password),
+                'person_id' => $person->id,
             ];
 
             $user = new User($userAttr);
 
             $projectManagerAttr = [
-                'last_name' => $attr['lastName'],
-                'organization' => $attr['organization'],
+                'last_name' => $model->lastName,
+                'organization' => $model->organization,
             ];
 
             $projectManager = new ProjectManager($projectManagerAttr);
             $projectManager->setUser($user);
 
-            if($projectManager->validate()){
+            if ($projectManager->validate()) {
                 $projectManager->save();
 
-                $this->sendActivationMail($attr['email']);
+                $this->sendActivationMail('nike-o_94@hotmail.com');
 
                 Yii::$app->session->setFlash('success', 'Se envío un correo de confirmación. Por favor verifique su correo electrónico');
                 return $this->refresh();
-            }else{
+            } else {
                 Yii::$app->session->setFlash('error', 'Ocurrió un error al guardar. Vuelve a intentar');
                 return $this->refresh();
             }
