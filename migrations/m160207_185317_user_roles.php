@@ -18,11 +18,6 @@ class m160207_185317_user_roles extends Migration
             'updated_at' => '1453888424'
         ]);
 
-        $this->insert('auth_item_child', [
-            'parent' => 'admin',
-            'child' => '/admin/*'
-        ]);
-
         //cambiar el nombre con respecto a los roles (projectManager,socialServiceManager,student)
         //rol de administrador de proyectos
         $this->insert('auth_item', [
@@ -33,11 +28,6 @@ class m160207_185317_user_roles extends Migration
             'data' => null,
             'created_at' => '1453888424',
             'updated_at' => '1453888424'
-        ]);
-
-        $this->insert('auth_item_child', [
-            'parent' => 'projectManager',
-            'child' => '/project_manager/*'
         ]);
 
         //rol de administrador de servicio social
@@ -51,11 +41,6 @@ class m160207_185317_user_roles extends Migration
             'updated_at' => '1453888424'
         ]);
 
-        $this->insert('auth_item_child', [
-            'parent' => 'socialServiceManager',
-            'child' => '/social_service_manager/*'
-        ]);
-
         //rol de estudiante
         $this->insert('auth_item', [
             'name' => 'student',
@@ -66,12 +51,51 @@ class m160207_185317_user_roles extends Migration
             'created_at' => '1453888424',
             'updated_at' => '1453888424'
         ]);
+        //Ruta del modulo de admin
+        $this->insert('auth_item', [
+            'name' => '/admin/*',
+            'type' => '2',
+            'description' => 'Ruta para el administrador del sistema para el Servicio social de la UADY',
+            'rule_name' => null,
+            'data' => null,
+            'created_at' => '1453888424',
+            'updated_at' => '1453888424'
+        ]);
 
-        $this->insert('auth_item_child', [
-            'parent' => 'student',
-            'child' => '/student/*'
+        //Ruta del modulo de admin de proyectos
+        $this->insert('auth_item', [
+            'name' => '/project_manager/*',
+            'type' => '2',
+            'description' => 'Ruta para el administrador de proyectos del sistema para el Servicio social de la UADY',
+            'rule_name' => null,
+            'data' => null,
+            'created_at' => '1453888424',
+            'updated_at' => '1453888424'
+        ]);
+
+        //Ruta del modulo de administrador de servicio social
+        $this->insert('auth_item', [
+            'name' => '/social_service_manager/*',
+            'type' => '2',
+            'description' => 'Ruta para el administrador de servicio social de una facultad del sistema para el Servicio social de la UADY',
+            'rule_name' => null,
+            'data' => null,
+            'created_at' => '1453888424',
+            'updated_at' => '1453888424'
+        ]);
+
+        //Ruta del modulo de estudiante
+        $this->insert('auth_item', [
+            'name' => '/student/*',
+            'type' => '2',
+            'description' => 'Ruta para el rol estudiante del sistema para el Servicio social de la UADY',
+            'rule_name' => null,
+            'data' => null,
+            'created_at' => '1453888424',
+            'updated_at' => '1453888424'
         ]);
     }
+
 
     public function down()
     {
