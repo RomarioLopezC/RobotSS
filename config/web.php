@@ -89,7 +89,6 @@ $config = [
                 'site/*',
                 'user/*',
                 'developer/*',
-                'admin/*',
                 'student/*',
                 'gii/*'
                 //'some-controller/some-action',
