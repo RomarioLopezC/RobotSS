@@ -37,17 +37,20 @@ AppAsset::register($this);
     if (!Yii::$app->user->isGuest) {
         if (Yii::$app->user->can('admin')) {
             echo $this->render('navAdmin');
+        } else if (Yii::$app->user->can('projectManager')) {
+            echo $this->render('navProjectManager');
+        } else if (Yii::$app->user->can('socialServiceManager')) {
+            echo $this->render('navSocialServiceManager');
+        } else if (Yii::$app->user->can('student')) {
+            echo $this->render('navStudent');
         }
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            //['label' => 'Home', 'url' => ['/site/index']],
-            //['label' => 'About', 'url' => ['/site/about']],
-            //['label' => 'Contact', 'url' => ['/site/contact']],
             !Yii::$app->user->isGuest ?
-            ['label' => "Bienvenido: ".Profile::findOne(Yii::$app->user->id)->name,
-                'url' => ['/user/profile']] :
+                ['label' => "Bienvenido: " . Profile::findOne(Yii::$app->user->id)->name,
+                    'url' => ['/user/profile']] :
                 ['label' => 'About', 'url' => ['/site/about']],
             Yii::$app->user->isGuest ?
                 ['label' => 'Iniciar sesión', 'url' => ['/user/security/login']] :

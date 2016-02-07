@@ -81,6 +81,11 @@ class SocialServiceManagerController extends Controller
                 $user->register();
                 $model->user_id = $user->id;
                 $model->save(false);
+                //assign the role to the user
+                $authManager = Yii::$app->getAuthManager();
+                $socialServiceMRole = $authManager->getRole('socialServiceManager');
+                $authManager->assign($socialServiceMRole,$user->id);
+                //set the success message
                 Yii::$app->getSession()->setFlash('success','Usuario creado con éxito');
                 return $this->redirect(['view', 'id' => $model->id]);
             }else{

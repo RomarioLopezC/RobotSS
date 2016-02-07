@@ -22,7 +22,7 @@ echo Nav::widget([
         [
             'label' => 'Cuenta',
             'items' => [
-                ['label' => 'Modificar cuenta', 'url' => ['/user/settings/profile']],
+                ['label' => 'Modificar cuenta', 'url' => Url::to(['/user/settings/profile'])],
             ],
         ],
     ]
