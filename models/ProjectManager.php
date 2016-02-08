@@ -51,4 +51,15 @@ class ProjectManager extends \yii\db\ActiveRecord {
     }
 
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        if ($insert) {
+            //assign the role to the user
+            $authManager = Yii::$app->getAuthManager();
+            $socialServiceMRole = $authManager->getRole('projectManager');
+            $authManager->assign($socialServiceMRole,$this->user_id);
+        }
+        parent::afterSave($insert, $changedAttributes);
+    }
+
 }
