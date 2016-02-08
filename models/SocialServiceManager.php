@@ -77,4 +77,15 @@ class SocialServiceManager extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Faculty::className(), ['id' => 'faculty_id']);
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if ($insert) {
+            //assign the role to the user
+            $authManager = Yii::$app->getAuthManager();
+            $socialServiceMRole = $authManager->getRole('socialServiceManager');
+            $authManager->assign($socialServiceMRole,$this->user_id);
+        }
+        parent::afterSave($insert, $changedAttributes);
+    }
 }
