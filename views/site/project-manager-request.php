@@ -58,17 +58,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ]); ?>
 
-                <?= $form->field($model, 'name') ?>
+                <?= $form->field($person, 'name') ?>
 
-                <?= $form->field($model, 'lastName') ?>
+                <?= $form->field($person, 'lastname') ?>
 
-                <?= $form->field($model, 'email') ?>
+                <?= $form->field($user, 'email') ?>
 
-                <?= $form->field($model, 'phone') ?>
+                <?= $form->field($person, 'phone') ?>
 
-                <?= $form->field($model, 'password')->passwordInput() ?>
+                <?= $form->field($user, 'username') ?>
 
-                <?= $form->field($model, 'organization') ?>
+                <?= $form->field($user, 'password_hash')->passwordInput()->label('Password') ?>
+
+                <?= $form->field($projectManager, 'organization') ?>
 
                 </div>
             </div>

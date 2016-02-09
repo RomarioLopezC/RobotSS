@@ -26,7 +26,7 @@ class ProjectManager extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['last_name', 'organization'], 'required'],
+            [['organization'], 'required'],
             [['id', 'user_id'], 'integer'],
             [['organization'], 'string', 'max' => 120]
         ];

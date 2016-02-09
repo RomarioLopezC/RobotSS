@@ -90,41 +90,42 @@ class SiteController extends Controller {
     }
 
     public function actionProjectManagerRequest() {
-        $model = new ProjectManagerForm();
+        $projectManager = new ProjectManager();
+        $user = new User();
+        $person = new Person();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if (Yii::$app->request->post()) {
+            $params = Yii::$app->request->post();
 
-            $person = new Person();
-            $person->name = $model->name;
-            $person->lastname = $model->lastName;
-            $person->phone = $model->phone;
-            $person->save(false); //Para que sirve el false?
+            $person->load($params);
+            $user->load($params);
+            $user->password_hash = Yii::$app->getSecurity()->generatePasswordHash($params['User']['password_hash']);
+            $projectManager->load($params);
 
-            $user = new User();
-            $user->username = $model->name;
-            $user->email = $model->email;
-            $user->password_hash = Yii::$app->getSecurity()->generatePasswordHash($model->password);
-            $user->person_id = $person->id;
 
-            if ($user->validate()) {
+            if($person->validate() && $user->validate() && $projectManager->validate()){
+
+                $person->save(false);
+                $user->person_id = $person->id;
                 $user->register();
-
-                $projectManager = new ProjectManager();
-                $projectManager->organization = $model->organization;
                 $projectManager->user_id = $user->id;
                 $projectManager->save();
 
                 Yii::$app->session->setFlash('success', 'Se envío un correo de confirmación. Por favor verifique su correo electrónico');
                 return $this->refresh();
-            } else {
-                Yii::$app->session->setFlash('error', 'Ocurrió un error al guardar. Vuelve a intentar');
+            }else{
+                Yii::$app->session->setFlash('danger', 'Ocurrió un error al guardar. Vuelve a intentar');
                 return $this->refresh();
             }
+
+        }else{
+            return $this->render('project-manager-request', [
+                'projectManager' => $projectManager,
+                'user' => $user,
+                'person' => $person,
+            ]);
         }
 
-        return $this->render('project-manager-request', [
-            'model' => $model,
-        ]);
     }
 
 }

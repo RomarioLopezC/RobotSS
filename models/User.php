@@ -49,7 +49,8 @@ class User extends BaseUser {
      */
     public function rules() {
         return [
-            [['username', 'email', 'password_hash'], 'required'],
+            [['username', 'email'], 'required'],
+            ['password_hash', 'required', 'message' => 'Password no puede estar vacío.'],
             [['confirmed_at', 'blocked_at', 'created_at', 'updated_at', 'flags', 'person_id'], 'integer'],
             [['username'], 'string', 'max' => 25],
             [['email', 'unconfirmed_email'], 'string', 'max' => 255],
