@@ -52,7 +52,7 @@ $config = [
             ],
             'user' => [
                 'identityClass' => 'dektrium\user\models\User',
-                'enableAutoLogin' => true,
+                //'enableAutoLogin' => true,
             ],
             'errorHandler' => [
                 'errorAction' => 'site/error',

@@ -14,10 +14,8 @@ use yii\filters\VerbFilter;
 /**
  * StudentController implements the CRUD actions for Student model.
  */
-class DefaultController extends Controller
-{
-    public function behaviors()
-    {
+class DefaultController extends Controller {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -32,8 +30,7 @@ class DefaultController extends Controller
      * Lists all Student models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new StudentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -48,8 +45,7 @@ class DefaultController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -60,37 +56,34 @@ class DefaultController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $student = new Student();
         $user = new User();
         $person = new Person();
 
-
         if (Yii::$app->request->post()) {
-            $person->name = Yii::$app->request->post()['Person']['name'];
-            $person->lastname = Yii::$app->request->post()['Person']['lastname'];
-            $person->phone = Yii::$app->request->post()['Person']['phone'];
-            if($person->save(false)){
-                $user->username = Yii::$app->request->post()['User']['username'];
-                $user->password = Yii::$app->request->post()['User']['password'];
-                $user->email = Yii::$app->request->post()['User']['email'];
-                $user->person_id = $person->getPrimaryKey();
-                $user->scenario = 'connect';
-                if($user->register()){
-                    $student->load(Yii::$app->request->post());
-                    $student->user_id = $user->id;
-                    $student->save(false);
-                    return $this->redirect(['index']);
-                } else {
-                    return $this->render('create', [
-                        'student' => $student,
-                        'user' => $user,
-                        'person' => $person
-                    ]);
-                }
+            $params = Yii::$app->request->post();
+
+            $person->load($params);
+            $user->load($params);
+            $user->password_hash = Yii::$app->getSecurity()->generatePasswordHash($params['User']['password_hash']);
+            $student->load($params);
+
+            if ($person->validate() && $user->validate() && $student->validate()) {
+
+                $person->save(false);
+                $user->person_id = $person->id;
+                $user->register();
+                $student->user_id = $user->id;
+                $student->save();
+
+                Yii::$app->session->setFlash('success', 'Se envío un correo de confirmación. Por favor verifique su correo electrónico');
+                return $this->refresh();
+            } else {
+                Yii::$app->session->setFlash('danger', 'Ocurrió un error al guardar. Vuelve a intentar');
+                return $this->refresh();
             }
-            return $this->redirect(['view', 'id' => $student->getPrimaryKey()]);
+
         } else {
             return $this->render('create', [
                 'student' => $student,
@@ -106,8 +99,7 @@ class DefaultController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $student = Student::findOne($id);
         $user = $student->getUser();
         $person = $user->getPerson();
@@ -117,13 +109,13 @@ class DefaultController extends Controller
             $person->name = Yii::$app->request->post()['Person']['name'];
             $person->lastname = Yii::$app->request->post()['Person']['lastname'];
             $person->phone = Yii::$app->request->post()['Person']['phone'];
-            if($person->save(false)){
+            if ($person->save(false)) {
                 $user->username = Yii::$app->request->post()['User']['username'];
                 $user->password = Yii::$app->request->post()['User']['password'];
                 $user->email = Yii::$app->request->post()['User']['email'];
                 $user->person_id = $person->getPrimaryKey();
                 $user->scenario = 'connect';
-                if($user->register()){
+                if ($user->register()) {
                     $student->load(Yii::$app->request->post());
                     $student->user_id = $user->id;
                     $student->save(false);
@@ -152,8 +144,7 @@ class DefaultController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -166,8 +157,7 @@ class DefaultController extends Controller
      * @return Student the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Student::findOne($id)) !== null) {
             return $model;
         } else {

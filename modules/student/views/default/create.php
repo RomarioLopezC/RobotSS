@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\bootstrap\Alert;
 
 
 /* @var $this yii\web\View */
@@ -12,9 +13,23 @@ $this->title = 'Solicitud cuenta de Alumno';
     <div class="well well-sm col-md-12">
         <h1><?= Html::encode($this->title) ?></h1>
     </div>
+
+    <br>
+
+    <?php
+    foreach(Yii::$app->getSession()->getAllFlashes() as $key => $message) {
+        echo Alert::widget([
+            'options' => [
+                'class' => 'alert-'.$key,
+            ],
+            'body' => $message,
+        ]);
+    }
+    ?>
+
     <div class="row">
         <div class="col-md-4">
-            <?= Html::img('../images/uady-logo.jpg', ['class' => 'img-responsive']) ?>
+            <?= Html::img('../../images/uady-logo.jpg', ['class' => 'img-responsive']) ?>
         </div>
 
         <div class="col-md-7 col-md-offset-1">

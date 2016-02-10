@@ -25,7 +25,7 @@ use app\models\Faculty;
 
     <?= $form->field($user, 'username')->textInput() ?>
 
-    <?= $form->field($user, 'password')->passwordInput() ?>
+    <?= $form->field($user, 'password_hash')->passwordInput()->label("Password") ?>
 
     <?= $form->field($student, 'current_semester')->textInput() ?>
 
