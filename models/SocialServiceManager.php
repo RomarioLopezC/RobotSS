@@ -16,6 +16,13 @@ use Yii;
  */
 class SocialServiceManager extends \yii\db\ActiveRecord
 {
+    public $name;
+    public $lastName;
+    public $email;
+    public $phone;
+    public $username;
+    public $password;
+
     /**
      * @inheritdoc
      */
@@ -30,8 +37,10 @@ class SocialServiceManager extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'user_id', 'faculty_id'], 'required'],
-            [['id', 'user_id', 'faculty_id'], 'integer']
+            [['faculty_id','name','lastName','username','password','email'], 'required','message'=>'El campo {attribute} está vacío'],
+            ['email', 'email','message'=>'El campo Correo electrónico es inválido'],
+            [['id', 'user_id', 'faculty_id'], 'integer'],
+            ['password', 'string', 'min' => 6,'message'=>'Contraseña debe tener al menos 6 caracteres']
         ];
     }
 
@@ -41,9 +50,15 @@ class SocialServiceManager extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'name' => 'Nombre',
+            'lastName' => 'Apellido',
+            'email' => 'Correo electrónico',
+            'phone' => 'Teléfono',
+            'password' => 'Contraseña',
+            'username' => 'Nombre de Usuario',
             'id' => 'ID',
             'user_id' => 'User ID',
-            'faculty_id' => 'Faculty ID',
+            'faculty_id' => 'Facultad',
         ];
     }
 
@@ -61,5 +76,16 @@ class SocialServiceManager extends \yii\db\ActiveRecord
     public function getFaculty()
     {
         return $this->hasOne(Faculty::className(), ['id' => 'faculty_id']);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if ($insert) {
+            //assign the role to the user
+            $authManager = Yii::$app->getAuthManager();
+            $socialServiceMRole = $authManager->getRole('socialServiceManager');
+            $authManager->assign($socialServiceMRole,$this->user_id);
+        }
+        parent::afterSave($insert, $changedAttributes);
     }
 }
