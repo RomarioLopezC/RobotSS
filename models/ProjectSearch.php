@@ -18,8 +18,8 @@ class ProjectSearch extends Project
     public function rules()
     {
         return [
-            [['id', 'ammount'], 'integer'],
-            [['name', 'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestrcture', 'approved'], 'safe'],
+            [['id'], 'integer'],
+            [['name', 'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'approved'], 'safe'],
         ];
     }
 
@@ -57,7 +57,6 @@ class ProjectSearch extends Project
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'ammount' => $this->ammount,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
@@ -69,7 +68,8 @@ class ProjectSearch extends Project
             ->andFilterWhere(['like', 'materials_for_students', $this->materials_for_students])
             ->andFilterWhere(['like', 'economic_support', $this->economic_support])
             ->andFilterWhere(['like', 'human_resource', $this->human_resource])
-            ->andFilterWhere(['like', 'infraestrcture', $this->infraestrcture])
+            ->andFilterWhere(['like', 'infraestructure', $this->infraestructure])
+            ->andFilterWhere(['like', 'ammount', $this->ammount])
             ->andFilterWhere(['like', 'approved', $this->approved]);
 
         return $dataProvider;

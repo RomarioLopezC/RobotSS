@@ -14,10 +14,7 @@ class m160212_034743_create_student_profile_table extends Migration
 
 
         ]);
-        $this->createIndex('idx-student_profile-project_id', 'student_profile', 'project_id');
-        $this->addForeignKey('fk-student_profile-project_id', 'user', 'project_id', 'project', 'id', 'CASCADE');
-        $this->createIndex('idx-student_profile-degree_id', 'student_profile', 'degree_id');
-        $this->addForeignKey('fk-student_profile-degree_id', 'user', 'degree_id', 'degree', 'id', 'CASCADE');
+
 
     }
 

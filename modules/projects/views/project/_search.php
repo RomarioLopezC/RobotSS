@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'human_resource') ?>
 
-    <?php // echo $form->field($model, 'infraestrcture') ?>
+    <?php // echo $form->field($model, 'infraestructure') ?>
 
     <?php // echo $form->field($model, 'ammount') ?>
 

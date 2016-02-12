@@ -18,7 +18,7 @@ use app\models\Degree;
 
     <?= $form->field($model, 'dependency')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'degrees')->checkboxList(ArrayHelper::map(Degree::find()->all(), 'id', 'name')) ?>
+    <?= $form->field($model, 'degrees')->checkboxList(ArrayHelper::map(Degree::find()->all(), 'id', 'name'))?>
 
     <?= $form->field($model, 'objective')->textInput(['maxlength' => true]) ?>
 
@@ -34,12 +34,9 @@ use app\models\Degree;
 
     <?= $form->field($model, 'human_resource')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'infraestrcture')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'infraestructure')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'ammount')->textInput(['maxlength' => true]) ?>
-
-
-
 
 
 

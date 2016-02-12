@@ -2,13 +2,13 @@
 
 namespace app\modules\projects\controllers;
 
-use app\models\StudentProfile;
 use Yii;
 use app\models\Project;
 use app\models\ProjectSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\StudentProfile;
 
 /**
  * ProjectController implements the CRUD actions for Project model.

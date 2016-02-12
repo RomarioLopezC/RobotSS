@@ -3,9 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\helpers\ArrayHelper;
-use yii\widgets\ActiveForm;
-
 
 /**
  * This is the model class for table "project".
@@ -20,11 +17,9 @@ use yii\widgets\ActiveForm;
  * @property string $materials_for_students
  * @property string $economic_support
  * @property string $human_resource
- * @property string $infraestrcture
- * @property integer $ammount
+ * @property string $infraestructure
+ * @property string $ammount
  * @property string $approved
- *
- * @property StudentProfile[] $studentProfiles
  */
 class Project extends \yii\db\ActiveRecord
 {
@@ -43,10 +38,9 @@ class Project extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestrcture', 'ammount'], 'required'],
-            [['ammount'], 'integer'],
+            [['name', 'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount'], 'required'],
             [['name', 'dependency'], 'string', 'max' => 200],
-            [['objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestrcture', 'approved'], 'string', 'max' => 500]
+            [['objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'approved'], 'string', 'max' => 500]
         ];
     }
 
@@ -67,21 +61,11 @@ class Project extends \yii\db\ActiveRecord
             'materials_for_students' => 'Recursos materiales',
             'economic_support' => 'Recursos economicos',
             'human_resource' => 'Recursos humanos',
-            'infraestrcture' => 'Infraestrctura',
+            'infraestructure' => 'Infraestrctura',
             'ammount' => 'Monto',
             'approved' => 'Approved',
             'degrees' => 'Perfiles solicitados',
 
         ];
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStudentProfiles()
-    {
-        return $this->hasMany(StudentProfile::className(), ['project_id' => 'id']);
-    }
-
-
 }
