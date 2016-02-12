@@ -2,6 +2,7 @@
 
 namespace app\modules\projects\controllers;
 
+use app\models\StudentProfile;
 use Yii;
 use app\models\Project;
 use app\models\ProjectSearch;
@@ -63,6 +64,14 @@ class ProjectController extends Controller
         $model = new Project();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $degreesList=$_POST['Project']['degrees'];
+            foreach($degreesList as $value){
+                $newProfile= new StudentProfile();
+                $newProfile->project_id=$model->id;
+                $newProfile->degree_id=$value;
+                $newProfile->save();
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [

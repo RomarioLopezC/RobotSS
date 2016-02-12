@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'dependency',
+            'degrees',
             'objective',
             'goals',
             'actions_by_students',

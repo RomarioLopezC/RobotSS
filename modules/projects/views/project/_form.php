@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Degree;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Project */
@@ -15,6 +17,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'dependency')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'degrees')->checkboxList(ArrayHelper::map(Degree::find()->all(), 'id', 'name')) ?>
 
     <?= $form->field($model, 'objective')->textInput(['maxlength' => true]) ?>
 
@@ -32,7 +36,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'infraestrcture')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'ammount')->textInput() ?>
+    <?= $form->field($model, 'ammount')->textInput(['maxlength' => true]) ?>
+
+
+
 
 
 

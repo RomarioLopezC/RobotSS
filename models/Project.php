@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+use yii\widgets\ActiveForm;
+
 
 /**
  * This is the model class for table "project".
@@ -25,6 +28,7 @@ use Yii;
  */
 class Project extends \yii\db\ActiveRecord
 {
+    public $degrees;
     /**
      * @inheritdoc
      */
@@ -66,6 +70,8 @@ class Project extends \yii\db\ActiveRecord
             'infraestrcture' => 'Infraestrctura',
             'ammount' => 'Monto',
             'approved' => 'Approved',
+            'degrees' => 'Perfiles solicitados',
+
         ];
     }
 
@@ -76,4 +82,6 @@ class Project extends \yii\db\ActiveRecord
     {
         return $this->hasMany(StudentProfile::className(), ['project_id' => 'id']);
     }
+
+
 }
