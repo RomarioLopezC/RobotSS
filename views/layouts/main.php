@@ -8,7 +8,9 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-use dektrium\user\models\Profile;
+use app\models\Person;
+use app\models\User;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -49,8 +51,8 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             !Yii::$app->user->isGuest ?
-                ['label' => "Bienvenido: " . Profile::findOne(Yii::$app->user->id)->name,
-                    'url' => ['/user/profile']] :
+                ['label' => "Bienvenido: " . Person::findOne(User::findOne(Yii::$app->user->id)->person_id)->name,
+                    'url' => Yii::$app->user->can('admin') ? Url::to(['user/profile']) : Url::to(['/person/view', 'id' => User::findOne(Yii::$app->user->id)->person_id])] :
                 ['label' => 'About', 'url' => ['/site/about']],
             Yii::$app->user->isGuest ?
                 ['label' => 'Iniciar sesión', 'url' => ['/user/security/login']] :

@@ -17,6 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Update'=>'Editar',
+    'Update {modelClass}: '=>'Editar {modelClass} de ',
     'Congratulations!' => 'Felicidades!',
     'Delete' => 'Eliminar',
     '¿Estas seguro que deseas eliminar?' => '',

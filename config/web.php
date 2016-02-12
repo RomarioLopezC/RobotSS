@@ -88,6 +88,8 @@ $config = [
             'allowActions' => [
                 'site/*',
                 'user/*',
+                'person/view',
+                'person/update',
                 'developer/*',
                 'student/default/create',
                 'gii/*'
