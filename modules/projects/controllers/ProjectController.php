@@ -2,6 +2,7 @@
 
 namespace app\modules\projects\controllers;
 
+use app\models\Degree;
 use Yii;
 use app\models\Project;
 use app\models\ProjectSearch;
@@ -9,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\StudentProfile;
+use yii\helpers\ArrayHelper;
 
 /**
  * ProjectController implements the CRUD actions for Project model.
@@ -71,7 +73,7 @@ class ProjectController extends Controller
                 $newProfile->degree_id=$value;
                 $newProfile->save();
             }
-
+            Yii::$app->getSession()->setFlash('success','Proyecto creado con éxito');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -89,8 +91,29 @@ class ProjectController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $degreeids =  StudentProfile::find()
+    ->where("project_id=".$model->id)
+    ->all();
+
+        $ids = ArrayHelper::getColumn($degreeids, 'degree_id');
+        $model->degrees=$ids;
+
+        //$degrees1 = Degree::find()->all();
+        //$model->degrees = \yii\helpers\ArrayHelper::getColumn(
+        //    $model->hasMany(StudentProfile::className(), ['project_id' => 'id'])->asArray()->all(),
+        //    'project_id'
+        //);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            StudentProfile::deleteAll('project_id='.$model->id);
+            $degreesList=$_POST['Project']['degrees'];
+            foreach($degreesList as $value){
+                $newProfile= new StudentProfile();
+                $newProfile->project_id=$model->id;
+                $newProfile->degree_id=$value;
+                $newProfile->save();
+            }
+            Yii::$app->getSession()->setFlash('success','Proyecto actualizado con éxito');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
