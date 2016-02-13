@@ -29,8 +29,8 @@ class Student extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['faculty_id', 'current_semester', 'enrollment_id'], 'required'],
-            [['id', 'user_id', 'faculty_id', 'current_semester'], 'integer'],
+            [['faculty_id', 'current_semester', 'enrollment_id', 'degree_id'], 'required'],
+            [['id', 'user_id', 'faculty_id', 'current_semester', 'degree_id'], 'integer'],
             [['enrollment_id'], 'string', 'max' => 255],
             [['enrollment_id'], 'unique']
         ];
@@ -46,6 +46,7 @@ class Student extends \yii\db\ActiveRecord {
             'faculty_id' => 'Facultad',
             'current_semester' => 'Semestre actual',
             'enrollment_id' => 'Matricula',
+            'degree_id' => 'Licenciatura',
         ];
     }
 
@@ -61,6 +62,10 @@ class Student extends \yii\db\ActiveRecord {
      */
     public function getFaculty() {
         return $this->hasOne(Faculty::className(), ['id' => 'faculty_id']);
+    }
+
+    public function getDegree() {
+        return $this->hasOne(Degree::className(), ['id' => 'degree_id']);
     }
 
     public function afterSave($insert, $changedAttributes) {
