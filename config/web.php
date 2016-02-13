@@ -95,7 +95,7 @@ $config = [
                 'gii/*',
                 'projects/*',
                 'student/*',
-                'projectmanager/*',
+                'project_manager/*',
                 'person/*'
                 //'some-controller/some-action',
                 // The actions listed here will be allowed to everyone including guests.

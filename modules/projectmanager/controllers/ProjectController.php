@@ -12,7 +12,9 @@ use yii\filters\VerbFilter;
 use app\models\StudentProfile;
 use yii\helpers\ArrayHelper;
 use app\models\ProjectVacancy;
-
+use app\models\User;
+use app\models\Registration;
+use app\models\Student;
 /**
  * ProjectController implements the CRUD actions for Project model.
  */
@@ -163,5 +165,41 @@ class ProjectController extends Controller {
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionPreregister($id){
+        $model = $this->findModel($id);
+        //$user_id=User::findOne(Yii::$app->user->id)->id;
+        $user = User::find()
+            ->where("id=" .Yii::$app->user->id)
+            ->all();
+        $user_id=ArrayHelper::getColumn($user, 'id')[0];
+        $student = Student::find()
+            ->where("user_id=" .$user_id)
+            ->all();
+        $student_id=ArrayHelper::getColumn($student, 'id')[0];
+
+        $vacancy = ProjectVacancy::find()
+            ->where("project_id=" .$id)
+            ->all();
+        $vacancyValue=ArrayHelper::getColumn($vacancy, 'vacancy')[0];
+
+        if($vacancyValue>0){
+            $newRegistration = new Registration();
+            $newRegistration->project_id = $id;
+            $newRegistration->student_id=$student_id;
+            $newRegistration->student_status="preregistered";
+            $newRegistration->save();
+            Yii::$app->getSession()->setFlash('success', 'Te has pre-registrado al proyecto');
+            return $this->redirect(['view', 'id' => $model->id]);
+        }else{
+            Yii::$app->getSession()->setFlash('error', 'no hay cupo');
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+
+
+
+
     }
 }
