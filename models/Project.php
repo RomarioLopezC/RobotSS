@@ -66,6 +66,7 @@ class Project extends \yii\db\ActiveRecord
             'ammount' => 'Monto',
             'approved' => 'Approved',
             'degrees' => 'Perfiles solicitados',
+            'vacancy' => 'Cupo disponible',
 
         ];
     }

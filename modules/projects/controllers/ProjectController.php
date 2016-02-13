@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\StudentProfile;
 use yii\helpers\ArrayHelper;
+use app\models\ProjectVacancy;
 
 /**
  * ProjectController implements the CRUD actions for Project model.
@@ -66,6 +67,13 @@ class ProjectController extends Controller
         $model = new Project();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            $vacancyvalue=$_POST['Project']['vacancy'];
+            $newVacancy= new ProjectVacancy();
+            $newVacancy->project_id=$model->id;
+            $newVacancy->vacancy=$vacancyvalue;
+            $newVacancy->save();
+
             $degreesList=$_POST['Project']['degrees'];
             foreach($degreesList as $value){
                 $newProfile= new StudentProfile();
@@ -94,9 +102,14 @@ class ProjectController extends Controller
         $degreeids =  StudentProfile::find()
     ->where("project_id=".$model->id)
     ->all();
+        $cupovalor =  ProjectVacancy::find()
+            ->where("project_id=".$model->id)
+            ->all();
 
         $ids = ArrayHelper::getColumn($degreeids, 'degree_id');
+        $cupo = ArrayHelper::getColumn($cupovalor, 'vacancy')[0];
         $model->degrees=$ids;
+        $model->vacancy=$cupo;
 
         //$degrees1 = Degree::find()->all();
         //$model->degrees = \yii\helpers\ArrayHelper::getColumn(
@@ -106,7 +119,16 @@ class ProjectController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             StudentProfile::deleteAll('project_id='.$model->id);
+            ProjectVacancy::deleteAll('project_id='.$model->id);
+            $vacancyvalue=$_POST['Project']['vacancy'];
+            $newVacancy= new ProjectVacancy();
+            $newVacancy->project_id=$model->id;
+            $newVacancy->vacancy=$vacancyvalue;
+            $newVacancy->save();
+
             $degreesList=$_POST['Project']['degrees'];
+
+
             foreach($degreesList as $value){
                 $newProfile= new StudentProfile();
                 $newProfile->project_id=$model->id;

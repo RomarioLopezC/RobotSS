@@ -46,6 +46,7 @@ use yii\bootstrap\Modal;
 
     ?>
 
+    <?= $form->field($model, 'vacancy')->textInput(['maxlength' => true]) ?>
 
 
     <?= $form->field($model, 'objective')->textInput(['maxlength' => true]) ?>
