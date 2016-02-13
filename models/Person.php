@@ -19,8 +19,6 @@ class Person extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public $email;
-    public $faculty_id;
 
     public static function tableName()
     {
@@ -34,7 +32,6 @@ class Person extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'lastname', 'phone'], 'required'],
-            ['email', 'email'],
             [['name', 'lastname', 'phone'], 'string', 'max' => 255]
         ];
     }

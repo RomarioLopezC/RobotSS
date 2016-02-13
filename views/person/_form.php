@@ -33,13 +33,27 @@ use yii\helpers\Url;
 
                     <?= $form->field($model, 'lastname')->textInput(['maxlength' => true]) ?>
 
-                    <?= $form->field($model, 'email')->textInput() ?>
+                    <?= $form->field($user, 'email')->textInput() ?>
 
                     <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
 
-                    <?= $form->field($model, 'faculty_id')->dropDownList(
-                        ArrayHelper::map(Faculty::find()->all(), 'id', 'name')
-                    ) ?>
+                    <?php
+                    if (Yii::$app->user->can('projectManager')) {
+                        echo $form->field($rol, 'organization')->textInput();
+
+                    } else if (Yii::$app->user->can('socialServiceManager')) {
+                        echo $form->field($rol, 'faculty_id')->dropDownList(
+                            ArrayHelper::map(Faculty::find()->all(), 'id', 'name')
+                        );
+
+                    } else if (Yii::$app->user->can('student')) {
+                        $form->field($rol, 'faculty_id')->dropDownList(
+                            ArrayHelper::map(Faculty::find()->all(), 'id', 'name')
+                        );
+                        echo $form->field($rol, 'current_semester')->textInput();
+                        echo $form->field($rol, 'enrollment_id')->textInput();
+                    }
+                    ?>
 
                 </div>
 
