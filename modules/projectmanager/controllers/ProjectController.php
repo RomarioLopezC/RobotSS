@@ -172,31 +172,44 @@ class ProjectController extends Controller {
         //$user_id=User::findOne(Yii::$app->user->id)->id;
         $user = User::find()
             ->where("id=" .Yii::$app->user->id)
-            ->all();
-        $user_id=ArrayHelper::getColumn($user, 'id')[0];
+            ->one();
+        $user_id=$user->id;
         $student = Student::find()
             ->where("user_id=" .$user_id)
-            ->all();
-        $student_id=ArrayHelper::getColumn($student, 'id')[0];
+            ->one();
+        $student_id=$student->id;
 
         $vacancy = ProjectVacancy::find()
             ->where("project_id=" .$id)
-            ->all();
-        $vacancyValue=ArrayHelper::getColumn($vacancy, 'vacancy')[0];
+            ->one();
+        //$vacancyValue=ArrayHelper::getColumn($vacancy, 'vacancy')[0];
+        $vacancyValue=$vacancy->vacancy;
 
-        if($vacancyValue>0){
-            $newRegistration = new Registration();
-            $newRegistration->project_id = $id;
-            $newRegistration->student_id=$student_id;
-            $newRegistration->student_status="preregistered";
-            $newRegistration->save();
-            Yii::$app->getSession()->setFlash('success', 'Te has pre-registrado al proyecto');
-            return $this->redirect(['view', 'id' => $model->id]);
+        if($existe=StudentProfile::find()->where(['project_id' => $id, 'degree_id' => $student->degree_id])->one()) {
+
+
+            if ($vacancyValue > 0) {
+
+                $newRegistration = new Registration();
+                $newRegistration->project_id = $id;
+                $newRegistration->student_id = $student_id;
+                $newRegistration->student_status = "preregistered";
+                $newRegistration->save();
+
+                //$vacancy->vacancy=$vacancy->vacancy-1;
+                Yii::$app->db->createCommand()->update('project_vacancy', ['vacancy' =>$vacancy->vacancy-1],'project_id='.$id)->execute();
+
+
+                Yii::$app->getSession()->setFlash('success', 'Te has pre-registrado al proyecto');
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                Yii::$app->getSession()->setFlash('danger', 'No hay cupo para este proyecto. Escoge otro.');
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }else{
-            Yii::$app->getSession()->setFlash('error', 'no hay cupo');
+            Yii::$app->getSession()->setFlash('danger', 'No cuentas con el perfil solicitado');
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
 
 
 
