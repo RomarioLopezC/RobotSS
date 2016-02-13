@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\projects\controllers;
+namespace app\modules\projectmanager\controllers;
 
 use app\models\Degree;
 use Yii;
@@ -16,10 +16,8 @@ use app\models\ProjectVacancy;
 /**
  * ProjectController implements the CRUD actions for Project model.
  */
-class ProjectController extends Controller
-{
-    public function behaviors()
-    {
+class ProjectController extends Controller {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -34,8 +32,7 @@ class ProjectController extends Controller
      * Lists all Project models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new ProjectSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -50,8 +47,7 @@ class ProjectController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -62,26 +58,25 @@ class ProjectController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new Project();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-            $vacancyvalue=$_POST['Project']['vacancy'];
-            $newVacancy= new ProjectVacancy();
-            $newVacancy->project_id=$model->id;
-            $newVacancy->vacancy=$vacancyvalue;
+            $vacancyvalue = $_POST['Project']['vacancy'];
+            $newVacancy = new ProjectVacancy();
+            $newVacancy->project_id = $model->id;
+            $newVacancy->vacancy = $vacancyvalue;
             $newVacancy->save();
 
-            $degreesList=$_POST['Project']['degrees'];
-            foreach($degreesList as $value){
-                $newProfile= new StudentProfile();
-                $newProfile->project_id=$model->id;
-                $newProfile->degree_id=$value;
+            $degreesList = $_POST['Project']['degrees'];
+            foreach ($degreesList as $value) {
+                $newProfile = new StudentProfile();
+                $newProfile->project_id = $model->id;
+                $newProfile->degree_id = $value;
                 $newProfile->save();
             }
-            Yii::$app->getSession()->setFlash('success','Proyecto creado con éxito');
+            Yii::$app->getSession()->setFlash('success', 'Proyecto creado con éxito');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -96,20 +91,19 @@ class ProjectController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
-        $degreeids =  StudentProfile::find()
-    ->where("project_id=".$model->id)
-    ->all();
-        $cupovalor =  ProjectVacancy::find()
-            ->where("project_id=".$model->id)
+        $degreeids = StudentProfile::find()
+            ->where("project_id=" . $model->id)
+            ->all();
+        $cupovalor = ProjectVacancy::find()
+            ->where("project_id=" . $model->id)
             ->all();
 
         $ids = ArrayHelper::getColumn($degreeids, 'degree_id');
         $cupo = ArrayHelper::getColumn($cupovalor, 'vacancy')[0];
-        $model->degrees=$ids;
-        $model->vacancy=$cupo;
+        $model->degrees = $ids;
+        $model->vacancy = $cupo;
 
         //$degrees1 = Degree::find()->all();
         //$model->degrees = \yii\helpers\ArrayHelper::getColumn(
@@ -118,24 +112,24 @@ class ProjectController extends Controller
         //);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            StudentProfile::deleteAll('project_id='.$model->id);
-            ProjectVacancy::deleteAll('project_id='.$model->id);
-            $vacancyvalue=$_POST['Project']['vacancy'];
-            $newVacancy= new ProjectVacancy();
-            $newVacancy->project_id=$model->id;
-            $newVacancy->vacancy=$vacancyvalue;
+            StudentProfile::deleteAll('project_id=' . $model->id);
+            ProjectVacancy::deleteAll('project_id=' . $model->id);
+            $vacancyvalue = $_POST['Project']['vacancy'];
+            $newVacancy = new ProjectVacancy();
+            $newVacancy->project_id = $model->id;
+            $newVacancy->vacancy = $vacancyvalue;
             $newVacancy->save();
 
-            $degreesList=$_POST['Project']['degrees'];
+            $degreesList = $_POST['Project']['degrees'];
 
 
-            foreach($degreesList as $value){
-                $newProfile= new StudentProfile();
-                $newProfile->project_id=$model->id;
-                $newProfile->degree_id=$value;
+            foreach ($degreesList as $value) {
+                $newProfile = new StudentProfile();
+                $newProfile->project_id = $model->id;
+                $newProfile->degree_id = $value;
                 $newProfile->save();
             }
-            Yii::$app->getSession()->setFlash('success','Proyecto actualizado con éxito');
+            Yii::$app->getSession()->setFlash('success', 'Proyecto actualizado con éxito');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -150,8 +144,7 @@ class ProjectController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -164,8 +157,7 @@ class ProjectController extends Controller
      * @return Project the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Project::findOne($id)) !== null) {
             return $model;
         } else {

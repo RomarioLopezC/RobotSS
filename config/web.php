@@ -26,10 +26,7 @@ $config = [
         ],
         'student' => [
             'class' => 'app\modules\student\Student',
-        ],
-        'projects' => [
-            'class' => 'app\modules\projects\Projects',
-        ],
+        ]
     ],
         'components' => [
             'view' => [
