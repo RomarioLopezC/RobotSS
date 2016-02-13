@@ -4,8 +4,10 @@ namespace app\controllers;
 
 use app\models\ProjectManager;
 use app\models\SocialServiceManager;
-use app\modules\student\Student;
-use dektrium\user\models\User;
+use app\models\Student;
+use app\models\User;
+use dektrium\user\helpers\Password;
+use dektrium\user\models\SettingsForm;
 use Yii;
 use app\models\Person;
 use yii\data\ActiveDataProvider;
@@ -83,29 +85,54 @@ class PersonController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-        $user = \app\models\User::findOne(['person_id' => $model->id]);
+        $user = User::findOne($id);
+        $model = $this->findModel($user->person_id);
+        $rol = null;
 
         if (Yii::$app->user->can('projectManager')) {
             $rol = ProjectManager::findOne(['user_id' => $user->id]);
         } else if (Yii::$app->user->can('socialServiceManager')) {
             $rol = SocialServiceManager::findOne(['user_id' => $user->id]);
         } else if (Yii::$app->user->can('student')) {
-            $rol = \app\models\Student::findOne(['user_id' => $user->id]);
+            $rol = Student::findOne(['user_id' => $user->id]);
         }
 
-        if ($model->load(Yii::$app->request->post())) {
-            $user->email = $model->email;
-            $rol->faculty_id = $model->faculty_id;
-
-            if ($model->save() && $user->save() && $rol->save(false)) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post())) {
+            if (isset($rol)) {
+                $rol->load(Yii::$app->request->post());
+                $rol->save(false);
+            }
+            if ($model->save() && $user->save()) {
+                Yii::$app->getSession()->setFlash('success', 'Su información se actualizó exitosamente');
+            } else {
+                Yii::$app->getSession()->setFlash('danger', 'Ocurrió un error al guardar. Vuelve a intentar');
             }
         }
         return $this->render('update', [
             'model' => $model,
+            'user' => $user,
+            'rol' => $rol
         ]);
 
+    }
+
+    public function actionChangePassword($id)
+    {
+        $userInfo = Yii::$app->request->post()['settings-form'];
+        $user = User::findIdentity($id);
+        if (Password::validate($userInfo['current_password'], $user->password_hash)) {
+            if ($user->resetPassword($userInfo['new_password'])) {
+                Yii::$app->getSession()->setFlash('success', 'Contraseña cambiada con éxito');
+            }
+            if ($user->username != $userInfo['username']) {
+                $user->username = $userInfo['username'];
+                $user->save();
+                Yii::$app->getSession()->setFlash('success','Nombre de usuario cambiado con éxito');
+            }
+        } else {
+            Yii::$app->getSession()->setFlash('danger', 'La contraseña actual no corresponde, valide e intente nuevamente');
+        }
+        $this->redirect(['person/update','id'=>Yii::$app->user->id]);
     }
 
     /**
@@ -131,18 +158,6 @@ class PersonController extends Controller
     protected function findModel($id)
     {
         if (($model = Person::findOne($id)) !== null) {
-            $user = \app\models\User::findOne(['person_id' => $model->id]);
-
-            if (Yii::$app->user->can('projectManager')) {
-                $rol = ProjectManager::findOne(['user_id' => $user->id]);
-            } else if (Yii::$app->user->can('socialServiceManager')) {
-                $rol = SocialServiceManager::findOne(['user_id' => $user->id]);
-            } else if (Yii::$app->user->can('student')) {
-                $rol = \app\models\Student::findOne(['user_id' => $user->id]);
-            }
-
-            $model->email = $user->email;
-            $model->faculty_id = $rol->faculty_id;
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
