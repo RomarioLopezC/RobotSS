@@ -24,6 +24,7 @@ use Yii;
 class Project extends \yii\db\ActiveRecord
 {
     public $degrees;
+    public $vacancy;
     /**
      * @inheritdoc
      */
