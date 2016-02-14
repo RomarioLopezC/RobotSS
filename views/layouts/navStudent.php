@@ -40,7 +40,7 @@ echo Nav::widget([
             'url' => Url::to('')
         ],
         [
-<<<<<<< HEAD
+
             'label'=>'Documentos',
             'items'=>[
                 [
@@ -48,10 +48,6 @@ echo Nav::widget([
                     'url'=>Url::to(['/student/default/print-preregistration-p-d-f'])
                 ]
             ]
-=======
-            'label' => 'Documentos',
-            'url' => Url::to('')
->>>>>>> 2fe3f3e42a1e4c407ed18b218edcaae8da4788fb
         ],
     ]
 ]);
