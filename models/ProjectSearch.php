@@ -10,24 +10,25 @@ use app\models\Project;
 /**
  * ProjectSearch represents the model behind the search form about `app\models\Project`.
  */
-class ProjectSearch extends Project
-{
+class ProjectSearch extends Project {
+
+    public $faculty;
+    public $degree;
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
-            [['name', 'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'approved'], 'safe'],
+            [['name', 'faculty', 'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'approved'], 'safe'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +40,7 @@ class ProjectSearch extends Project
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Project::find();
 
         $dataProvider = new ActiveDataProvider([

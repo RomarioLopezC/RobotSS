@@ -36,7 +36,7 @@ echo Nav::widget([
         [
             'label' => 'Proyectos',
             'items' => [
-                ['label' => 'Busqueda', 'url' => '#'],
+                ['label' => 'Busqueda', 'url' => Url::to(['/project'])],
             ],
         ],
     ]

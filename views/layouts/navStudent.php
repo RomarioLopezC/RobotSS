@@ -25,23 +25,23 @@ echo Nav::widget([
             'label' => 'Cuenta',
             'items' => [
                 ['label' => 'Modificar cuenta',
-                    'url' => Url::to(['/person/update','id'=>Yii::$app->user->id])
+                    'url' => Url::to(['/person/update', 'id' => Yii::$app->user->id])
                 ],
             ],
         ],
         [
             'label' => 'Proyectos',
             'items' => [
-                ['label' => 'Busqueda', 'url' => '#'],
+                ['label' => 'Busqueda', 'url' => Url::to(['/project'])],
             ],
         ],
         [
-            'label'=>'Avances',
-            'url'=>Url::to('')
+            'label' => 'Avances',
+            'url' => Url::to('')
         ],
         [
-            'label'=>'Documentos',
-            'url'=>Url::to('')
+            'label' => 'Documentos',
+            'url' => Url::to('')
         ],
     ]
 ]);

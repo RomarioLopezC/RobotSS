@@ -36,7 +36,7 @@ echo Nav::widget([
                 ['label' => 'Mis proyectos', 'url' =>Url::to(['/project_manager/project'])],
                 //['label' => 'Editar proyecto', 'url' => '#'],
                 //['label' => 'Eliminar proyecto', 'url' => '#'],
-                ['label' => 'Busqueda', 'url' => Url::to(['/admin/social-service-manager/create'])],
+                ['label' => 'Busqueda', 'url' => Url::to(['/project'])],
             ],
         ],
         [
