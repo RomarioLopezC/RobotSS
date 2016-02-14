@@ -14,10 +14,10 @@ return [
     // boolean, whether to sort messages by keys when merging new messages
     // with the existing ones. Defaults to false, which means the new (untranslated)
     // messages will be separated from the old (translated) ones.
-    'sort' => false,
+    'sort' => true,
     // boolean, whether to remove messages that no longer appear in the source code.
     // Defaults to false, which means each of these messages will be enclosed with a pair of '@@' marks.
-    'removeUnused' => false,
+    'removeUnused' => true,
     // array, list of patterns that specify which files (not directories) should be processed.
     // If empty or not set, all files will be processed.
     // Please refer to "except" for details about the patterns.

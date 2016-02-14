@@ -82,6 +82,20 @@ $config = [
                 ],
             ],
             'db' => require(__DIR__ . '/db.php'),
+            'i18n' => [
+                'translations' => [
+                    'user' => [
+                        'class' => 'yii\i18n\PhpMessageSource',
+                        'sourceLanguage' => 'en-US',
+                        'basePath' => '@app/messages'
+                    ],
+                    'yii' => [
+                        'class' => 'yii\i18n\PhpMessageSource',
+                        'sourceLanguage' => 'en-US',
+                        'basePath' => '@app/messages'
+                    ],
+                ],
+            ],
         ],
         'as access' => [
             'class' => 'mdm\admin\components\AccessControl',
