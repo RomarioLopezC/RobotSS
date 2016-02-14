@@ -1,0 +1,70 @@
+<?php
+
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Faculty;
+use app\models\Degree;
+
+/* @var $this yii\web\View */
+/* @var $model app\models\ProjectSearch */
+/* @var $form yii\widgets\ActiveForm */
+?>
+
+<div class="project-search">
+
+    <div class="panel panel-default">
+
+        <div class="panel-heading">
+            <h4>Parámetros de búsqueda</h4>
+        </div>
+
+        <div class="panel-body">
+
+            <?php $form = ActiveForm::begin([
+                'action' => ['index'],
+                'method' => 'get',
+                'fieldConfig' => [
+                    'template' => "{label}\n<div class=\"col-lg-8\">{input}{error}</div>",
+                    'labelOptions' => ['class' => 'col-lg-4 control-label'],
+                ],
+            ]); ?>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <?= $form->field($model, 'name') ?>
+                </div>
+
+                <div class="col-md-6">
+                    <?= $form->field($model, 'id')->label('ID del proyecto') ?>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <?= $form->field($model, 'faculty')->label('Facultad')->dropDownList(
+                        ArrayHelper::map(Faculty::find()->all(), 'id', 'name')
+                    )?>
+                </div>
+
+                <div class="col-md-6">
+                    <?= $form->field($model, 'degree')->label('Licenciatura')->dropDownList(
+                        ArrayHelper::map(Degree::find()->all(), 'id', 'name')
+                    ) ?>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary pull-right']) ?>
+            </div>
+
+            <?php ActiveForm::end(); ?>
+
+        </div>
+    </div>
+
+</div>
