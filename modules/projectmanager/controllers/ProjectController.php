@@ -3,6 +3,7 @@
 namespace app\modules\projectmanager\controllers;
 
 use app\models\Degree;
+use app\models\ProjectManager;
 use Yii;
 use app\models\Project;
 use app\models\ProjectSearch;
@@ -62,6 +63,15 @@ class ProjectController extends Controller {
      */
     public function actionCreate() {
         $model = new Project();
+        $user = User::find()
+            ->where("id=" .Yii::$app->user->id)
+            ->one();
+        $user_id=$user->id;
+        $manager = ProjectManager::find()
+            ->where("user_id=" .$user_id)
+            ->one();
+        $manager_id=$manager->id;
+        $model->manager_id=$manager_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
@@ -95,6 +105,16 @@ class ProjectController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
+        $user = User::find()
+            ->where("id=" .Yii::$app->user->id)
+            ->one();
+        $user_id=$user->id;
+        $manager = ProjectManager::find()
+            ->where("user_id=" .$user_id)
+            ->one();
+        $manager_id=$manager->id;
+        $model->manager_id=$manager_id;
+
         $degreeids = StudentProfile::find()
             ->where("project_id=" . $model->id)
             ->all();
