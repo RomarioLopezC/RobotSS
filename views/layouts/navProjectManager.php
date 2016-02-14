@@ -26,7 +26,7 @@ echo Nav::widget([
             'label' => 'Cuenta',
             'items' => [
                 ['label' => 'Modificar cuenta',
-                    Url::to(['/person/update','id'=>Yii::$app->user->id])
+                    'url' => Url::to(['/person/update','id'=>Yii::$app->user->id])
                 ],
             ],
         ],

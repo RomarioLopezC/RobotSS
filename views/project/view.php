@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?php if(Yii::$app->user->can('student')){
-         echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-primary']);
+         echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success pull-right']);
     } ?>
             </div>
 
