@@ -17,9 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Faculty ID'=>'Facultad',
+    'Current Semester' => 'Semestre actual',
+    'Enrollment ID' => 'Matricula',
+    'Degree ID'=>'Licenciatura',
     'Update'=>'Editar',
     'Update {modelClass}: '=>'Editar {modelClass} de ',
     'Congratulations!' => 'Felicidades!',
     'Delete' => 'Eliminar',
-    '¿Estas seguro que deseas eliminar?' => '',
+    'Update Account'=>'Actualizar Cuenta'
 ];
