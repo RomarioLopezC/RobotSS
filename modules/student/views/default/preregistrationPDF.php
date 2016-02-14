@@ -7,12 +7,9 @@
  */
 use yii\bootstrap\Html;
 use yii\helpers\Url;
-use app\models\Student;
 use app\models\Person;
-use app\models\Degree;
-use app\models\Project;
-
 ?>
+
 <div class="row">
     <div class="col-xs-2">
         <?= Html::img(Url::to(['/images/uady-logo.jpg'])) ?>
@@ -24,72 +21,49 @@ use app\models\Project;
             Institucional de Servicio Social</p>
     </div>
 </div>
-<h3 class="text-center" STYLE="font-weight: bold">CARTA DE PREREGISTRO</h3>
+<h3 class="text-center" style="font-weight: bold; margin: 2em 0">CARTA DE PRE-REGISTRO</h3>
 
-
+<?php
+$formatter = \Yii::$app->formatter;
+?>
+<p class="text-right">
+    <?='Mérida, Yucatán a '.$formatter->asDate(date('Y-m-d'), 'long');?>
+</p>
 <div class="row">
     <h4 class="text-center" style="margin: 2em 0">DATOS DEL PRESTADOR</h4>
     <div class="col-xs-3 col-xs-offset-1">
         <strong>Matricula:</strong><br>
         <strong>Nombre Completo:</strong><br>
-        <strong>Facultad:</strong><br>
-        <strong>Plan de Estudio:</strong>
+        <strong>Carrera:</strong><br>
+        <strong>Correo electronico:</strong>
+        <strong>Teléfono:</strong>
     </div>
     <div class="col-xs-5">
         <?= $student->enrollment_id ?><br>
         <?= $person->name .' '. $person->lastname ?><br>
-        <?= $student->getFaculty()->all()[0]['name'] ?><br>
         <?= $degree->name ?><br>
+        <?= $user->email ?><br>
+        <?= $person->phone ?><br>
     </div>
 </div>
-
 
 <div class="row">
     <h4 class="text-center" style="margin: 2em 0">DATOS DEL PROYECTO</h4>
-    <div class="col-xs-3 col-xs-offset-1">
-        <strong>Nombre:</strong><br>
-        <strong>Periodo de prestación:</strong><br>
-        <strong>Ayuda Económica:</strong><br>
-        <strong>Monto:</strong><br>
-        <strong>Duración (Hrs.):</strong>
-    </div>
-    <div class="col-xs-5">
-        <?= $project->name ?><br>
-        <?= 'Inicia: ' . date('d') . '/' . date('m') . '/' . date('Y') .
-        ' - Finaliza: ' . date('d') . '/0' . ((int)date('m') + 6) . '/' . date('Y') ?> <br>
-        <?= $project->economic_support ?><br>
-        <?= $project->ammount ?><br>
-        <?= '480' ?><br>
-    </div>
-</div>
-
-<div class="row">
-    <h4 class="text-center" style="margin: 2em 0">DATOS DE LA INSTITUCIÓN</h4>
     <div class="col-xs-4 col-xs-offset-1">
-        <strong>Nombre:</strong><br>
-        <strong>Unidad Receptora:</strong><br>
-        <strong>Responsable del Proyecto:</strong><br>
-        <strong>Responsable del Prestador:</strong><br>
+        <strong>Número y Nombre:</strong><br>
+        <strong>Responsable del proyecto:</strong><br>
     </div>
-    <div class="col-xs-4">
-        <?= $projectM->organization ?><br>
-        <?= $project->dependency ?><br>
-        <?= Person::findOne(\app\models\User::findOne($projectM->user_id)->person_id)->name . ' ' .
-        Person::findOne(\app\models\User::findOne($projectM->user_id)->person_id)->lastname ?>
-        <br>
+    <div class="col-xs-5">
+        <?= $project->id .' - '.$project->name ?><br>
         <?= Person::findOne(\app\models\User::findOne($projectM->user_id)->person_id)->name . ' ' .
         Person::findOne(\app\models\User::findOne($projectM->user_id)->person_id)->lastname ?>
         <br>
     </div>
 </div>
 
-<div class="row" style="margin: 9em 0 0 0">
-    <div class="col-xs-5">
+<div class="row" style="margin: 9em 0 7em 0">
+    <div class="col-xs-5 center-block">
         <p class="text-center">Firma y Sello</p>
-        <p class="text-center" style="margin: 1.4em 0">_________________________</p>
-    </div>
-    <div class="col-xs-5">
-        <p class="text-center">Firma</p>
-        <p class="text-center" style="margin: 1.4em 0">_________________________</p>
+        <p class="text-center" style="margin: 1.4em 0">______________________________</p>
     </div>
 </div>

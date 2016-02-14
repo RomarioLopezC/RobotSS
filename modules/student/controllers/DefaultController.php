@@ -169,21 +169,22 @@ class DefaultController extends Controller
     {
         $student = Student::findOne(['user_id' => Yii::$app->user->id]);
         try {
-            $registration = Registration::findOne(['student_id'=>$student->id]);
+            $registration = Registration::findOne(['student_id' => $student->id]);
             $person = Person::findOne(User::findOne(Yii::$app->user->id)->person_id);
             $degree = Degree::findOne($student->degree_id);
 
+            $user = User::findOne(Yii::$app->user->id);
             $project = Project::findOne($registration->project_id);
             $projectM = ProjectManager::findOne(2);
-
-            // get your HTML raw content without any layouts or scripts
             $content = $this->render('preregistrationPDF', [
                 'student' => $student,
                 'person' => $person,
                 'degree' => $degree,
                 'project' => $project,
-                'projectM' => $projectM
+                'projectM' => $projectM,
+                'user'=> $user
             ]);
+
 
             // setup kartik\mpdf\Pdf component
             $pdf = new Pdf([
@@ -203,19 +204,73 @@ class DefaultController extends Controller
                 // any css to be embedded if required
                 'cssInline' => '.kv-heading-1{font-size:18px}',
                 // set mPDF properties on the fly
-                'options' => ['title' => 'Krajee Report Title'],
+                'options' => ['title' => 'Carta de Preregistro'],
                 // call mPDF methods on the fly
-                //'methods' => ['SetHeader'=>['Carta de Preregistro al Servicio Social'],'SetFooter'=>['{PAGENO}'],]
+
             ]);
 
             // return the pdf output as per the destination setting
             return $pdf->render();
         } catch (InvalidConfigException $e) {
-            Yii::$app->getSession()->setFlash('danger','No tienes preregistros realizados');
+            Yii::$app->getSession()->setFlash('danger', 'No tienes preregistros realizados');
             return $this->redirect(Url::home());
         }
+    }
 
+    public function actionPrintProjectAssignmentPDF()
+    {
+        $student = Student::findOne(['user_id' => Yii::$app->user->id]);
+        try {
+            $registration = Registration::findOne(['student_id' => $student->id]);
+            $person = Person::findOne(User::findOne(Yii::$app->user->id)->person_id);
+            $degree = Degree::findOne($student->degree_id);
 
+            $project = Project::findOne($registration->project_id);
+            $projectM = ProjectManager::findOne(2);
+
+            // get your HTML raw content without any layouts or scripts
+            $content = $this->render('projectAssignmentPDF', [
+                'student' => $student,
+                'person' => $person,
+                'degree' => $degree,
+                'project' => $project,
+                'projectM' => $projectM
+            ]);
+
+            $formatter = \Yii::$app->formatter;
+            // setup kartik\mpdf\Pdf component
+            $pdf = new Pdf([
+                // set to use core fonts only
+                'mode' => Pdf::MODE_UTF8,
+                // A4 paper format
+                'format' => Pdf::FORMAT_LETTER,
+                // portrait orientation
+                'orientation' => Pdf::ORIENT_PORTRAIT,
+                // stream to browser inline
+                'destination' => Pdf::DEST_BROWSER,
+                // your html content input
+                'content' => $content,
+                // format content from your own css file if needed or use the
+                // enhanced bootstrap css built by Krajee for mPDF formatting
+                'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+                // any css to be embedded if required
+                'cssInline' => '.kv-heading-1{font-size:18px}',
+                // set mPDF properties on the fly
+                'options' => ['title' => 'Carta de Asignación'],
+                // call mPDF methods on the fly
+                'methods' =>
+                    [
+                        //'SetHeader' => ['Carta de Asignación al Servicio Social'],
+                        'SetFooter' => ['Fecha de expedición: ' . $formatter->asDate(date('Y-m-d'), 'long')],
+                    ]
+            ]);
+
+            // return the pdf output as per the destination setting
+            return $pdf->render();
+        } catch (InvalidConfigException $e) {
+            Yii::$app->getSession()->setFlash('danger', 'No tienes preregistros realizados');
+            return $this->redirect(Url::home());
+        }
     }
 
     /**
