@@ -50,10 +50,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'human_resource',
             'infraestructure',
             'ammount',
-            'approved',
+
         ],
     ]) ?>
 
-    <?= Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+
 
 </div>

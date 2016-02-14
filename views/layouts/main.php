@@ -11,6 +11,7 @@ use app\assets\AppAsset;
 use app\models\Person;
 use app\models\User;
 use yii\helpers\Url;
+use yii\bootstrap\Alert;
 
 AppAsset::register($this);
 ?>
@@ -75,9 +76,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-left">&copy; Universidad Autónoma de Yucatán <?= date('Y') ?></p>
     </div>
 </footer>
 

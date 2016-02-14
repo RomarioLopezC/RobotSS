@@ -82,6 +82,20 @@ $config = [
                 ],
             ],
             'db' => require(__DIR__ . '/db.php'),
+            'i18n' => [
+                'translations' => [
+                    'user' => [
+                        'class' => 'yii\i18n\PhpMessageSource',
+                        'sourceLanguage' => 'en-US',
+                        'basePath' => '@app/messages'
+                    ],
+                    'yii' => [
+                        'class' => 'yii\i18n\PhpMessageSource',
+                        'sourceLanguage' => 'en-US',
+                        'basePath' => '@app/messages'
+                    ],
+                ],
+            ],
         ],
         'as access' => [
             'class' => 'mdm\admin\components\AccessControl',
@@ -96,7 +110,8 @@ $config = [
                 'projects/*',
                 'student/*',
                 'project_manager/*',
-                'person/*'
+                'person/*',
+                'project/*'
                 //'some-controller/some-action',
                 // The actions listed here will be allowed to everyone including guests.
                 // So, 'admin/*' should not appear here in the production, of course.
