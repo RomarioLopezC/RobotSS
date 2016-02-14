@@ -16,6 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
     </div>
 
+    <div class="container-fluid">
+
     <div class="row">
         <div class="col-lg-6">
             <p><b>Nombre del Proyecto: </b> <?= $model->name ?></p>
@@ -60,6 +62,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-12">
             <p><b>Recursos con los que dispondrá el prestador: </b> <?= $model->economic_support ?> </p>
         </div>
+    </div>
+
+
+    <?php if(Yii::$app->user->can('student')){
+         echo Html::button('Pre-registrarse al proyecto', ['class' => 'btn btn-success pull-right']);
+    } ?>
+
     </div>
 
 </div>
