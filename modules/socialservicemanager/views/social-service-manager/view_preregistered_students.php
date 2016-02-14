@@ -1,7 +1,9 @@
 <?php
 
+use yii\bootstrap\Alert;
 use yii\helpers\Html;
 use yii\grid\GridView;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StudentSearch */
@@ -9,6 +11,16 @@ use yii\grid\GridView;
 
 $this->title = 'Asignación de estudiantes';
 $this->params['breadcrumbs'][] = $this->title;
+?>
+<?php
+foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
+    echo Alert::widget([
+        'options' => [
+            'class' => 'alert-' . $key,
+        ],
+        'body' => $message,
+    ]);
+}
 ?>
 <div class="student-index">
 

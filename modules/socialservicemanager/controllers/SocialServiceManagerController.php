@@ -174,9 +174,31 @@ class SocialServiceManagerController extends Controller
     public function actionAssignStudent($id)
     {
         if (($model = Registration::findOne($id)) !== null) {
-            $model->student_status = Registration::ASSIGNED;
-            $model->save();
-            return $this->actionViewPreregisteredStudents();
+            if ($model->student_status != Registration::ASSIGNED) {
+                $model->student_status = Registration::ASSIGNED;
+                $model->save();
+                Yii::$app->mailer->compose()
+                    ->setFrom('from@domain.com')
+                    ->setTo($model->student->user->email)
+                    ->setSubject('Asignación de alumno al proyecto' . ' ' . $model->project->name)
+                    ->setTextBody('Asignación exitosa')
+                    ->setHtmlBody('<b>Asignación exitosa</b>')
+                    ->send();
+
+                Yii::$app->mailer->compose()
+                    ->setFrom('from@domain.com')
+                    ->setTo($model->project->projectManager->user->email)
+                    ->setSubject('Asignación de alumno al proyecto' . ' ' . $model->project->name)
+                    ->setTextBody('Asignación exitosa')
+                    ->setHtmlBody('<b>Asignación exitosa</b>')
+                    ->send();
+
+                Yii::$app->getSession()->setFlash('success', 'Alumno asignado exitosamente.');
+                $this->redirect('view-preregistered-students');
+            } else {
+                Yii::$app->getSession()->setFlash('danger', 'El alumno ya ha sido asignado previamente.');
+                $this->redirect('view-preregistered-students');
+            }
         } else {
             throw new NotFoundHttpException('El estudiante no ha sido encontrado.');
         }
@@ -188,7 +210,7 @@ class SocialServiceManagerController extends Controller
             $model->student_status = Registration::PREREGISTRATION_CANCELLED;
             $model->save();
             Yii::$app->getSession()->setFlash('success', 'Alumno eliminado.');
-            return $this->actionViewPreregisteredStudents();
+            $this->redirect('view-preregistered-students');
         } else {
             throw new NotFoundHttpException('El estudiante no ha sido encontrado.');
         }

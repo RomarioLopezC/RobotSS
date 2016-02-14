@@ -71,4 +71,12 @@ class Project extends \yii\db\ActiveRecord
             'vacancy' => 'Cupo disponible',
         ];
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProjectManager()
+    {
+        return $this->hasOne(ProjectManager::className(), ['id' => 'manager_id']);
+    }
 }
