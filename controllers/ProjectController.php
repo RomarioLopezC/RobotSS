@@ -100,10 +100,15 @@ class ProjectController extends Controller {
 
                 //$vacancy->vacancy=$vacancy->vacancy-1;
                 Yii::$app->db->createCommand()->update('project_vacancy', ['vacancy' =>$vacancy->vacancy-1],'project_id='.$id)->execute();
+                if(Registration::find()->where(['student_id' => $student_id])->one()) {
+                    Yii::$app->getSession()->setFlash('danger', 'Ya te has pre-registrado a un proyecto');
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }else{
+                    Yii::$app->getSession()->setFlash('success', 'Te has pre-registrado al proyecto');
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
 
 
-                Yii::$app->getSession()->setFlash('success', 'Te has pre-registrado al proyecto');
-                return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 Yii::$app->getSession()->setFlash('danger', 'No hay cupo para este proyecto. Escoge otro.');
                 return $this->redirect(['view', 'id' => $model->id]);

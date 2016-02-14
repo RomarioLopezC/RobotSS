@@ -3,6 +3,10 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\bootstrap\Alert;
+use app\models\Registration;
+use app\models\ProjectVacancy;
+use app\models\Student;
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Project */
@@ -10,6 +14,7 @@ use yii\bootstrap\Alert;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Búsqueda de Proyectos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="container-fluid">
 
@@ -76,8 +81,30 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?php if(Yii::$app->user->can('student')){
-         echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success pull-right']);
-    } ?>
+        $vacancy = ProjectVacancy::find()
+            ->where("project_id=" .$model->id)
+            ->one();
+        //$vacancyValue=ArrayHelper::getColumn($vacancy, 'vacancy')[0];
+        $vacancyValue=$vacancy->vacancy;
+        if($vacancyValue>0) {
+            $user = User::find()
+                ->where("id=" .Yii::$app->user->id)
+                ->one();
+            $user_id=$user->id;
+            $student = Student::find()
+                ->where("user_id=" .$user_id)
+                ->one();
+            $student_id=$student->id;
+            if(Registration::find()->where(['student_id' => $student_id])->one()) {
+                echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success pull-right', 'disabled' => 'disabled']);
+            }else{
+                echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success pull-right']);
+            }
+
+            }else{
+            echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success pull-right', 'disabled' => 'disabled']);
+        }
+        } ?>
             </div>
 
 </div>
