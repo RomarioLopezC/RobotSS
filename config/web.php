@@ -26,10 +26,7 @@ $config = [
         ],
         'student' => [
             'class' => 'app\modules\student\Student',
-        ],
-        'projects' => [
-            'class' => 'app\modules\projects\Projects',
-        ],
+        ]
     ],
         'components' => [
             'view' => [
@@ -98,8 +95,9 @@ $config = [
                 'gii/*',
                 'projects/*',
                 'student/*',
-                'projectmanager/*',
-                'person/*'
+                'project_manager/*',
+                'person/*',
+                'project/*'
                 //'some-controller/some-action',
                 // The actions listed here will be allowed to everyone including guests.
                 // So, 'admin/*' should not appear here in the production, of course.

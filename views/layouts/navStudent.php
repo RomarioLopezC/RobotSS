@@ -25,21 +25,22 @@ echo Nav::widget([
             'label' => 'Cuenta',
             'items' => [
                 ['label' => 'Modificar cuenta',
-                    'url' => Url::to(['/person/update','id'=>Yii::$app->user->id])
+                    'url' => Url::to(['/person/update', 'id' => Yii::$app->user->id])
                 ],
             ],
         ],
         [
             'label' => 'Proyectos',
             'items' => [
-                ['label' => 'Busqueda', 'url' => '#'],
+                ['label' => 'Busqueda', 'url' => Url::to(['/project'])],
             ],
         ],
         [
-            'label'=>'Avances',
-            'url'=>Url::to('')
+            'label' => 'Avances',
+            'url' => Url::to('')
         ],
         [
+<<<<<<< HEAD
             'label'=>'Documentos',
             'items'=>[
                 [
@@ -47,6 +48,10 @@ echo Nav::widget([
                     'url'=>Url::to(['/student/default/print-preregistration-p-d-f'])
                 ]
             ]
+=======
+            'label' => 'Documentos',
+            'url' => Url::to('')
+>>>>>>> 2fe3f3e42a1e4c407ed18b218edcaae8da4788fb
         ],
     ]
 ]);
