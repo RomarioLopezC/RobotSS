@@ -41,7 +41,12 @@ echo Nav::widget([
         ],
         [
             'label'=>'Documentos',
-            'url'=>Url::to('')
+            'items'=>[
+                [
+                    'label'=>'Preregistro',
+                    'url'=>Url::to(['/student/default/print-preregistration-p-d-f'])
+                ]
+            ]
         ],
     ]
 ]);
