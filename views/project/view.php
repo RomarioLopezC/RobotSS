@@ -105,6 +105,8 @@ $this->params['breadcrumbs'][] = $this->title;
             echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success pull-right', 'disabled' => 'disabled']);
         }
         } ?>
+
+
             </div>
 
 </div>
