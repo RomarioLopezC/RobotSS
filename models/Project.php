@@ -40,8 +40,8 @@ class Project extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'manager_id'], 'required'],
-            [['manager_id'], 'integer'],
+            [['name', 'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'manager_id','vacancy','degrees'], 'required'],
+            [['manager_id','vacancy','ammount'], 'integer'],
             [['name', 'dependency'], 'string', 'max' => 200],
             [['objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'approved'], 'string', 'max' => 500]
         ];

@@ -88,7 +88,7 @@ class ProjectController extends Controller {
                 $newProfile->degree_id = $value;
                 $newProfile->save();
             }
-            Yii::$app->getSession()->setFlash('success', 'Proyecto creado con éxito');
+            Yii::$app->getSession()->setFlash('success', 'El proyecto se ha creado exitosamente');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -151,7 +151,7 @@ class ProjectController extends Controller {
                 $newProfile->degree_id = $value;
                 $newProfile->save();
             }
-            Yii::$app->getSession()->setFlash('success', 'Proyecto actualizado con éxito');
+            Yii::$app->getSession()->setFlash('success', 'Los cambios se han guardado exitosamente');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
