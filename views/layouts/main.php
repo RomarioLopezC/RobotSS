@@ -11,6 +11,7 @@ use app\assets\AppAsset;
 use app\models\Person;
 use app\models\User;
 use yii\helpers\Url;
+use yii\bootstrap\Alert;
 
 AppAsset::register($this);
 ?>
@@ -69,15 +70,23 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+        <?php
+        foreach(Yii::$app->getSession()->getAllFlashes() as $key => $message) {
+            echo Alert::widget([
+                'options' => [
+                    'class' => 'alert-'.$key,
+                ],
+                'body' => $message,
+            ]);
+        }
+        ?>
         <?= $content ?>
     </div>
 </div>
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-left">&copy; Universidad Autónoma de Yucatán <?= date('Y') ?></p>
     </div>
 </footer>
 

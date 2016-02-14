@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Faculty;
 use yii\helpers\Url;
-
+use app\models\Degree;
 /* @var $this yii\web\View */
 /* @var $model app\models\Person */
 /* @var $form yii\widgets\ActiveForm */
@@ -47,8 +47,11 @@ use yii\helpers\Url;
                         );
 
                     } else if (Yii::$app->user->can('student')) {
-                        $form->field($rol, 'faculty_id')->dropDownList(
+                        echo $form->field($rol, 'faculty_id')->dropDownList(
                             ArrayHelper::map(Faculty::find()->all(), 'id', 'name')
+                        );
+                        echo $form->field($rol, 'degree_id')->dropDownList(
+                            ArrayHelper::map(Degree::find()->all(), 'id', 'name')
                         );
                         echo $form->field($rol, 'current_semester')->textInput();
                         echo $form->field($rol, 'enrollment_id')->textInput();
