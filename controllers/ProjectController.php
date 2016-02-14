@@ -90,28 +90,33 @@ class ProjectController extends Controller {
         if($existe=StudentProfile::find()->where(['project_id' => $id, 'degree_id' => $student->degree_id])->one()) {
 
 
-            if ($vacancyValue > 0) {
+            if (Registration::find()->where(['student_id' => $student_id])->one()) {
+                Yii::$app->getSession()->setFlash('danger', 'Ya te has pre-registrado a un proyecto');
+                return $this->redirect(['view', 'id' => $model->id]);
 
-                $newRegistration = new Registration();
-                $newRegistration->project_id = $id;
-                $newRegistration->student_id = $student_id;
-                $newRegistration->student_status = "preregistered";
-                $newRegistration->save();
 
-                //$vacancy->vacancy=$vacancy->vacancy-1;
-                Yii::$app->db->createCommand()->update('project_vacancy', ['vacancy' =>$vacancy->vacancy-1],'project_id='.$id)->execute();
-                if(Registration::find()->where(['student_id' => $student_id])->one()) {
-                    Yii::$app->getSession()->setFlash('danger', 'Ya te has pre-registrado a un proyecto');
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }else{
-                    Yii::$app->getSession()->setFlash('success', 'Te has pre-registrado al proyecto');
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
+
 
 
             } else {
-                Yii::$app->getSession()->setFlash('danger', 'No hay cupo para este proyecto. Escoge otro.');
-                return $this->redirect(['view', 'id' => $model->id]);
+                if( $vacancyValue > 0) {
+
+                    $newRegistration = new Registration();
+                    $newRegistration->project_id = $id;
+                    $newRegistration->student_id = $student_id;
+                    $newRegistration->student_status = "preregistered";
+                    $newRegistration->save();
+
+                    //$vacancy->vacancy=$vacancy->vacancy-1;
+                    Yii::$app->db->createCommand()->update('project_vacancy', ['vacancy' =>$vacancy->vacancy-1],'project_id='.$id)->execute();
+                    Yii::$app->getSession()->setFlash('success', 'Te has pre-registrado al proyecto');
+                    return $this->redirect(['view', 'id' => $model->id]);
+
+                }else{
+
+                    Yii::$app->getSession()->setFlash('danger', 'No hay cupo para este proyecto. Escoge otro.');
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         }else{
             Yii::$app->getSession()->setFlash('danger', 'No cuentas con el perfil solicitado');
