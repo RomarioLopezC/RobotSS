@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\bootstrap\Alert;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Project */
@@ -15,7 +16,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="well well-sm">
         <h1><?= Html::encode($this->title) ?></h1>
     </div>
-
+    <?php
+    foreach(Yii::$app->getSession()->getAllFlashes() as $key => $message) {
+        echo Alert::widget([
+            'options' => [
+                'class' => 'alert-'.$key,
+            ],
+            'body' => $message,
+        ]);
+    }
+    ?>
     <div class="container-fluid">
 
     <div class="row">
@@ -66,9 +76,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?php if(Yii::$app->user->can('student')){
-         echo Html::button('Pre-registrarse al proyecto', ['class' => 'btn btn-success pull-right']);
+         echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-primary']);
     } ?>
-
-    </div>
+            </div>
 
 </div>
