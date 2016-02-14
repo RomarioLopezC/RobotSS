@@ -12,6 +12,9 @@ use dektrium\user\models\User;
 use Yii;
 use app\models\SocialServiceManager;
 use app\models\SocialServiceManagerSearch;
+use app\models\Registration;
+use app\models\Student;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -81,7 +84,7 @@ class SocialServiceManagerController extends Controller
             $user->password = $model->password;
             $user->email = $model->email;
             $user->person_id = $person->id;
-            $user->scenario='register';
+            $user->scenario = 'register';
             if ($user->validate(['username', 'password'])) {
                 $user->register();
                 $model->user_id = $user->id;
@@ -89,11 +92,11 @@ class SocialServiceManagerController extends Controller
                 //assign the role to the user
                 $authManager = Yii::$app->getAuthManager();
                 $socialServiceMRole = $authManager->getRole('socialServiceManager');
-                $authManager->assign($socialServiceMRole,$user->id);
+                $authManager->assign($socialServiceMRole, $user->id);
                 //set the success message
-                Yii::$app->getSession()->setFlash('success','Usuario creado con éxito');
+                Yii::$app->getSession()->setFlash('success', 'Usuario creado con éxito');
                 return $this->redirect(['view', 'id' => $model->id]);
-            }else{
+            } else {
                 $model->addErrors($user->errors);
             }
         }
@@ -111,7 +114,7 @@ class SocialServiceManagerController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = SocialServiceManager::findOne(['user_id'=>$id]);
+        $model = SocialServiceManager::findOne(['user_id' => $id]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -131,8 +134,8 @@ class SocialServiceManagerController extends Controller
     public function actionDelete($user_id)
     {
         //$this->findModel($user_id)->delete();
-        Yii::$app->db->createCommand()->delete('social_service_manager', 'user_id ='.$user_id.'')->execute();
-        Yii::$app->db->createCommand()->delete('user', 'id ='.$user_id.'')->execute();
+        Yii::$app->db->createCommand()->delete('social_service_manager', 'user_id =' . $user_id . '')->execute();
+        Yii::$app->db->createCommand()->delete('user', 'id =' . $user_id . '')->execute();
         echo Alert::widget([
 
             'body' => 'El usuario se eliminó exitosamente!'
@@ -155,6 +158,39 @@ class SocialServiceManagerController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionViewPreregisteredStudents()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Registration::find()->where(['student_status' => Registration::UNASSIGNED]),
+        ]);
+        return $this->render('view_preregistered_students', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionAssignStudent($id)
+    {
+        if (($model = Registration::findOne($id)) !== null) {
+            $model->student_status = Registration::ASSIGNED;
+            $model->save();
+            return $this->actionViewPreregisteredStudents();
+        } else {
+            throw new NotFoundHttpException('El estudiante no ha sido encontrado.');
+        }
+    }
+
+    public function actionCancelPreregistration($id)
+    {
+        if (($model = Registration::findOne($id)) !== null) {
+            $model->student_status = Registration::PREREGISTRATION_CANCELLED;
+            $model->save();
+            Yii::$app->getSession()->setFlash('success', 'Alumno eliminado.');
+            return $this->actionViewPreregisteredStudents();
+        } else {
+            throw new NotFoundHttpException('El estudiante no ha sido encontrado.');
         }
     }
 }

@@ -7,6 +7,7 @@
  */
 use yii\bootstrap\Nav;
 use yii\helpers\Url;
+
 /*
 •	Cuenta
     o	Modificar cuenta
@@ -23,14 +24,15 @@ echo Nav::widget([
             'label' => 'Cuenta',
             'items' => [
                 ['label' => 'Modificar cuenta',
-                    'url' => Url::to(['/person/update','id'=>Yii::$app->user->id])
+                    'url' => Url::to(['/person/update', 'id' => Yii::$app->user->id])
                 ],
             ],
         ],
         [
             'label' => 'Alumnos',
             'items' => [
-                ['label' => 'Asignación de alumnos', 'url' => '#'],
+                ['label' => 'Asignación de alumnos',
+                    'url' => Url::to(['/social_service_manager/social-service-manager/view-preregistered-students'])],
             ],
         ],
         [
