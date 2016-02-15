@@ -21,7 +21,7 @@ use app\models\Person;
             Institucional de Servicio Social</p>
     </div>
 </div>
-<h3 class="text-center" style="font-weight: bold; margin: 2em 0">CARTA DE PRE-REGISTRO</h3>
+<h3 class="text-center" style="font-weight: bold; margin: 2em 0">HOJA DE PRE-REGISTRO</h3>
 
 <?php
 $formatter = \Yii::$app->formatter;
