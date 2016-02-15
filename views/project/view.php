@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <div class="row">
                         <div class="col-lg-4">
-                            <p><b>Dependencia Solicitante: </b> </p>
+                            <p><b>Dependencia Solicitante: </b></p>
                         </div>
 
                         <div class="col-lg-6">
@@ -68,26 +68,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <p><b>Prefiles Solicitados: </b>  </p>
-
-
+                            <p><b>Prefiles Solicitados: </b></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-12">
                             <table class="table table-striped">
-
                                 <tbody>
-                                    <tr>
-                                        <td>hola</td>
-                                    </tr>
-                                    <tr>
-                                        <td>hola</td>
-                                    </tr>
-                                    <tr>
-                                        <td>hola</td>
-                                    </tr>
+                                <?php
+                                foreach ($model->degrees as $degree) {
+                                    echo '<tr>
+                                                  <td>' . $degree->name . '</td>
+                                              </tr>';
+                                }
+                                ?>
                                 </tbody>
                             </table>
                         </div>
@@ -161,13 +156,55 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <p><b>Recursos con los que dispondrá el prestador: </b> </p>
+                            <p><b>Recursos materiales: </b></p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p><?= $model->materials_for_students ?> </p>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p><b>Recursos económicos: </b></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-12">
                             <p><?= $model->economic_support ?> </p>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p><b>Recursos humanos: </b></p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p><?= $model->human_resource ?> </p>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p><b>Infraestructura: </b></p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p><?= $model->infraestructure ?> </p>
                         </div>
                     </div>
 
@@ -186,32 +223,34 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
 
-                    <?php if (Yii::$app->user->can('student')) {
-                        $vacancy = ProjectVacancy::find()
-                            ->where("project_id=" . $model->id)
-                            ->one();
-                        //$vacancyValue=ArrayHelper::getColumn($vacancy, 'vacancy')[0];
-                        $vacancyValue = $vacancy->vacancy;
-                        if ($vacancyValue > 0) {
-                            $user = User::find()
-                                ->where("id=" . Yii::$app->user->id)
-                                ->one();
-                            $user_id = $user->id;
-                            $student = Student::find()
-                                ->where("user_id=" . $user_id)
-                                ->one();
-                            $student_id = $student->id;
-                            if (Registration::find()->where(['student_id' => $student_id])->one()) {
-                                echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success pull-right', 'disabled' => 'disabled']);
-                            } else {
-                                echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success pull-right']);
-                            }
 
-                        } else {
-                            echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success pull-right', 'disabled' => 'disabled']);
-                        }
-                    } ?>
+            <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-danger']) ?>
 
+            <?php if (Yii::$app->user->can('student')) {
+                $vacancy = ProjectVacancy::find()
+                    ->where("project_id=" . $model->id)
+                    ->one();
+                //$vacancyValue=ArrayHelper::getColumn($vacancy, 'vacancy')[0];
+                $vacancyValue = $vacancy->vacancy;
+                if ($vacancyValue > 0) {
+                    $user = User::find()
+                        ->where("id=" . Yii::$app->user->id)
+                        ->one();
+                    $user_id = $user->id;
+                    $student = Student::find()
+                        ->where("user_id=" . $user_id)
+                        ->one();
+                    $student_id = $student->id;
+                    if (Registration::find()->where(['student_id' => $student_id])->one()) {
+                        echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success pull-right', 'disabled' => 'disabled']);
+                    } else {
+                        echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success pull-right']);
+                    }
+
+                } else {
+                    echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success pull-right', 'disabled' => 'disabled']);
+                }
+            } ?>
 
 
         </div>

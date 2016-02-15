@@ -22,26 +22,23 @@ use Yii;
  * @property string $approved
  * @property integer $manager_id
  */
-class Project extends \yii\db\ActiveRecord
-{
-    public $degrees;
+class Project extends \yii\db\ActiveRecord {
     public $vacancy;
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'project';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['name', 'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'manager_id','vacancy','degrees'], 'required'],
-            [['manager_id','vacancy','ammount'], 'integer'],
+            [['name', 'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'manager_id', 'vacancy', 'degrees'], 'required'],
+            [['manager_id', 'vacancy', 'ammount'], 'integer'],
             [['name', 'dependency'], 'string', 'max' => 200],
             [['objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'approved'], 'string', 'max' => 500]
         ];
@@ -50,8 +47,7 @@ class Project extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'name' => 'Nombre del proyecto',
@@ -70,5 +66,10 @@ class Project extends \yii\db\ActiveRecord
             'degrees' => 'Perfiles solicitados',
             'vacancy' => 'Cupo disponible',
         ];
+    }
+
+    public function getDegrees() {
+        return $this->hasMany(Degree::className(), ['id' => 'degree_id'])
+            ->viaTable('student_profile', ['project_id' => 'id']);
     }
 }
