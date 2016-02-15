@@ -168,6 +168,7 @@ class DefaultController extends Controller
     public function actionPrintPreregistrationPDF()
     {
         $student = Student::findOne(['user_id' => Yii::$app->user->id]);
+        date_default_timezone_set("America/Mexico_City");
         try {
             $registration = Registration::findOne(['student_id' => $student->id]);
             $person = Person::findOne(User::findOne(Yii::$app->user->id)->person_id);
@@ -220,6 +221,7 @@ class DefaultController extends Controller
     public function actionPrintProjectAssignmentPDF()
     {
         $student = Student::findOne(['user_id' => Yii::$app->user->id]);
+        date_default_timezone_set("America/Mexico_City");
         try {
             $registration = Registration::findOne(['student_id' => $student->id]);
             $person = Person::findOne(User::findOne(Yii::$app->user->id)->person_id);
