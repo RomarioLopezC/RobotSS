@@ -80,4 +80,12 @@ class Project extends \yii\db\ActiveRecord {
     {
         return $this->hasOne(ProjectManager::className(), ['id' => 'manager_id']);
     }
+
+    public function getStudentProfiles() {
+        $profiles = '| ';
+        foreach($this->degrees as $degree){
+            $profiles .= $degree->name ." | ";
+        }
+        return $profiles;
+    }
 }
