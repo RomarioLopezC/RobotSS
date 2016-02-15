@@ -223,34 +223,36 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
 
+            <div class="pull-right">
+                <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-danger']) ?>
 
-            <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-danger']) ?>
+                <?php if (Yii::$app->user->can('student')) {
+                    $vacancy = ProjectVacancy::find()
+                        ->where("project_id=" . $model->id)
+                        ->one();
+                    //$vacancyValue=ArrayHelper::getColumn($vacancy, 'vacancy')[0];
+                    $vacancyValue = $vacancy->vacancy;
+                    if ($vacancyValue > 0) {
+                        $user = User::find()
+                            ->where("id=" . Yii::$app->user->id)
+                            ->one();
+                        $user_id = $user->id;
+                        $student = Student::find()
+                            ->where("user_id=" . $user_id)
+                            ->one();
+                        $student_id = $student->id;
+                        if (Registration::find()->where(['student_id' => $student_id])->one()) {
+                            echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success', 'disabled' => 'disabled']);
+                        } else {
+                            echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success']);
+                        }
 
-            <?php if (Yii::$app->user->can('student')) {
-                $vacancy = ProjectVacancy::find()
-                    ->where("project_id=" . $model->id)
-                    ->one();
-                //$vacancyValue=ArrayHelper::getColumn($vacancy, 'vacancy')[0];
-                $vacancyValue = $vacancy->vacancy;
-                if ($vacancyValue > 0) {
-                    $user = User::find()
-                        ->where("id=" . Yii::$app->user->id)
-                        ->one();
-                    $user_id = $user->id;
-                    $student = Student::find()
-                        ->where("user_id=" . $user_id)
-                        ->one();
-                    $student_id = $student->id;
-                    if (Registration::find()->where(['student_id' => $student_id])->one()) {
-                        echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success pull-right', 'disabled' => 'disabled']);
                     } else {
-                        echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success pull-right']);
+                        echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success', 'disabled' => 'disabled']);
                     }
+                } ?>
 
-                } else {
-                    echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success pull-right', 'disabled' => 'disabled']);
-                }
-            } ?>
+            </div>
 
 
         </div>
