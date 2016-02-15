@@ -168,7 +168,7 @@ class ProjectController extends Controller {
      */
     public function actionDelete($id) {
         $this->findModel($id)->delete();
-
+        Yii::$app->getSession()->setFlash('success', 'El proyecto se ha eliminado exitosamente.');
         return $this->redirect(['index']);
     }
 

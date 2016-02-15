@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap\Alert;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -9,6 +10,16 @@ use yii\grid\GridView;
 
 $this->title = 'Mis proyectos';
 $this->params['breadcrumbs'][] = $this->title;
+?>
+<?php
+foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
+    echo Alert::widget([
+        'options' => [
+            'class' => 'alert-' . $key,
+        ],
+        'body' => $message,
+    ]);
+}
 ?>
 <div class="project-index">
 
@@ -30,16 +41,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'dependency',
             'objective',
             'goals',
-            // 'actions_by_students',
-            // 'induction',
-            // 'materials_for_students',
-            // 'economic_support',
-            // 'human_resource',
-            // 'infraestructure',
-            // 'ammount',
-            // 'approved',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete}',
+                'buttons' => [
+                    'delete' => function($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'id' => $model['id']] , [
+                            'title' => Yii::t('app', 'Delete'), 'data-confirm' => Yii::t('app', '¿Estas seguro que deseas eliminar el proyecto?'),'data-method' => 'post']);
+                    }
+                ],
+            ],
         ],
     ]); ?>
 
