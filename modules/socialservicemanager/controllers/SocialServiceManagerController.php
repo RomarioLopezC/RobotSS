@@ -8,6 +8,7 @@
 namespace app\modules\socialservicemanager\controllers;
 
 use app\models\Person;
+use app\models\ProjectVacancy;
 use dektrium\user\models\User;
 use Yii;
 use app\models\SocialServiceManager;
@@ -175,8 +176,16 @@ class SocialServiceManagerController extends Controller
     {
         if (($model = Registration::findOne($id)) !== null) {
             if ($model->student_status != Registration::ASSIGNED) {
+                //Se registra como asignado
                 $model->student_status = Registration::ASSIGNED;
                 $model->save();
+
+                //Se resta un vacante del proyecto
+                $projectVacancy = ProjectVacancy::find()->where(['project_id' => $model->project->id])->one();
+                $projectVacancy->vacancy = $projectVacancy->vacancy - 1;
+                $projectVacancy->update();
+
+                //Se envia el correo al estudiante
                 Yii::$app->mailer->compose()
                     ->setFrom('from@domain.com')
                     ->setTo($model->student->user->email)
@@ -185,6 +194,7 @@ class SocialServiceManagerController extends Controller
                     ->setHtmlBody('<b>Asignación exitosa</b>')
                     ->send();
 
+                //Se envia el correo al project manager
                 Yii::$app->mailer->compose()
                     ->setFrom('from@domain.com')
                     ->setTo($model->project->projectManager->user->email)
@@ -209,6 +219,16 @@ class SocialServiceManagerController extends Controller
         if (($model = Registration::findOne($id)) !== null) {
             $model->student_status = Registration::PREREGISTRATION_CANCELLED;
             $model->save();
+
+            //Se envia el correo al estudiante
+            Yii::$app->mailer->compose()
+                ->setFrom('from@domain.com')
+                ->setTo($model->student->user->email)
+                ->setSubject('Asignación de alumno al proyecto' . ' ' . $model->project->name)
+                ->setTextBody('Su registro al proyecto ha sido rechazado.')
+                ->setHtmlBody('<b>Asignación exitosa</b>')
+                ->send();
+
             Yii::$app->getSession()->setFlash('success', 'Alumno eliminado.');
             $this->redirect('view-preregistered-students');
         } else {

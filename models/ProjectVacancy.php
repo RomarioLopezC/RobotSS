@@ -41,4 +41,9 @@ class ProjectVacancy extends \yii\db\ActiveRecord
             'vacancy' => 'Vacancy',
         ];
     }
+
+    public function getPrimaryKey($asArray = false)
+    {
+        return 'project_id';
+    }
 }
