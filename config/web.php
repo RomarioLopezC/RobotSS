@@ -29,6 +29,12 @@ $config = [
         ]
     ],
         'components' => [
+            'formatter' => [
+                'dateFormat' => 'dd.MM.yyyy',
+                'decimalSeparator' => ',',
+                'thousandSeparator' => ' ',
+                'currencyCode' => '$',
+            ],
             'view' => [
                 'theme' => [
                     'pathMap' => [
