@@ -10,12 +10,18 @@ use Yii;
  * @property integer $project_id
  * @property integer $student_id
  * @property string $student_status
+ * @property string $beginning_date
+ * @property string $ending_date
+ *
+ * @property Project $project
+ * @property Student $student
  */
 class Registration extends \yii\db\ActiveRecord
 {
     const ASSIGNED = 'assigned';
     const UNASSIGNED = 'preregistered';
     const PREREGISTRATION_CANCELLED = 'cancelled';
+
     /**
      * @inheritdoc
      */
@@ -51,7 +57,7 @@ class Registration extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveRelation
+     * @return \yii\db\ActiveQuery
      */
     public function getProject()
     {
@@ -59,7 +65,7 @@ class Registration extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveRelation
+     * @return \yii\db\ActiveQuery
      */
     public function getStudent()
     {
@@ -75,5 +81,4 @@ class Registration extends \yii\db\ActiveRecord
     {
         return $this->project->name;
     }
-
 }

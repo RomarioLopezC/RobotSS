@@ -7,6 +7,8 @@
  */
 use yii\bootstrap\Nav;
 use yii\helpers\Url;
+use app\models\Student;
+use app\models\Registration;
 
 /*
  *
@@ -18,6 +20,20 @@ use yii\helpers\Url;
 •	Documentos
 
  */
+
+$student = Student::findOne(['user_id' => Yii::$app->user->id]);
+$registration = Registration::findOne(['student_id' => $student->id]);
+
+$item = "";
+if(isset($registration)){
+    $item = $registration->beginning_date == null ? '<li data-toggle="modal" data-target="#modalChooseDate"><a>Imprimir hoja de asignación</a></li>' :
+        [
+            'label' => 'Imprimir hoja de asignación',
+            'url' => Url::to(['/student/default/print-project-assignment-p-d-f'])
+        ];
+}
+
+
 echo Nav::widget([
     'options' => ['class' => 'navbar-nav navbar-left'],
     'items' => [
@@ -41,16 +57,13 @@ echo Nav::widget([
         ],
         [
 
-            'label'=>'Documentos',
-            'items'=>[
+            'label' => 'Documentos',
+            'items' => [
                 [
-                    'label'=>'Imprimir hoja de preinscripción',
-                    'url'=>Url::to(['/student/default/print-preregistration-p-d-f'])
+                    'label' => 'Imprimir hoja de preinscripción',
+                    'url' => Url::to(['/student/default/print-preregistration-p-d-f'])
                 ],
-                [
-                    'label'=>'Imprimir carta de asignación.',
-                    'url'=>Url::to(['/student/default/print-project-assignment-p-d-f'])
-                ]
+                $item
             ]
         ],
     ]

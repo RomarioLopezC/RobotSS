@@ -8,8 +8,10 @@ use Yii;
 use app\models\Student;
 use app\models\StudentSearch;
 use yii\base\ErrorException;
+use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\helpers\Url;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -176,14 +178,14 @@ class DefaultController extends Controller
 
             $user = User::findOne(Yii::$app->user->id);
             $project = Project::findOne($registration->project_id);
-            $projectM = ProjectManager::findOne(2);
+            $projectM = ProjectManager::findOne($project->manager_id);
             $content = $this->render('preregistrationPDF', [
                 'student' => $student,
                 'person' => $person,
                 'degree' => $degree,
                 'project' => $project,
                 'projectM' => $projectM,
-                'user'=> $user
+                'user' => $user
             ]);
 
 
@@ -228,10 +230,11 @@ class DefaultController extends Controller
             $degree = Degree::findOne($student->degree_id);
 
             $project = Project::findOne($registration->project_id);
-            $projectM = ProjectManager::findOne(2);
+            $projectM = ProjectManager::findOne($project->manager_id);
 
             // get your HTML raw content without any layouts or scripts
             $content = $this->render('projectAssignmentPDF', [
+                'registration' => $registration,
                 'student' => $student,
                 'person' => $person,
                 'degree' => $degree,
@@ -270,8 +273,31 @@ class DefaultController extends Controller
             // return the pdf output as per the destination setting
             return $pdf->render();
         } catch (InvalidConfigException $e) {
-            Yii::$app->getSession()->setFlash('danger', 'No tienes preregistros realizados');
+            Yii::$app->getSession()->setFlash('danger', 'No tienes proyectos asignados');
             return $this->redirect(Url::home());
+        }
+    }
+
+    public function actionSetBeginningAndEndingDates()
+    {
+        $beginningDate = new \DateTime(Yii::$app->request->post('Registration')['beginning_date']);
+        $endingDate = new \DateTime(Yii::$app->request->post('Registration')['ending_date']);
+        $interval = $beginningDate->diff($endingDate);
+        $daysBetweenDates = $interval->format('%a');
+        if ($daysBetweenDates > 180) {
+            try {
+                $student = Student::findOne(['user_id' => Yii::$app->user->id]);
+                $registration = Registration::findOne(['student_id' => $student->id]);
+                $registration->beginning_date = Yii::$app->request->post('Registration')['beginning_date'];
+                $registration->ending_date = Yii::$app->request->post('Registration')['ending_date'];
+                $registration->save(false);
+                $this->actionPrintProjectAssignmentPDF();
+            } catch (InvalidConfigException $e) {
+                throw new BadRequestHttpException('No se tiene asignado ningun proyecto');
+            }
+        } else {
+            throw new BadRequestHttpException('Las fechas ingresadas no son validas,
+            deben tener una diferencia de al menos 6 meses');
         }
     }
 

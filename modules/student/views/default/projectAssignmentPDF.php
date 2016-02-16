@@ -54,8 +54,8 @@ use app\models\Project;
     </div>
     <div class="col-xs-5">
         <?= $project->name ?><br>
-        <?= 'Inicia: ' . date('d') . '/' . date('m') . '/' . date('Y') .
-        ' - Finaliza: ' . date('d') . '/0' . ((int)date('m') + 6) . '/' . date('Y') ?> <br>
+        <?= 'Inicia: ' . $registration->beginning_date .
+        ' - Finaliza: ' . $registration->ending_date ?> <br>
         <?= $project->economic_support ?><br>
         <?= $project->ammount ?><br>
         <?= '480' ?><br>

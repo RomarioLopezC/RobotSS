@@ -70,6 +70,7 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+        <?= $this->render('modalChooseDate')?>
         <?= $content ?>
     </div>
 </div>
