@@ -31,7 +31,7 @@ foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
     <?php if ($dataProvider->totalCount == 0): ?>
         <div class="alert-danger alert">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            No existen alumnos Pre-registrador a proyectos
+            No existen alumnos Pre-registrados a proyectos.
         </div>
     <?php else: ?>
         <?= GridView::widget([
