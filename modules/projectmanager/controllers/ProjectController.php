@@ -16,11 +16,14 @@ use app\models\ProjectVacancy;
 use app\models\User;
 use app\models\Registration;
 use app\models\Student;
+
 /**
  * ProjectController implements the CRUD actions for Project model.
  */
-class ProjectController extends Controller {
-    public function behaviors() {
+class ProjectController extends Controller
+{
+    public function behaviors()
+    {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -35,7 +38,8 @@ class ProjectController extends Controller {
      * Lists all Project models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $searchModel = new ProjectSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -50,7 +54,8 @@ class ProjectController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -61,17 +66,18 @@ class ProjectController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new Project();
         $user = User::find()
-            ->where("id=" .Yii::$app->user->id)
+            ->where("id=" . Yii::$app->user->id)
             ->one();
-        $user_id=$user->id;
+        $user_id = $user->id;
         $manager = ProjectManager::find()
-            ->where("user_id=" .$user_id)
+            ->where("user_id=" . $user_id)
             ->one();
-        $manager_id=$manager->id;
-        $model->manager_id=$manager_id;
+        $manager_id = $manager->id;
+        $model->manager_id = $manager_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
@@ -103,17 +109,18 @@ class ProjectController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->findModel($id);
         $user = User::find()
-            ->where("id=" .Yii::$app->user->id)
+            ->where("id=" . Yii::$app->user->id)
             ->one();
-        $user_id=$user->id;
+        $user_id = $user->id;
         $manager = ProjectManager::find()
-            ->where("user_id=" .$user_id)
+            ->where("user_id=" . $user_id)
             ->one();
-        $manager_id=$manager->id;
-        $model->manager_id=$manager_id;
+        $manager_id = $manager->id;
+        $model->manager_id = $manager_id;
 
         $degreeids = StudentProfile::find()
             ->where("project_id=" . $model->id)
@@ -166,8 +173,11 @@ class ProjectController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->findModel($id)->delete();
+        Registration::deleteAll(['project_id' => $id]);
+        ProjectVacancy::deleteAll(['project_id' => $id]);
         Yii::$app->getSession()->setFlash('success', 'El proyecto se ha eliminado exitosamente.');
         return $this->redirect(['index']);
     }
@@ -179,7 +189,8 @@ class ProjectController extends Controller {
      * @return Project the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = Project::findOne($id)) !== null) {
             return $model;
         } else {
@@ -187,25 +198,26 @@ class ProjectController extends Controller {
         }
     }
 
-    public function actionPreregister($id){
+    public function actionPreregister($id)
+    {
         $model = $this->findModel($id);
         //$user_id=User::findOne(Yii::$app->user->id)->id;
         $user = User::find()
-            ->where("id=" .Yii::$app->user->id)
+            ->where("id=" . Yii::$app->user->id)
             ->one();
-        $user_id=$user->id;
+        $user_id = $user->id;
         $student = Student::find()
-            ->where("user_id=" .$user_id)
+            ->where("user_id=" . $user_id)
             ->one();
-        $student_id=$student->id;
+        $student_id = $student->id;
 
         $vacancy = ProjectVacancy::find()
-            ->where("project_id=" .$id)
+            ->where("project_id=" . $id)
             ->one();
         //$vacancyValue=ArrayHelper::getColumn($vacancy, 'vacancy')[0];
-        $vacancyValue=$vacancy->vacancy;
+        $vacancyValue = $vacancy->vacancy;
 
-        if($existe=StudentProfile::find()->where(['project_id' => $id, 'degree_id' => $student->degree_id])->one()) {
+        if ($existe = StudentProfile::find()->where(['project_id' => $id, 'degree_id' => $student->degree_id])->one()) {
 
 
             if ($vacancyValue > 0) {
@@ -217,7 +229,7 @@ class ProjectController extends Controller {
                 $newRegistration->save();
 
                 //$vacancy->vacancy=$vacancy->vacancy-1;
-                Yii::$app->db->createCommand()->update('project_vacancy', ['vacancy' =>$vacancy->vacancy-1],'project_id='.$id)->execute();
+                Yii::$app->db->createCommand()->update('project_vacancy', ['vacancy' => $vacancy->vacancy - 1], 'project_id=' . $id)->execute();
 
 
                 Yii::$app->getSession()->setFlash('success', 'Te has pre-registrado al proyecto');
@@ -226,12 +238,10 @@ class ProjectController extends Controller {
                 Yii::$app->getSession()->setFlash('danger', 'No hay cupo para este proyecto. Escoge otro.');
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-        }else{
+        } else {
             Yii::$app->getSession()->setFlash('danger', 'No cuentas con el perfil solicitado');
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
-
 
 
     }
