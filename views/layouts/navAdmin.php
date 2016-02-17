@@ -15,7 +15,7 @@ echo Nav::widget([
             'items' => [
                 ['label' => 'Eliminar cuentas', 'url' => '#'],
                 ['label' => 'Aprobación de solicitudes', 'url' => '#'],
-                ['label' => 'Aprobación de proyectos', 'url' => '#'],
+                ['label' => 'Aprobación de proyectos', 'url' => Url::to(['admin/project/view-projects'])],
                 ['label' => 'Registrar encargado de servicio social', 'url' => Url::to(['/admin/social-service-manager/create'])],
             ],
         ],
