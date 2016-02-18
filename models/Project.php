@@ -24,6 +24,7 @@ use Yii;
  */
 class Project extends \yii\db\ActiveRecord {
     public $vacancy;
+    public $degrees1;
 
     /**
      * @inheritdoc
@@ -37,7 +38,7 @@ class Project extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['name', 'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'manager_id', 'vacancy'], 'required'],
+            [['name', 'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'manager_id', 'vacancy', 'degrees1'], 'required'],
             [['manager_id', 'vacancy', 'ammount'], 'integer'],
             [['name', 'dependency'], 'string', 'max' => 200],
             [['objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'approved'], 'string', 'max' => 500]
@@ -63,7 +64,7 @@ class Project extends \yii\db\ActiveRecord {
             'infraestructure' => 'Infraestrctura',
             'ammount' => 'Monto',
             'approved' => 'Approved',
-            'degrees' => 'Perfiles solicitados',
+            'degrees1' => 'Perfiles solicitados',
             'vacancy' => 'Cupo disponible',
         ];
     }

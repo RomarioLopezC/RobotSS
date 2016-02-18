@@ -11,9 +11,7 @@ use app\models\Project;
  * ProjectSearch represents the model behind the search form about `app\models\Project`.
  */
 class ProjectSearch extends Project {
-
-    public $faculty;
-    public $degree;
+    public $degree_id;
 
     /**
      * @inheritdoc
@@ -21,7 +19,7 @@ class ProjectSearch extends Project {
     public function rules() {
         return [
             [['id'], 'integer'],
-            [['name', 'faculty', 'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'approved'], 'safe'],
+            [['name','degree_id' ,'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'approved'], 'safe'],
         ];
     }
 
@@ -43,6 +41,8 @@ class ProjectSearch extends Project {
     public function search($params) {
         $query = Project::find();
 
+        $query->joinWith(['degrees']);
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -56,21 +56,11 @@ class ProjectSearch extends Project {
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'project.id' => $this->id,
+            'degree.id' => $this->degree_id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'dependency', $this->dependency])
-            ->andFilterWhere(['like', 'objective', $this->objective])
-            ->andFilterWhere(['like', 'goals', $this->goals])
-            ->andFilterWhere(['like', 'actions_by_students', $this->actions_by_students])
-            ->andFilterWhere(['like', 'induction', $this->induction])
-            ->andFilterWhere(['like', 'materials_for_students', $this->materials_for_students])
-            ->andFilterWhere(['like', 'economic_support', $this->economic_support])
-            ->andFilterWhere(['like', 'human_resource', $this->human_resource])
-            ->andFilterWhere(['like', 'infraestructure', $this->infraestructure])
-            ->andFilterWhere(['like', 'ammount', $this->ammount])
-            ->andFilterWhere(['like', 'approved', $this->approved]);
+        $query->andFilterWhere(['like', 'project.name', $this->name]);
 
         return $dataProvider;
     }

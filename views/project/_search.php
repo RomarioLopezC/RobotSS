@@ -45,13 +45,7 @@ use app\models\Degree;
             <div class="row">
 
                 <div class="col-md-6">
-                    <?= $form->field($model, 'faculty')->label('Facultad')->dropDownList(
-                        ArrayHelper::map(Faculty::find()->all(), 'id', 'name')
-                    )?>
-                </div>
-
-                <div class="col-md-6">
-                    <?= $form->field($model, 'degree')->label('Licenciatura')->dropDownList(
+                    <?= $form->field($model, 'degree_id')->label('Licenciatura')->dropDownList(
                         ArrayHelper::map(Degree::find()->all(), 'id', 'name')
                     ) ?>
                 </div>

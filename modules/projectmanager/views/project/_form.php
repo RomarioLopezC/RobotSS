@@ -40,7 +40,7 @@ use yii\bootstrap\Modal;
         ],
     ]);
 
-    echo $form->field($model, 'degrees')->checkboxList(ArrayHelper::map(Degree::find()->all(), 'id', 'name'));
+    echo $form->field($model, 'degrees1')->checkboxList(ArrayHelper::map(Degree::find()->all(), 'id', 'name'));
 
     Modal::end();
 
