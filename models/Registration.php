@@ -30,7 +30,7 @@ class Registration extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['project_id', 'student_id', 'student_status'], 'required'],
+            [['project_id', 'student_id', 'student_status', 'begining_date', 'endind_date'], 'required'],
             [['project_id', 'student_id'], 'integer'],
             [['student_status'], 'string', 'max' => 255]
         ];
@@ -45,6 +45,8 @@ class Registration extends \yii\db\ActiveRecord
             'project_id' => 'Proyecto',
             'student_id' => 'Estudiante',
             'student_status' => 'Estatus',
+            'beginning_date' => 'Fecha de inicio',
+            'ending_date' => 'Fecha de término',
         ];
     }
 

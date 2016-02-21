@@ -1,8 +1,8 @@
 <?php
 
 use yii\bootstrap\Alert;
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
@@ -39,6 +39,8 @@ foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
             'columns' => [
                 ['label' => 'Proyecto', 'attribute' => 'projectName'],
                 ['label' => 'Estudiante', 'attribute' => 'studentName'],
+                'beginning_date',
+                'ending_date',
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{assign-student} {cancel-preregistration}',
