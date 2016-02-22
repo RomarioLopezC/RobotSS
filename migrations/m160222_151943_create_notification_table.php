@@ -9,12 +9,16 @@ class m160222_151943_create_notification_table extends Migration
     {
         $this->createTable('notification', [
             'id' => Schema::TYPE_PK,
-            'user_ud' => Schema::TYPE_INTEGER,
+            'user_id' => Schema::TYPE_INTEGER,
             'description' => Schema::TYPE_TEXT,
             'role' => Schema::TYPE_STRING,
             'created_at' => Schema::TYPE_DATE,
             'viewed' => Schema::TYPE_BOOLEAN,
         ]);
+
+        $this->createIndex('idx-notification-user_id', 'notification', 'user_id');
+
+        $this->addForeignKey('fk-notification-user_id', 'notification', 'user_id', 'user', 'id');
 
     }
 
