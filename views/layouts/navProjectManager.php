@@ -25,16 +25,18 @@ echo Nav::widget([
         [
             'label' => 'Cuenta',
             'items' => [
-                ['label' => 'Modificar cuenta', 'url' => Url::to(['/user/settings/profile'])],
+                ['label' => 'Modificar cuenta',
+                    'url' => Url::to(['/person/update','id'=>Yii::$app->user->id])
+                ],
             ],
         ],
         [
             'label' => 'Proyectos',
             'items' => [
-                ['label' => 'Registrar proyecto', 'url' => '#'],
-                ['label' => 'Editar proyecto', 'url' => '#'],
-                ['label' => 'Eliminar proyecto', 'url' => '#'],
-                ['label' => 'Busqueda', 'url' => Url::to(['/admin/social-service-manager/create'])],
+                ['label' => 'Mis proyectos', 'url' =>Url::to(['/project_manager/project'])],
+                //['label' => 'Editar proyecto', 'url' => '#'],
+                //['label' => 'Eliminar proyecto', 'url' => '#'],
+                ['label' => 'Busqueda', 'url' => Url::to(['/project'])],
             ],
         ],
         [

@@ -26,9 +26,15 @@ $config = [
         ],
         'student' => [
             'class' => 'app\modules\student\Student',
-        ],
+        ]
     ],
         'components' => [
+            'formatter' => [
+                'dateFormat' => 'dd.MM.yyyy',
+                'decimalSeparator' => ',',
+                'thousandSeparator' => ' ',
+                'currencyCode' => '$',
+            ],
             'view' => [
                 'theme' => [
                     'pathMap' => [
@@ -82,15 +88,36 @@ $config = [
                 ],
             ],
             'db' => require(__DIR__ . '/db.php'),
+            'i18n' => [
+                'translations' => [
+                    'user' => [
+                        'class' => 'yii\i18n\PhpMessageSource',
+                        'sourceLanguage' => 'en-US',
+                        'basePath' => '@app/messages'
+                    ],
+                    'yii' => [
+                        'class' => 'yii\i18n\PhpMessageSource',
+                        'sourceLanguage' => 'en-US',
+                        'basePath' => '@app/messages'
+                    ],
+                ],
+            ],
         ],
         'as access' => [
             'class' => 'mdm\admin\components\AccessControl',
             'allowActions' => [
                 'site/*',
                 'user/*',
+                'person/view',
+                'person/update',
                 'developer/*',
                 'student/default/create',
-                'gii/*'
+                'gii/*',
+                'projects/*',
+                'student/*',
+                'project_manager/*',
+                'person/*',
+                'project/*'
                 //'some-controller/some-action',
                 // The actions listed here will be allowed to everyone including guests.
                 // So, 'admin/*' should not appear here in the production, of course.

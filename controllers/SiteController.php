@@ -79,12 +79,10 @@ class SiteController extends Controller {
 
             $person->load($params);
             $user->load($params);
-            $user->password_hash = Yii::$app->getSecurity()->generatePasswordHash($params['User']['password_hash']);
             $projectManager->load($params);
 
-
-            if($person->validate() && $user->validate() && $projectManager->validate()){
-
+            if ($person->validate() && $user->validate() && $projectManager->validate()) {
+                $user->password_hash = Yii::$app->getSecurity()->generatePasswordHash($params['User']['password_hash']);
                 $person->save(false);
                 $user->person_id = $person->id;
                 $user->register();
@@ -92,19 +90,18 @@ class SiteController extends Controller {
                 $projectManager->save();
 
                 Yii::$app->session->setFlash('success', 'Se envío un correo de confirmación. Por favor verifique su correo electrónico');
-                return $this->refresh();
-            }else{
+
+            } else {
                 Yii::$app->session->setFlash('danger', 'Ocurrió un error al guardar. Vuelve a intentar');
-                return $this->refresh();
             }
 
-        }else{
-            return $this->render('project-manager-request', [
-                'projectManager' => $projectManager,
-                'user' => $user,
-                'person' => $person,
-            ]);
         }
+        return $this->render('project-manager-request', [
+            'projectManager' => $projectManager,
+            'user' => $user,
+            'person' => $person,
+        ]);
+
 
     }
 
