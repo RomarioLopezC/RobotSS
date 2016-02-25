@@ -93,3 +93,11 @@ a.desc:after {
 .well > h1{
     text-align: center;
 }
+
+.navbar-inverse .badge{
+    background-color: #c75050;
+    color: #fff ;
+}
+.dropdown-header{
+    color: #0a0a0a;
+}
