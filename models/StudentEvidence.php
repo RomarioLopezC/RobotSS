@@ -44,6 +44,9 @@ class StudentEvidence extends \yii\db\ActiveRecord {
             'project_id' => 'Project ID',
             'evidence_id' => 'Evidence ID',
             'student_id' => 'Student ID',
+            'task_name' => 'Nombre',
+            'task_delivery_date' => 'Fecha límite de entrega',
+            'evidence_updated_at' => 'Fecha de última edición',
         ];
     }
 

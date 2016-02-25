@@ -17,6 +17,11 @@ use Yii;
  * @property StudentEvidence[] $studentEvidences
  */
 class Evidence extends \yii\db\ActiveRecord {
+
+    public static $NEW = 'Nuevo';
+    public static $PENDING = 'Pendiente';
+    public static $ACCEPTED = 'Aceptado';
+
     /**
      * @inheritdoc
      */

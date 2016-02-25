@@ -53,7 +53,7 @@ echo Nav::widget([
         ],
         [
             'label' => 'Avances',
-            'url' => Url::to(['/student/evidence'])
+            'url' => Url::to(['/student/student-evidence'])
         ],
         [
 
