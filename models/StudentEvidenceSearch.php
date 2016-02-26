@@ -45,7 +45,7 @@ class StudentEvidenceSearch extends StudentEvidence {
     public function searchNews($params) {
         $query = StudentEvidence::find();
 
-        $query->joinWith(['evidence', 'task']);
+        $query->joinWith(['evidence', 'task', 'student']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -61,6 +61,7 @@ class StudentEvidenceSearch extends StudentEvidence {
 
         $query->andFilterWhere([
             'evidence.status' => Evidence::$NEW,
+            'student.user_id' => Yii::$app->user->id,
             'task.name' => $this->task_name,
             'task.delivery_data' => $this->task_delivery_date,
             'evidence.updated_at' => $this->evidence_updated_at,
@@ -72,7 +73,7 @@ class StudentEvidenceSearch extends StudentEvidence {
     public function searchPending($params) {
         $query = StudentEvidence::find();
 
-        $query->joinWith(['evidence', 'task']);
+        $query->joinWith(['evidence', 'task', 'student']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -88,6 +89,7 @@ class StudentEvidenceSearch extends StudentEvidence {
 
         $query->andFilterWhere([
             'evidence.status' => Evidence::$PENDING,
+            'student.user_id' => Yii::$app->user->id,
             'task.name' => $this->task_name,
             'task.delivery_data' => $this->task_delivery_date,
         ]);
@@ -98,7 +100,7 @@ class StudentEvidenceSearch extends StudentEvidence {
     public function searchAccepted($params) {
         $query = StudentEvidence::find();
 
-        $query->joinWith(['evidence', 'task']);
+        $query->joinWith(['evidence', 'task', 'student']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -114,6 +116,7 @@ class StudentEvidenceSearch extends StudentEvidence {
 
         $query->andFilterWhere([
             'evidence.status' => Evidence::$ACCEPTED,
+            'student.user_id' => Yii::$app->user->id,
             'task.name' => $this->task_name,
             'task.delivery_data' => $this->task_delivery_date,
         ]);
@@ -179,7 +182,7 @@ class StudentEvidenceSearch extends StudentEvidence {
     public function searchAcceptedByProjectManager($params) {
         $query = StudentEvidence::find();
 
-        $query->joinWith(['evidence', 'task', 'project']);
+        $query->joinWith(['evidence', 'task', 'project', 'student']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
