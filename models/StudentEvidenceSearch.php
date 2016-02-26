@@ -14,6 +14,8 @@ class StudentEvidenceSearch extends StudentEvidence {
     public $task_name;
     public $task_delivery_date;
     public $evidence_updated_at;
+    public $student_asign;
+    public $evidence_accepted_date;
 
     /**
      * @inheritdoc
@@ -21,7 +23,7 @@ class StudentEvidenceSearch extends StudentEvidence {
     public function rules() {
         return [
             [['task_id', 'project_id', 'evidence_id', 'student_id'], 'integer'],
-            [['task_name', 'task_delivery_date', 'evidence_updated_at'], 'safe'],
+            [['task_name', 'task_delivery_date', 'evidence_updated_at', 'evidence_accepted_date', 'student_asign'], 'safe'],
         ];
     }
 
@@ -122,7 +124,7 @@ class StudentEvidenceSearch extends StudentEvidence {
     public function searchNewsByProjectManager($params) {
         $query = StudentEvidence::find();
 
-        $query->joinWith(['evidence', 'task', 'project']);
+        $query->joinWith(['evidence', 'task', 'project', 'student']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -150,7 +152,7 @@ class StudentEvidenceSearch extends StudentEvidence {
     public function searchPendingByProjectManager($params) {
         $query = StudentEvidence::find();
 
-        $query->joinWith(['evidence', 'task', 'project']);
+        $query->joinWith(['evidence', 'task', 'project', 'student']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

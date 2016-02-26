@@ -2,6 +2,8 @@
 
 namespace app\modules\projectmanager\controllers;
 
+use app\models\Person;
+use app\models\User;
 use Yii;
 use app\models\StudentEvidence;
 use app\models\StudentEvidenceSearch;
@@ -33,6 +35,15 @@ class StudentEvidenceController extends Controller {
         $dataProviderNews = $searchModel->searchNewsByProjectManager(Yii::$app->request->queryParams);
         $dataProviderPending = $searchModel->searchPendingByProjectManager(Yii::$app->request->queryParams);
         $dataProviderAccepted = $searchModel->searchAcceptedByProjectManager(Yii::$app->request->queryParams);
+
+        $id_user = $dataProviderNews->getModels()[0]['student']['user_id'];
+
+        $user = User::findOne($id_user);
+        $person = Person::findOne($user->person_id);
+
+        $dataProviderNews->getModels()[0]['student']['user_id'] = $person->name;
+        $dataProviderPending->getModels()[0]['student']['user_id'] = $person->name;
+        $dataProviderAccepted->getModels()[0]['student']['user_id'] = $person->name;
 
         return $this->render('index', [
             'searchModel' => $searchModel,

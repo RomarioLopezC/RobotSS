@@ -11,6 +11,7 @@ use yii\grid\GridView;
 
 $this->title = 'Avances';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="student-evidence-index">
 
@@ -42,6 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => 'task.name',
                     ],
                     [
+                        'attribute' => 'student_asign',
+                        'value' => 'student.user_id',
+                    ],
+                    [
                         'attribute' => 'task_delivery_date',
                         'value' => 'task.delivery_date',
                         'format' => ['date', 'php:d/F/Y'],
@@ -69,6 +74,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'task_name',
                         'value' => 'task.name',
+                    ],
+                    [
+                        'attribute' => 'student_asign',
+                        'value' => 'student.user_id',
                     ],
                     [
                         'attribute' => 'evidence_updated_at',
@@ -105,8 +114,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => 'task.name',
                     ],
                     [
-                        'attribute' => 'task_delivery_date',
-                        'value' => 'task.delivery_date',
+                        'attribute' => 'student_asign',
+                        'value' => 'student.user_id',
+                    ],
+                    [
+                        'attribute' => 'evidence_accepted_date',
+                        'value' => 'evidence.accepted_date',
                         'format' => ['date', 'php:d/F/Y'],
                     ],
                     ['class' => 'yii\grid\ActionColumn'],
