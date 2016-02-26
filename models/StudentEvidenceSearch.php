@@ -118,4 +118,88 @@ class StudentEvidenceSearch extends StudentEvidence {
 
         return $dataProvider;
     }
+
+    public function searchNewsByProjectManager($params) {
+        $query = StudentEvidence::find();
+
+        $query->joinWith(['evidence', 'task', 'project']);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'project.manager_id' => 2,
+            'evidence.status' => Evidence::$NEW,
+            'task.name' => $this->task_name,
+            'task.delivery_data' => $this->task_delivery_date,
+            'evidence.updated_at' => $this->evidence_updated_at,
+        ]);
+
+        return $dataProvider;
+    }
+
+    public function searchPendingByProjectManager($params) {
+        $query = StudentEvidence::find();
+
+        $query->joinWith(['evidence', 'task', 'project']);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'project.manager_id' => 2,
+            'evidence.status' => Evidence::$PENDING,
+            'task.name' => $this->task_name,
+            'task.delivery_data' => $this->task_delivery_date,
+        ]);
+
+        return $dataProvider;
+    }
+
+    public function searchAcceptedByProjectManager($params) {
+        $query = StudentEvidence::find();
+
+        $query->joinWith(['evidence', 'task', 'project']);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'project.manager_id' => 2,
+            'evidence.status' => Evidence::$ACCEPTED,
+            'task.name' => $this->task_name,
+            'task.delivery_data' => $this->task_delivery_date,
+        ]);
+
+        return $dataProvider;
+    }
+
+
 }

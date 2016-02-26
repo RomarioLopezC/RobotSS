@@ -5,7 +5,9 @@ use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StudentEvidenceSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $dataProviderNews yii\data\ActiveDataProvider */
+/* @var $dataProviderPending yii\data\ActiveDataProvider */
+/* @var $dataProviderAccepted yii\data\ActiveDataProvider */
 
 $this->title = 'Avances';
 $this->params['breadcrumbs'][] = $this->title;
