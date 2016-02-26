@@ -34,6 +34,7 @@ $config = [
                 'decimalSeparator' => ',',
                 'thousandSeparator' => ' ',
                 'currencyCode' => '$',
+                'locale' => 'es_MX'
             ],
             'view' => [
                 'theme' => [
