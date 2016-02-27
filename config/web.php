@@ -30,10 +30,10 @@ $config = [
     ],
         'components' => [
             'formatter' => [
-                'dateFormat' => 'dd.MMMM.yyyy',
+                'dateFormat' => 'dd/MMMM/yyyy',
                 'decimalSeparator' => ',',
                 'thousandSeparator' => ' ',
-                'currencyCode' => '$',
+                'locale'=>'es_Mx'
             ],
             'view' => [
                 'theme' => [

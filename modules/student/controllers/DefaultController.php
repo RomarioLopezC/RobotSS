@@ -293,10 +293,10 @@ class DefaultController extends Controller
                 $registration->save(false);
                 $this->actionPrintProjectAssignmentPDF();
             } catch (InvalidConfigException $e) {
-                throw new BadRequestHttpException('No se tiene asignado ningun proyecto');
+                throw new BadRequestHttpException('No se tiene asignado ningún proyecto');
             }
         } else {
-            throw new BadRequestHttpException('Las fechas ingresadas no son validas,
+            throw new BadRequestHttpException('Las fechas ingresadas no son válidas,
             deben tener una diferencia de al menos 6 meses');
         }
     }

@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "task".
@@ -20,6 +23,8 @@ use Yii;
  * @property Project $project
  */
 class Task extends \yii\db\ActiveRecord {
+    public $students;
+
     /**
      * @inheritdoc
      */
@@ -35,7 +40,8 @@ class Task extends \yii\db\ActiveRecord {
             [['description'], 'string'],
             [['delivery_date', 'created_at', 'updated_at'], 'safe'],
             [['project_id'], 'integer'],
-            [['name', 'status'], 'string', 'max' => 255]
+            [['name', 'status'], 'string', 'max' => 255],
+
         ];
     }
 
@@ -67,5 +73,20 @@ class Task extends \yii\db\ActiveRecord {
      */
     public function getProject() {
         return $this->hasOne(Project::className(), ['id' => 'project_id']);
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                // if you're using datetime instead of UNIX timestamp:
+                'value' => new Expression('NOW()'),
+            ],
+        ];
     }
 }

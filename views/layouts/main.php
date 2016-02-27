@@ -11,7 +11,7 @@ use app\assets\AppAsset;
 use app\models\Person;
 use app\models\User;
 use yii\helpers\Url;
-use yii\bootstrap\Alert;
+use app\models\Notification;
 
 AppAsset::register($this);
 ?>
@@ -48,20 +48,57 @@ AppAsset::register($this);
             echo $this->render('navStudent');
         }
     }
+
+    $navItems = [
+        !Yii::$app->user->isGuest ?
+            ['label' => "Bienvenido: " . Person::findOne(User::findOne(Yii::$app->user->id)->person_id)->name,
+                'url' => Url::to(['site/index'])] :
+            ['label' => '', 'url' => ['site/index']],
+    ];
+
+
+    if (Yii::$app->user->can('student') or Yii::$app->user->can('projectManager')){
+        $notifications = Notification::find()->where(['user_id'=>Yii::$app->user->id]);
+        $arrayNotifications = [];
+        if($notifications->count() == 0){
+            array_push($arrayNotifications,
+                [
+                    'label'=>'No hay notificaciones nuevas',
+                    'options'=>[
+                        'class'=>'content'
+                    ]
+                ]
+            );
+        }else{
+            foreach($notifications as $notification){
+                array_push($arrayNotifications,
+                    [
+                        'label'=>$notification->description
+                    ]
+                );
+            }
+        }
+        array_push($navItems,
+            [
+                'label'=>'Notificaciones <span class="badge">'.$notifications->count().'</span>',
+                'encode'=>false,
+                'items'=>$arrayNotifications
+            ]
+        );
+    }
+
+    array_push($navItems,
+        Yii::$app->user->isGuest ?
+            ['label' => 'Iniciar sesión', 'url' => ['/user/security/login']] :
+            ['label' => 'Cerrar sesión (' . Yii::$app->user->identity->username . ')',
+                'url' => ['/user/security/logout'],
+                'linkOptions' => ['data-method' => 'post']]
+    );
+
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            !Yii::$app->user->isGuest ?
-                ['label' => "Bienvenido: " . Person::findOne(User::findOne(Yii::$app->user->id)->person_id)->name,
-                    'url' => Yii::$app->user->can('admin') ? Url::to(['user/profile']) : Url::to(['/person/view', 'id' => User::findOne(Yii::$app->user->id)->person_id])] :
-                ['label' => 'About', 'url' => ['/site/about']],
-            Yii::$app->user->isGuest ?
-                ['label' => 'Iniciar sesión', 'url' => ['/user/security/login']] :
-                ['label' => 'Cerrar sesión (' . Yii::$app->user->identity->username . ')',
-                    'url' => ['/user/security/logout'],
-                    'linkOptions' => ['data-method' => 'post']],
-            ['label' => 'Registrarse', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest]
-        ],
+        'items' => $navItems
     ]);
     NavBar::end();
     ?>
@@ -70,7 +107,7 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?= $this->render('modalChooseDate')?>
+        <?= $this->render('modalChooseDate') ?>
         <?= $content ?>
     </div>
 </div>

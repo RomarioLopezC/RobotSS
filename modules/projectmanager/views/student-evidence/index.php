@@ -11,7 +11,6 @@ use yii\grid\GridView;
 
 $this->title = 'Avances';
 $this->params['breadcrumbs'][] = $this->title;
-Yii::$app->formatter->locale = 'es_ES';
 
 ?>
 <div class="student-evidence-index">
@@ -21,7 +20,7 @@ Yii::$app->formatter->locale = 'es_ES';
     </div>
 
     <p>
-        <?= Html::a('Imprimir reporte de avances', ['print-evidence-report'], ['class' => 'btn btn-success pull-right']) ?>
+        <?= Html::a('Crear una nueva petición', ['create'], ['class' => 'btn btn-success pull-right']) ?>
     </p>
 
     <br><br><br>
@@ -44,11 +43,15 @@ Yii::$app->formatter->locale = 'es_ES';
                         'value' => 'task.name',
                     ],
                     [
+                        'attribute' => 'student_asign',
+                        'value' => 'student.user_id',
+                    ],
+                    [
                         'attribute' => 'task_delivery_date',
                         'value' => 'task.delivery_date',
-                        'format' => 'date',
+                        'format' => ['date', 'php:d/F/Y'],
                     ],
-                    ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
+                    ['class' => 'yii\grid\ActionColumn'],
                 ],
             ]); ?>
 
@@ -73,16 +76,20 @@ Yii::$app->formatter->locale = 'es_ES';
                         'value' => 'task.name',
                     ],
                     [
+                        'attribute' => 'student_asign',
+                        'value' => 'student.user_id',
+                    ],
+                    [
                         'attribute' => 'evidence_updated_at',
                         'value' => 'evidence.updated_at',
-                        'format' => 'date',
+                        'format' => ['date', 'php:d/F/Y'],
                     ],
                     [
                         'attribute' => 'task_delivery_date',
                         'value' => 'task.delivery_date',
-                        'format' => 'date',
+                        'format' => ['date', 'php:d/F/Y'],
                     ],
-                    ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
+                    ['class' => 'yii\grid\ActionColumn'],
                 ],
             ]); ?>
 
@@ -107,16 +114,19 @@ Yii::$app->formatter->locale = 'es_ES';
                         'value' => 'task.name',
                     ],
                     [
+                        'attribute' => 'student_asign',
+                        'value' => 'student.user_id',
+                    ],
+                    [
                         'attribute' => 'evidence_accepted_date',
                         'value' => 'evidence.accepted_date',
-                        'format' => 'date',
+                        'format' => ['date', 'php:d/F/Y'],
                     ],
-                    ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
+                    ['class' => 'yii\grid\ActionColumn'],
                 ],
             ]); ?>
 
         </div>
     </div>
-
 
 </div>

@@ -41,7 +41,7 @@ echo Nav::widget([
         ],
         [
             'label'=>'Avances',
-            'url'=>Url::to('')
+            'url' => Url::to(['/project_manager/student-evidence'])
         ],
     ]
 ]);
