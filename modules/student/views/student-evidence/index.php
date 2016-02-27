@@ -36,7 +36,6 @@ Yii::$app->formatter->locale = 'es_ES';
 
             <?= GridView::widget([
                 'dataProvider' => $dataProviderNews,
-                'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
@@ -65,7 +64,6 @@ Yii::$app->formatter->locale = 'es_ES';
 
             <?= GridView::widget([
                 'dataProvider' => $dataProviderPending,
-                'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
@@ -99,7 +97,6 @@ Yii::$app->formatter->locale = 'es_ES';
 
             <?= GridView::widget([
                 'dataProvider' => $dataProviderAccepted,
-                'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
