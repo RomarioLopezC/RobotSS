@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /* @var $dataProviderPending yii\data\ActiveDataProvider */
 /* @var $dataProviderAccepted yii\data\ActiveDataProvider */
 
-$this->title = 'Avances';
+$this->title = 'Avances de proyecto';
 $this->params['breadcrumbs'][] = $this->title;
 Yii::$app->formatter->locale = 'es_ES';
 
