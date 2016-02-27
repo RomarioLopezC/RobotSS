@@ -149,7 +149,6 @@ class StudentEvidenceController extends Controller {
                 // call mPDF methods on the fly
                 'methods' =>
                     [
-                        //'SetHeader' => ['Carta de Asignación al Servicio Social'],
                         'SetFooter' => ['Fecha de expedición: ' . $formatter->asDate(date('Y-m-d'), 'long')],
                     ]
             ]);
