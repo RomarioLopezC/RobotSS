@@ -21,7 +21,7 @@ Yii::$app->formatter->locale = 'es_ES';
     </div>
 
     <p>
-        <?= Html::a('Imprimir reporte de avances', [''], ['class' => 'btn btn-success pull-right']) ?>
+        <?= Html::a('Imprimir reporte de avances', ['print-evidence-report'], ['class' => 'btn btn-success pull-right']) ?>
     </p>
 
     <br><br><br>

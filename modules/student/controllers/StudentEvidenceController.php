@@ -2,6 +2,13 @@
 
 namespace app\modules\student\controllers;
 
+use app\models\Person;
+use app\models\Project;
+use app\models\Registration;
+use app\models\User;
+use app\models\ProjectManager;
+use app\models\Student;
+use kartik\mpdf\Pdf;
 use Yii;
 use app\models\StudentEvidence;
 use app\models\StudentEvidenceSearch;
@@ -94,6 +101,67 @@ class StudentEvidenceController extends Controller {
         }
     }
 
+    public function actionPrintEvidenceReport()
+    {
+        $student = Student::findOne(['user_id' => Yii::$app->user->id]);
+        date_default_timezone_set("America/Mexico_City");
+        try {
+            $searchModel = new StudentEvidenceSearch();
+            $dataProviderAccepted = $searchModel->searchAccepted(Yii::$app->request->queryParams);
+
+            $registration = Registration::findOne(['student_id' => $student->id]);
+            $person = Person::findOne(User::findOne(Yii::$app->user->id)->person_id);
+
+            $project = Project::findOne($registration->project_id);
+            $projectM = ProjectManager::findOne($project->manager_id);
+
+            // get your HTML raw content without any layouts or scripts
+            $content = $this->render('studentEvidencePDF', [
+                'registration' => $registration,
+                'student' => $student,
+                'person' => $person,
+                'project' => $project,
+                'projectM' => $projectM,
+                'searchModel' => $searchModel,
+                'dataProviderAccepted' => $dataProviderAccepted
+            ]);
+
+            $formatter = \Yii::$app->formatter;
+            // setup kartik\mpdf\Pdf component
+            $pdf = new Pdf([
+                // set to use core fonts only
+                'mode' => Pdf::MODE_UTF8,
+                // A4 paper format
+                'format' => Pdf::FORMAT_LETTER,
+                // portrait orientation
+                'orientation' => Pdf::ORIENT_PORTRAIT,
+                // stream to browser inline
+                'destination' => Pdf::DEST_BROWSER,
+                // your html content input
+                'content' => $content,
+                // format content from your own css file if needed or use the
+                // enhanced bootstrap css built by Krajee for mPDF formatting
+                'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+                // any css to be embedded if required
+                'cssInline' => '.kv-heading-1{font-size:18px}',
+                // set mPDF properties on the fly
+                'options' => ['title' => 'Reporte de avances'],
+                // call mPDF methods on the fly
+                'methods' =>
+                    [
+                        //'SetHeader' => ['Carta de Asignación al Servicio Social'],
+                        'SetFooter' => ['Fecha de expedición: ' . $formatter->asDate(date('Y-m-d'), 'long')],
+                    ]
+            ]);
+
+            // return the pdf output as per the destination setting
+            return $pdf->render();
+        } catch (InvalidConfigException $e) {
+            Yii::$app->getSession()->setFlash('danger', 'No tienes proyectos asignados');
+            return $this->redirect(Url::home());
+        }
+    }
+
     /**
      * Deletes an existing StudentEvidence model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -126,4 +194,6 @@ class StudentEvidenceController extends Controller {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+
 }
