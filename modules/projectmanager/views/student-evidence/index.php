@@ -88,9 +88,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => ['date', 'php:d/F/Y'],
                     ],
                     ['class' => 'yii\grid\ActionColumn',
-                        'template'=>'{update}',
+                        'template'=>'{update} {retro}',
                         'buttons'=>[
-                            'update' => function ($url, $model) {
+                            'retro' => function ($url, $model) {
                                 return Html::a('Dar retroalimentación', $url);
                             }
                         ]
