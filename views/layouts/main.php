@@ -52,8 +52,8 @@ AppAsset::register($this);
     $navItems = [
         !Yii::$app->user->isGuest ?
             ['label' => "Bienvenido: " . Person::findOne(User::findOne(Yii::$app->user->id)->person_id)->name,
-                'url' => Yii::$app->user->can('admin') ? Url::to(['user/profile']) : Url::to(['/person/view', 'id' => User::findOne(Yii::$app->user->id)->person_id])] :
-            ['label' => 'About', 'url' => ['/site/about']],
+                'url' => Url::to(['site/index'])] :
+            ['label' => '', 'url' => ['site/index']],
     ];
 
 
@@ -92,8 +92,7 @@ AppAsset::register($this);
             ['label' => 'Iniciar sesión', 'url' => ['/user/security/login']] :
             ['label' => 'Cerrar sesión (' . Yii::$app->user->identity->username . ')',
                 'url' => ['/user/security/logout'],
-                'linkOptions' => ['data-method' => 'post']],
-        ['label' => 'Registrarse', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest]
+                'linkOptions' => ['data-method' => 'post']]
     );
 
 
