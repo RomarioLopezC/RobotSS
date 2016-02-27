@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'evidence_updated_at',
-                        'value' => 'updated_at',
+                        'value' => 'evidence.updated_at',
                         'format' => ['date', 'php:d/F/Y'],
                     ],
                     [

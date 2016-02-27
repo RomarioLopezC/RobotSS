@@ -11,7 +11,7 @@ use yii\grid\GridView;
 
 $this->title = 'Avances';
 $this->params['breadcrumbs'][] = $this->title;
-$formatter = Yii::$app->formatter;
+Yii::$app->formatter->locale = 'es_ES';
 
 ?>
 <div class="student-evidence-index">
@@ -46,7 +46,7 @@ $formatter = Yii::$app->formatter;
                     [
                         'attribute' => 'task_delivery_date',
                         'value' => 'task.delivery_date',
-                        'format' => ['date', 'php:d/F/Y'],
+                        'format' => 'date',
                     ],
                     ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
                 ],
@@ -75,12 +75,12 @@ $formatter = Yii::$app->formatter;
                     [
                         'attribute' => 'evidence_updated_at',
                         'value' => 'evidence.updated_at',
-                        'format' => ['date', 'php:d/F/Y'],
+                        'format' => 'date',
                     ],
                     [
                         'attribute' => 'task_delivery_date',
                         'value' => 'task.delivery_date',
-                        'format' => ['date', 'php:d/F/Y'],
+                        'format' => 'date',
                     ],
                     ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
                 ],
@@ -109,7 +109,7 @@ $formatter = Yii::$app->formatter;
                     [
                         'attribute' => 'evidence_accepted_date',
                         'value' => 'evidence.accepted_date',
-                        'format' => ['date', 'php:d/F/Y'],
+                        'format' => 'date',
                     ],
                     ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
                 ],
