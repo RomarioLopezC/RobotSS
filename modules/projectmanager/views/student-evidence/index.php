@@ -11,7 +11,6 @@ use yii\grid\GridView;
 
 $this->title = 'Avances';
 $this->params['breadcrumbs'][] = $this->title;
-$formatter = Yii::$app->formatter;
 
 ?>
 <div class="student-evidence-index">
@@ -21,7 +20,7 @@ $formatter = Yii::$app->formatter;
     </div>
 
     <p>
-        <?= Html::a('Imprimir reporte de avances', [''], ['class' => 'btn btn-success pull-right']) ?>
+        <?= Html::a('Crear una nueva petición', ['create'], ['class' => 'btn btn-success pull-right']) ?>
     </p>
 
     <br><br><br>
@@ -44,11 +43,15 @@ $formatter = Yii::$app->formatter;
                         'value' => 'task.name',
                     ],
                     [
+                        'attribute' => 'student_asign',
+                        'value' => 'student.user_id',
+                    ],
+                    [
                         'attribute' => 'task_delivery_date',
                         'value' => 'task.delivery_date',
                         'format' => ['date', 'php:d/F/Y'],
                     ],
-                    ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
+                    ['class' => 'yii\grid\ActionColumn'],
                 ],
             ]); ?>
 
@@ -73,8 +76,12 @@ $formatter = Yii::$app->formatter;
                         'value' => 'task.name',
                     ],
                     [
+                        'attribute' => 'student_asign',
+                        'value' => 'student.user_id',
+                    ],
+                    [
                         'attribute' => 'evidence_updated_at',
-                        'value' => 'evidence.updated_at',
+                        'value' => 'updated_at',
                         'format' => ['date', 'php:d/F/Y'],
                     ],
                     [
@@ -82,7 +89,7 @@ $formatter = Yii::$app->formatter;
                         'value' => 'task.delivery_date',
                         'format' => ['date', 'php:d/F/Y'],
                     ],
-                    ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
+                    ['class' => 'yii\grid\ActionColumn'],
                 ],
             ]); ?>
 
@@ -107,16 +114,19 @@ $formatter = Yii::$app->formatter;
                         'value' => 'task.name',
                     ],
                     [
+                        'attribute' => 'student_asign',
+                        'value' => 'student.user_id',
+                    ],
+                    [
                         'attribute' => 'evidence_accepted_date',
                         'value' => 'evidence.accepted_date',
                         'format' => ['date', 'php:d/F/Y'],
                     ],
-                    ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
+                    ['class' => 'yii\grid\ActionColumn'],
                 ],
             ]); ?>
 
         </div>
     </div>
-
 
 </div>
