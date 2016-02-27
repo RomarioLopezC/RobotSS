@@ -4,14 +4,13 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Sistema de Servicio Social de la Universidad Autónoma de Yucatán';
+$this->title = 'Página principal';
+$this->params['breadcrumbs'][] = $this->title;
+Yii::$app->formatter->locale = 'es_ES';
+if (Yii::$app->user->can('student')) {
+    echo $this->render('../../modules/student/views/default/index');
+}else{
+    echo $this->render('../site/landing');
+}
 ?>
-<div class="site-index">
-    <div class="body-content center-block">
-        <h1><?= Html::encode($this->title) ?></h1>
 
-        <p>
-            <?= Html::img(Url::to(['/images/uady-logo.jpg']), ['class' => 'img-responsive center-block']) ?>
-        </p>
-    </div>
-</div>
