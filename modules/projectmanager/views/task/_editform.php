@@ -2,6 +2,13 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\User;
+use app\models\Project;
+use app\models\Registration;
+use app\models\ProjectManager;
+use yii\helpers\Url;
+
 
 
 /* @var $this yii\web\View */
