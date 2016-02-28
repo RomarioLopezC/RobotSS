@@ -58,10 +58,12 @@ class StudentEvidenceController extends Controller {
     public function actionSelectProject() {
         $model = new Task();
         $project = $_POST['list'];
+
         if (Registration::find()->where("project_id=" . $project)->all()) {
             return $this->render('create', [
                 'model' => $model,
                 'project_id' => $project,
+
             ]);
         } else {
             Yii::$app->getSession()->setFlash('danger', 'No hay estudiantes en el proyecto seleccionado ');

@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
     }
     ?>
 
+
     <?php
     // ////////////////////////BOTON CREAR/////////////////////7
     $user = User::find()
@@ -54,23 +55,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'header' => '<h2>Seleccione el proyecto</h2>',
         'toggleButton' => [
             'label' => 'Crear nueva petición',
-            'class' => 'btn btn-success pull-right'
+            'class' => 'btn btn-success'
         ],
     ]);
 
-
     ?>
 
-    <?= Html::beginForm(['select-project'], 'post') ?>
+    <?= Html::beginForm(['task/select-project'], 'post') ?>
     <?= Html::dropDownList('list', null, ArrayHelper::map($projects, 'id', 'name'), ['class' => 'form-control']) ?>
-    <br>
     <?= Html::submitButton('Crear', ['class' => 'btn btn-success']) ?>
     <?= Html::endForm() ?>
 
     <?php
 
     Modal::end();
-    ///////////////////////////// BOTON CREAR///////////////////////////////////7
+    ////////////////////////////// BOTON CREAR///////////////////////////////////7
     ?>
 
     <br><br><br>
