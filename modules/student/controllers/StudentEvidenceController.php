@@ -243,7 +243,8 @@ class StudentEvidenceController extends Controller {
     protected function findModel($task_id, $project_id, $evidence_id, $student_id) {
         if (($model = StudentEvidence::findOne(['task_id' => $task_id,
                 'project_id' => $project_id, 'evidence_id' => $evidence_id,
-                'student_id' => $student_id])) !== null) {
+                'student_id' => $student_id])) !== null
+        ) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -252,7 +253,8 @@ class StudentEvidenceController extends Controller {
 
     protected function findModelWithoutEvidence($task_id, $project_id, $student_id) {
         if (($model = StudentEvidence::findOne(['task_id' => $task_id,
-                'project_id' => $project_id, 'student_id' => $student_id])) !== null) {
+                'project_id' => $project_id, 'student_id' => $student_id])) !== null
+        ) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -272,8 +274,8 @@ class StudentEvidenceController extends Controller {
      */
     private function saveEvidenceFile($evidence) {
         $evidence->
-            file->
-            saveAs(Yii::getAlias('@webroot') . '/uploads/evidence/' . $evidence->id . '.' .
+        file->
+        saveAs(Yii::getAlias('@webroot') . '/uploads/evidence/' . $evidence->id . '.' .
             $evidence->file->extension);
         $evidence->attachment_path = '/uploads/evidence/' . $evidence->id . '.' . $evidence->file->extension;
         $evidence->attachment_name = $evidence->file->baseName . '.' . $evidence->file->getExtension();
