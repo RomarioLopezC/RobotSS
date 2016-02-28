@@ -2,10 +2,8 @@
 
 namespace app\controllers;
 
-class RegistrationController extends \yii\web\Controller
-{
-    public function actionIndex()
-    {
+class RegistrationController extends \yii\web\Controller {
+    public function actionIndex() {
         return $this->render('index');
     }
 

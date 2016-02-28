@@ -127,13 +127,14 @@ class StudentEvidenceController extends Controller
      */
     public function actionUpdate($evidence_id)
     {
-        $model = $this->findModelByEvidence($evidence_id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'task_id' => $model->task_id, 'project_id' => $model->project_id, 'evidence_id' => $model->evidence_id, 'student_id' => $model->student_id]);
+        $student_evidence = $this->findModelByEvidence($evidence_id);
+        $evidence = $student_evidence->evidence;
+        if ($evidence->load(Yii::$app->request->post()) && $evidence->update()) {
+            return $this->redirect(['view', 'task_id' => $student_evidence->task_id, 'project_id' => $student_evidence->project_id, 'student_id' => $student_evidence->student_id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'student_evidence' => $student_evidence,
+                'evidence' => $evidence,
             ]);
         }
     }

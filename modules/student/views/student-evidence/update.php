@@ -28,12 +28,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($evidence, 'description')->textarea() ?>
 
-                <?= $form->field($evidence, 'file')->fileInput(['required' => true]) ?>
+                <p>
+                    <button class="btn btn-success"
+                            onclick="$('#file_upload').prop('disabled',false); $(this).hide();event.preventDefault();">
+                        Actualizar archivo
+                    </button>
+                    <?= $form->field($evidence, 'file')->fileInput(['required' => true, 'disabled' => true, 'id' => 'file_upload']) ?>
+                </p>
 
                 <div class="form-group row">
                     <div class="col-md-12 text-center">
                         <?= Html::a('Cancelar', '#', ['class' => 'btn btn-danger']) ?>
-                        <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
+                        <?= Html::submitButton($evidence->isNewRecord ? 'Completar solicitud' : 'Guardar', ['class' => 'btn btn-primary']) ?>
                     </div>
                 </div>
 

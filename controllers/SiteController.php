@@ -90,7 +90,7 @@ class SiteController extends Controller {
                 $projectManager->save();
 
                 Yii::$app->session->setFlash('success', 'Se envío un correo de confirmación. Por favor verifique su correo electrónico');
-
+                return $this->refresh();
             } else {
                 Yii::$app->session->setFlash('danger', 'Ocurrió un error al guardar. Vuelve a intentar');
             }
