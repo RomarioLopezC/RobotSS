@@ -71,8 +71,8 @@ Yii::$app->formatter->locale = 'es_ES';
                         'value' => 'task.name',
                     ],
                     [
-                        'attribute' => 'evidence_updated_at',
-                        'value' => 'evidence.updated_at',
+                        'attribute' => 'task_updated_at',
+                        'value' => 'task.updated_at',
                         'format' => 'date',
                     ],
                     [

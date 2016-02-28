@@ -18,30 +18,23 @@ use yii\db\Expression;
  *
  * @property StudentEvidence[] $studentEvidences
  */
-class Evidence extends \yii\db\ActiveRecord
-{
+class Evidence extends \yii\db\ActiveRecord {
     public $file;
-
-    public static $NEW = 'Nuevo';
-    public static $PENDING = 'Pendiente';
-    public static $ACCEPTED = 'Aceptado';
 
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'evidence';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['description'], 'required'],
-            ['file', 'file', 'maxSize' => 1024*1024*10,  'tooBig' => 'El archivo ha superado el límite de 10MB.' ],
+            ['file', 'file', 'maxSize' => 1024 * 1024 * 10, 'tooBig' => 'El archivo ha superado el límite de 10MB.'],
             [['description'], 'string'],
             [['accepted_date', 'updated_at'], 'safe'],
             [['attachment_path', 'attachment_name'], 'string', 'max' => 255]
@@ -51,8 +44,7 @@ class Evidence extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'attachment_path' => 'Archivo',
@@ -68,13 +60,11 @@ class Evidence extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStudentEvidences()
-    {
+    public function getStudentEvidences() {
         return $this->hasMany(StudentEvidence::className(), ['evidence_id' => 'id']);
     }
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             [
                 'class' => TimestampBehavior::className(),

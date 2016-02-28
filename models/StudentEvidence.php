@@ -18,6 +18,11 @@ use Yii;
  * @property Task $task
  */
 class StudentEvidence extends \yii\db\ActiveRecord {
+
+    public static $NEW = 'Nuevo';
+    public static $PENDING = 'Pendiente';
+    public static $ACCEPTED = 'Aceptado';
+
     /**
      * @inheritdoc
      */
@@ -47,7 +52,7 @@ class StudentEvidence extends \yii\db\ActiveRecord {
             'task_name' => 'Nombre',
             'task_description' => 'Descripción',
             'task_delivery_date' => 'Fecha límite de entrega',
-            'evidence_updated_at' => 'Fecha de última edición',
+            'task_updated_at' => 'Fecha de última edición',
             'student_asign' => 'Alumno Asignado',
             'evidence_accepted_date' => 'Fecha de aceptación',
         ];

@@ -13,7 +13,7 @@ use app\models\StudentEvidence;
 class StudentEvidenceSearch extends StudentEvidence {
     public $task_name;
     public $task_delivery_date;
-    public $evidence_updated_at;
+    public $task_updated_at;
     public $student_asign;
     public $evidence_accepted_date;
 
@@ -23,7 +23,7 @@ class StudentEvidenceSearch extends StudentEvidence {
     public function rules() {
         return [
             [['task_id', 'project_id', 'evidence_id', 'student_id'], 'integer'],
-            [['task_name', 'task_delivery_date', 'evidence_updated_at', 'evidence_accepted_date', 'student_asign'], 'safe'],
+            [['status', 'task_name', 'task_delivery_date', 'task_updated_at', 'evidence_accepted_date', 'student_asign'], 'safe'],
         ];
     }
 
@@ -60,11 +60,11 @@ class StudentEvidenceSearch extends StudentEvidence {
         }
 
         $query->andFilterWhere([
-            'evidence.status' => Evidence::$NEW,
+            'student_evidence.status' => StudentEvidence::$NEW,
             'student.user_id' => Yii::$app->user->id,
             'task.name' => $this->task_name,
             'task.delivery_data' => $this->task_delivery_date,
-            'evidence.updated_at' => $this->evidence_updated_at,
+            'task.updated_at' => $this->task_updated_at,
         ]);
 
         return $dataProvider;
@@ -88,7 +88,7 @@ class StudentEvidenceSearch extends StudentEvidence {
         }
 
         $query->andFilterWhere([
-            'evidence.status' => Evidence::$PENDING,
+            'student_evidence.status' => StudentEvidence::$PENDING,
             'student.user_id' => Yii::$app->user->id,
             'task.name' => $this->task_name,
             'task.delivery_data' => $this->task_delivery_date,
@@ -115,7 +115,7 @@ class StudentEvidenceSearch extends StudentEvidence {
         }
 
         $query->andFilterWhere([
-            'evidence.status' => Evidence::$ACCEPTED,
+            'student_evidence.status' => StudentEvidence::$ACCEPTED,
             'student.user_id' => Yii::$app->user->id,
             'task.name' => $this->task_name,
             'task.delivery_data' => $this->task_delivery_date,
@@ -143,10 +143,10 @@ class StudentEvidenceSearch extends StudentEvidence {
 
         $query->andFilterWhere([
             'project.manager_id' => 2,
-            'evidence.status' => Evidence::$NEW,
+            'student_evidence.status' => StudentEvidence::$NEW,
             'task.name' => $this->task_name,
             'task.delivery_data' => $this->task_delivery_date,
-            'evidence.updated_at' => $this->evidence_updated_at,
+            'evidence.updated_at' => $this->task_updated_at,
         ]);
 
         return $dataProvider;
@@ -171,7 +171,7 @@ class StudentEvidenceSearch extends StudentEvidence {
 
         $query->andFilterWhere([
             'project.manager_id' => 2,
-            'evidence.status' => Evidence::$PENDING,
+            'student_evidence.status' => StudentEvidence::$PENDING,
             'task.name' => $this->task_name,
             'task.delivery_data' => $this->task_delivery_date,
         ]);
@@ -198,7 +198,7 @@ class StudentEvidenceSearch extends StudentEvidence {
 
         $query->andFilterWhere([
             'project.manager_id' => 2,
-            'evidence.status' => Evidence::$ACCEPTED,
+            'student_evidence.status' => StudentEvidence::$ACCEPTED,
             'task.name' => $this->task_name,
             'task.delivery_data' => $this->task_delivery_date,
         ]);
