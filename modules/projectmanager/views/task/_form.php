@@ -18,7 +18,7 @@ use yii\helpers\Url;
 
 <div class="task-form">
 
-    <?php $form = ActiveForm::begin (['action' => Url::to (['create','project_id'=>$project_id])]); ?>
+    <?php $form = ActiveForm::begin (['action' => Url::to (['create', 'project_id' => $project_id])]); ?>
 
     <?= $form->field ($model, 'name')->textInput (['maxlength' => true]) ?>
 

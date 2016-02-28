@@ -71,36 +71,36 @@ class TaskController extends Controller
 
         if ($model->load (Yii::$app->request->post ())) {
 
-                if(strtotime($model->delivery_date) >= strtotime(Yii::$app->formatter->asDate ('now', 'yyyy-MM-dd'))) {
-                    $students = $_POST['Task']['students'];
-                    //$model->setIsNewRecord (true);
-                    //$model->id = null;
-                    $model->status = Task::NEWTASK;
-                    //$project = Registration::find ()->where ("student_id=" . $value)->one ();
-                    $model->project_id = $project_id;
-                    $model->save ();
+            if (strtotime ($model->delivery_date) >= strtotime (Yii::$app->formatter->asDate ('now', 'yyyy-MM-dd'))) {
+                $students = $_POST['Task']['students'];
+                //$model->setIsNewRecord (true);
+                //$model->id = null;
+                $model->status = Task::NEWTASK;
+                //$project = Registration::find ()->where ("student_id=" . $value)->one ();
+                $model->project_id = $project_id;
+                $model->save ();
 
-                    foreach ($students as $value) {
+                foreach ($students as $value) {
 
 
-                        Yii::$app->db->createCommand ()->insert ('student_evidence', [
-                            'task_id' => $model->id,
-                            'project_id' => $model->project_id,
-                            'evidence_id' => null,
-                            'student_id' => $value,
-                            'status' => Task::NEWTASK
-                        ])->execute ();
+                    Yii::$app->db->createCommand ()->insert ('student_evidence', [
+                        'task_id' => $model->id,
+                        'project_id' => $model->project_id,
+                        'evidence_id' => null,
+                        'student_id' => $value,
+                        'status' => Task::NEWTASK
+                    ])->execute ();
 
-                        Yii::$app->getSession ()->setFlash ('success', 'Petición creada exitosamente');
-                    }
-                    return $this->redirect (['index']);
-                }else{
-                    Yii::$app->getSession ()->setFlash ('danger', 'La fecha de entrega no puede ser anterior a la fecha actual');
-                    return $this->render ('create', [
-                        'model' => $model,
-                        'project_id' => $project_id,
-                    ]);
+                    Yii::$app->getSession ()->setFlash ('success', 'Petición creada exitosamente');
                 }
+                return $this->redirect (['index']);
+            } else {
+                Yii::$app->getSession ()->setFlash ('danger', 'La fecha de entrega no puede ser anterior a la fecha actual');
+                return $this->render ('create', [
+                    'model' => $model,
+                    'project_id' => $project_id,
+                ]);
+            }
 
         } else {
             return $this->render ('create', [
@@ -138,8 +138,6 @@ class TaskController extends Controller
             Yii::$app->db->createCommand ()->delete ('student_evidence', 'task_id=' . $model->id)->execute ();
 
             foreach ($students as $value) {
-
-
 
 
                 Yii::$app->db->createCommand ()->insert ('student_evidence', [
