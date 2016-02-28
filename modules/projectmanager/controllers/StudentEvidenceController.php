@@ -38,14 +38,17 @@ class StudentEvidenceController extends Controller {
         $dataProviderPending = $searchModel->searchPendingByProjectManager(Yii::$app->request->queryParams);
         $dataProviderAccepted = $searchModel->searchAcceptedByProjectManager(Yii::$app->request->queryParams);
 
-        $id_user = $dataProviderNews->getModels()[0]['student']['user_id'];
+        if($id_user = $dataProviderNews->getModels()){
+            $id_user = $dataProviderNews->getModels()[0]['student']['user_id'];
 
-        $user = User::findOne($id_user);
-        $person = Person::findOne($user->person_id);
+            $user = User::findOne($id_user);
+            $person = Person::findOne($user->person_id);
 
-        $dataProviderNews->getModels()[0]['student']['user_id'] = $person->name;
-        $dataProviderPending->getModels()[0]['student']['user_id'] = $person->name;
-        $dataProviderAccepted->getModels()[0]['student']['user_id'] = $person->name;
+            $dataProviderNews->getModels()[0]['student']['user_id'] = $person->name;
+            $dataProviderPending->getModels()[0]['student']['user_id'] = $person->name;
+            $dataProviderAccepted->getModels()[0]['student']['user_id'] = $person->name;
+        }
+
 
         return $this->render('index', [
             'searchModel' => $searchModel,
