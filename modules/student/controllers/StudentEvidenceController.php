@@ -21,10 +21,8 @@ use yii\web\UploadedFile;
 /**
  * StudentEvidenceController implements the CRUD actions for StudentEvidence model.
  */
-class StudentEvidenceController extends Controller
-{
-    public function behaviors()
-    {
+class StudentEvidenceController extends Controller {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -39,8 +37,7 @@ class StudentEvidenceController extends Controller
      * Lists all StudentEvidence models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new StudentEvidenceSearch();
         $dataProviderNews = $searchModel->searchNews(Yii::$app->request->queryParams);
         $dataProviderPending = $searchModel->searchPending(Yii::$app->request->queryParams);
@@ -62,8 +59,7 @@ class StudentEvidenceController extends Controller
      * @return mixed
      * http://localhost/RobotSS/web/student/student-evidence/view?task_id=1&project_id=1&student_id=1
      */
-    public function actionView($task_id, $project_id, $student_id)
-    {
+    public function actionView($task_id, $project_id, $student_id) {
         $session = Yii::$app->session;
         $session->set('task_id', $task_id);
         $session->set('project_id', $project_id);
@@ -79,8 +75,7 @@ class StudentEvidenceController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($task_id, $project_id, $student_id)
-    {
+    public function actionCreate($task_id, $project_id, $student_id) {
         $student_evidence = $this->findModelWithoutEvidence($task_id, $project_id, $student_id);
 
         $evidence = new Evidence();
@@ -88,15 +83,15 @@ class StudentEvidenceController extends Controller
         if (Yii::$app->request->post()) {
             $params = Yii::$app->request->post();
             $evidence->load($params);
+
             //Cambiar estado de evidencia a pendiente
-            $evidence->status = Evidence::$PENDING;
+            $student_evidence->status = Evidence::$PENDING;
 
             $evidence->file = UploadedFile::getInstance($evidence, 'file');
             if ($evidence->validate() && $evidence->save()) {
 
-                $evidence->file->saveAs(Yii::getAlias('@webroot') . '/uploads/evidence/' . $evidence->id . '.' . $evidence->file->extension);
-                $evidence->attachment_path = '/uploads/evidence/' . $evidence->id . '.' . $evidence->file->extension;
-                $evidence->attachment_name = $evidence->file->baseName . '.' . $evidence->file->getExtension();
+                $this->saveEvidenceFile($evidence);
+
                 $evidence->update(false);
 
                 $student_evidence->evidence_id = $evidence->id;
@@ -125,12 +120,24 @@ class StudentEvidenceController extends Controller
      * @param integer $evidence_id
      * @return mixed
      */
-    public function actionUpdate($evidence_id)
-    {
+    public function actionUpdate($evidence_id) {
         $student_evidence = $this->findModelByEvidence($evidence_id);
         $evidence = $student_evidence->evidence;
-        if ($evidence->load(Yii::$app->request->post()) && $evidence->update()) {
-            return $this->redirect(['view', 'task_id' => $student_evidence->task_id, 'project_id' => $student_evidence->project_id, 'student_id' => $student_evidence->student_id]);
+
+        if (Yii::$app->request->post()) {
+            $params = Yii::$app->request->post();
+            $evidence->load($params);
+            $evidence->file = UploadedFile::getInstance($evidence, 'file');
+
+            if (isset($evidence->file)) {
+                if (is_file(Yii::getAlias('@webroot') . $evidence->attachment_path)) {
+                    unlink(Yii::getAlias('@webroot') . $evidence->attachment_path);
+                }
+                $this->saveEvidenceFile($evidence);
+            }
+            $evidence->update(false);
+            return $this->redirect(['view', 'task_id' => $student_evidence->task_id,
+                'project_id' => $student_evidence->project_id, 'student_id' => $student_evidence->student_id]);
         } else {
             return $this->render('update', [
                 'student_evidence' => $student_evidence,
@@ -139,8 +146,8 @@ class StudentEvidenceController extends Controller
         }
     }
 
-    public function actionDownload($evidence_id)
-    {
+
+    public function actionDownload($evidence_id) {
         $studentEvidence = $this->findModelByEvidence($evidence_id);
         return Yii::$app->response->sendFile(
             Yii::getAlias('@webroot') . $studentEvidence->evidence->attachment_path,
@@ -148,8 +155,7 @@ class StudentEvidenceController extends Controller
         )->send();
     }
 
-    public function actionPrintEvidenceReport()
-    {
+    public function actionPrintEvidenceReport() {
         $student = Student::findOne(['user_id' => Yii::$app->user->id]);
         date_default_timezone_set("America/Mexico_City");
         try {
@@ -217,8 +223,7 @@ class StudentEvidenceController extends Controller
      * @param integer $student_id
      * @return mixed
      */
-    public function actionDelete($task_id, $project_id, $evidence_id, $student_id)
-    {
+    public function actionDelete($task_id, $project_id, $evidence_id, $student_id) {
         $this->findModel($task_id, $project_id, $evidence_id, $student_id)->delete();
 
         return $this->redirect(['index']);
@@ -234,8 +239,7 @@ class StudentEvidenceController extends Controller
      * @return StudentEvidence the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($task_id, $project_id, $evidence_id, $student_id)
-    {
+    protected function findModel($task_id, $project_id, $evidence_id, $student_id) {
         if (($model = StudentEvidence::findOne(['task_id' => $task_id, 'project_id' => $project_id, 'evidence_id' => $evidence_id, 'student_id' => $student_id])) !== null) {
             return $model;
         } else {
@@ -243,8 +247,7 @@ class StudentEvidenceController extends Controller
         }
     }
 
-    protected function findModelWithoutEvidence($task_id, $project_id, $student_id)
-    {
+    protected function findModelWithoutEvidence($task_id, $project_id, $student_id) {
         if (($model = StudentEvidence::findOne(['task_id' => $task_id, 'project_id' => $project_id, 'student_id' => $student_id])) !== null) {
             return $model;
         } else {
@@ -252,13 +255,21 @@ class StudentEvidenceController extends Controller
         }
     }
 
-    protected function findModelByEvidence($evidence_id)
-    {
+    protected function findModelByEvidence($evidence_id) {
         if (($model = StudentEvidence::findOne(['evidence_id' => $evidence_id])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    /**
+     * @param $evidence
+     */
+    private function saveEvidenceFile($evidence) {
+        $evidence->file->saveAs(Yii::getAlias('@webroot') . '/uploads/evidence/' . $evidence->id . '.' . $evidence->file->extension);
+        $evidence->attachment_path = '/uploads/evidence/' . $evidence->id . '.' . $evidence->file->extension;
+        $evidence->attachment_name = $evidence->file->baseName . '.' . $evidence->file->getExtension();
     }
 
 

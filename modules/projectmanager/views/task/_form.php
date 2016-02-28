@@ -8,6 +8,7 @@ use app\models\User;
 use app\models\Project;
 use app\models\Registration;
 use app\models\ProjectManager;
+use yii\helpers\Url;
 
 
 /* @var $this yii\web\View */
@@ -17,56 +18,54 @@ use app\models\ProjectManager;
 
 <div class="task-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin (['action' => Url::to (['create'])]); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field ($model, 'name')->textInput (['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+    <?= $form->field ($model, 'description')->textarea (['rows' => 6]) ?>
 
-    <?= $form->field($model, 'delivery_date')->widget(\yii\jui\DatePicker::classname(), [
+    <?= $form->field ($model, 'delivery_date')->widget (\yii\jui\DatePicker::classname (), [
 
         'dateFormat' => 'yyyy-MM-dd'
     ]) ?>
 
     <?php
-    //$options = \yii\helpers\ArrayHelper::map($model->degrees, 'id', 'name');
 
-
-    //$form->field($model, 'degrees')->checkboxList($options, ['unselect'=>NULL])
-
-
-
-
-    $user = User::find()
-        ->where("id=" . Yii::$app->user->id)
-        ->one();
+    $user = User::find ()
+        ->where ("id=" . Yii::$app->user->id)
+        ->one ();
     $user_id = $user->id;
-    $manager = ProjectManager::find()
-        ->where("user_id=" . $user_id)
-        ->one();
+    $manager = ProjectManager::find ()
+        ->where ("user_id=" . $user_id)
+        ->one ();
     $manager_id = $manager->id;
-    $project=Project::find()
-        ->where("manager_id=" . $manager_id)
-        ->one();
-    $project_id = $project->id;
 
-    $students=Registration::find()
-        ->where("project_id=" . $project_id);
+    $students = Yii::$app->db->createCommand ('Select
+        registration.student_id,
+        student.id,
+        person.name,
+        person.lastname
+        From
+        registration Inner Join
+        student
+        On registration.student_id = student.id Inner Join
+        user
+        On student.user_id = user.id Inner Join
+        person
+        On user.person_id = person.id
+        where registration.project_id=' . $project_id)
+        ->queryAll ();
 
-    ;
 
-    echo $form->field($model, 'students')->checkboxList(ArrayHelper::map(Registration::find()->joinWith('student', true, 'INNER JOIN')->joinWith('project', true, 'INNER JOIN')->where("manager_id=" . $manager_id)->all(), 'student_id', 'student_id'));
-
-
+    echo $form->field ($model, 'students')->checkboxList (ArrayHelper::map ($students, 'student_id', 'name'));
 
     ?>
 
 
-
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton ($model->isNewRecord ? 'Guardar' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php ActiveForm::end (); ?>
 
 </div>
