@@ -18,10 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-md-6">
             Estado:
-            <?php if ($model->evidence_id == null): ?>
+            <?php if ($model->status == null): ?>
                 Nuevo
             <?php else:
-                print $model->evidence->status;
+                print $model->status;
             endif; ?>
         </div>
         <div class="col-md-6 text-right">

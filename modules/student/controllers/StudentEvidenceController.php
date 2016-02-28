@@ -84,6 +84,9 @@ class StudentEvidenceController extends Controller {
             $params = Yii::$app->request->post();
             $evidence->load($params);
 
+            //Cambiar estado de evidencia a pendiente
+            $student_evidence->status = Evidence::$PENDING;
+
             $evidence->file = UploadedFile::getInstance($evidence, 'file');
             if ($evidence->validate() && $evidence->save()) {
 
