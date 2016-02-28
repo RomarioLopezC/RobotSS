@@ -213,29 +213,35 @@ class TaskController extends Controller
 
         $comment = $_POST['feedback'];
         $accepted = $_POST['aceptado'];
-        $studentEvidence = StudentEvidence::find ()
+        $student_evidence = StudentEvidence::find ()
             ->where ("task_id=" . $task->id)
             ->one ();
-        $evidence_id = $studentEvidence->evidence_id;
+        $evidence_id = $student_evidence->evidence_id;
+        $student_id=$student_evidence->student_id;
 
         if ($accepted == 1) {
 
-            Yii::$app->db->createCommand ()->update ('student_evidence', ['comment' => $comment], 'task_id=' . $task->id)->execute ();
-
+            //Yii::$app->db->createCommand ()->update ('student_evidence', ['comment' => $comment], 'task_id=' . $task->id)->execute ();
+            Yii::$app->db->createCommand('UPDATE student_evidence SET comment="'.$comment.'" WHERE task_id='.$task->id.' AND student_id='.$student_id)
+                ->execute();
             $task->status = Task::ACCEPTED;
+            Yii::$app->db->createCommand('UPDATE student_evidence SET status="'.Task::ACCEPTED.'" WHERE task_id='.$task->id.' AND student_id='.$student_id)
+                ->execute();
+
             $task->update ();
 
             $evidence = Evidence::find ()
                 ->where ("id=" . $evidence_id)
                 ->one ();
-            $evidence->status = Task::ACCEPTED;
+            //$evidence->status = Task::ACCEPTED;
             $evidence->accepted_date = Yii::$app->formatter->asDate ('now', 'yyyy-MM-dd');
             $evidence->update ();
             Yii::$app->getSession ()->setFlash ('success', 'Sus cambios se han guardado exitosamente');
 
         } else {
-            $studentEvidence->comment = $comment;
-            $studentEvidence->update ();
+            $student_evidence->comment = $comment;
+
+            $student_evidence->update ();
             Yii::$app->getSession ()->setFlash ('success', 'Sus cambios se han guardado exitosamente');
         }
 
