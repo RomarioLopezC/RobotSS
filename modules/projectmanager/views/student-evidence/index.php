@@ -2,6 +2,12 @@
 
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\bootstrap\Alert;
+use yii\bootstrap\Modal;
+use app\models\Project;
+use app\models\ProjectManager;
+use app\models\User;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StudentEvidenceSearch */
@@ -19,9 +25,53 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
     </div>
 
-    <p>
-        <?= Html::a('Crear una nueva petición', ['create'], ['class' => 'btn btn-success pull-right']) ?>
-    </p>
+    <?php
+    foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
+        echo Alert::widget([
+            'options' => [
+                'class' => 'alert-' . $key,
+            ],
+            'body' => $message,
+        ]);
+    }
+    ?>
+
+    <?php
+    // ////////////////////////BOTON CREAR/////////////////////7
+    $user = User::find()
+        ->where("id=" . Yii::$app->user->id)
+        ->one();
+    $user_id = $user->id;
+    $manager = ProjectManager::find()
+        ->where("user_id=" . $user_id)
+        ->one();
+    $manager_id = $manager->id;
+    $projects = Project::find()
+        ->where("manager_id=" . $manager_id)
+        ->all();
+
+    Modal::begin([
+        'header' => '<h2>Seleccione el proyecto</h2>',
+        'toggleButton' => [
+            'label' => 'Crear nueva petición',
+            'class' => 'btn btn-success pull-right'
+        ],
+    ]);
+
+
+    ?>
+
+    <?= Html::beginForm(['select-project'], 'post') ?>
+    <?= Html::dropDownList('list', null, ArrayHelper::map($projects, 'id', 'name'), ['class' => 'form-control']) ?>
+    <br>
+    <?= Html::submitButton('Crear', ['class' => 'btn btn-success']) ?>
+    <?= Html::endForm() ?>
+
+    <?php
+
+    Modal::end();
+    ///////////////////////////// BOTON CREAR///////////////////////////////////7
+    ?>
 
     <br><br><br>
 

@@ -3,6 +3,8 @@
 namespace app\modules\projectmanager\controllers;
 
 use app\models\Person;
+use app\models\Registration;
+use app\models\Task;
 use app\models\StudentEvidence;
 use app\models\StudentEvidenceSearch;
 use app\models\User;
@@ -51,6 +53,20 @@ class StudentEvidenceController extends Controller {
             'dataProviderPending' => $dataProviderPending,
             'dataProviderAccepted' => $dataProviderAccepted,
         ]);
+    }
+
+    public function actionSelectProject() {
+        $model = new Task();
+        $project = $_POST['list'];
+        if (Registration::find()->where("project_id=" . $project)->all()) {
+            return $this->render('create', [
+                'model' => $model,
+                'project_id' => $project,
+            ]);
+        } else {
+            Yii::$app->getSession()->setFlash('danger', 'No hay estudiantes en el proyecto seleccionado ');
+            return $this->redirect(['index']);
+        }
     }
 
     /**

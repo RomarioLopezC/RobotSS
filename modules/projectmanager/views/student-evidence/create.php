@@ -4,18 +4,19 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\StudentEvidence */
+/* @var $model app\models\Task */
 
-$this->title = 'Create Student Evidence';
-$this->params['breadcrumbs'][] = ['label' => 'Student Evidences', 'url' => ['index']];
+$this->title = 'Crear nueva petición';
+$this->params['breadcrumbs'][] = ['label' => 'Tasks', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="student-evidence-create">
+<div class="task-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
+        'project_id' => $project_id,
     ]) ?>
 
 </div>

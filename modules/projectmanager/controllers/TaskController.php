@@ -74,7 +74,6 @@ class TaskController extends Controller {
                 $project = Registration::find()->where("student_id=" . $value)->one();
                 $model->project_id = $project->project_id;
 
-
                 $model->save();
 
                 Yii::$app->db->createCommand()->insert('student_evidence', [
@@ -86,7 +85,7 @@ class TaskController extends Controller {
 
                 Yii::$app->getSession()->setFlash('success', 'Petición creada exitosamente');
             }
-            return $this->redirect(['index']);
+            return $this->redirect(['student-evidence/index']);
 
 
         } else {
@@ -141,6 +140,7 @@ class TaskController extends Controller {
         }
     }
 
+    /*
     public function actionSelectProject() {
         $model = new Task();
         $project = $_POST['list'];
@@ -153,11 +153,10 @@ class TaskController extends Controller {
             Yii::$app->getSession()->setFlash('danger', 'No hay estudiantes en el proyecto seleccionado ');
             return $this->redirect(['index']);
         }
-    }
+    }*/
 
     public function actionGiveFeedback($id) {
         $task = $this->findModel($id);
-
 
         $comment = $_POST['feedback'];
         $accepted = $_POST['aceptado'];
