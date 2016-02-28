@@ -57,32 +57,34 @@ AppAsset::register($this);
     ];
 
 
-    if (Yii::$app->user->can('student') or Yii::$app->user->can('projectManager')){
-        $notifications = Notification::find()->where(['user_id'=>Yii::$app->user->id]);
+    if (Yii::$app->user->can('student') or Yii::$app->user->can('projectManager')) {
+        $notifications = Notification::find()->where(['user_id' => Yii::$app->user->id]);
         $arrayNotifications = [];
-        if($notifications->count() == 0){
+        if ($notifications->count() == 0) {
             array_push($arrayNotifications,
                 [
-                    'label'=>'No hay notificaciones nuevas',
-                    'options'=>[
-                        'class'=>'content'
+                    'label' => 'No hay notificaciones nuevas',
+                    'options' => [
+                        'class' => 'content'
                     ]
                 ]
             );
-        }else{
-            foreach($notifications as $notification){
+        } else {
+            foreach ($notifications as $notification) {
                 array_push($arrayNotifications,
                     [
-                        'label'=>$notification->description
+                        'label' => $notification->description
                     ]
                 );
             }
         }
         array_push($navItems,
             [
-                'label'=>'Notificaciones <span class="badge">'.$notifications->count().'</span>',
-                'encode'=>false,
-                'items'=>$arrayNotifications
+                'label' => $notifications->count() == 0 ?
+                    'Notificaciones' :
+                    'Notificaciones <span class="badge">' . $notifications->count() . '</span>',
+                'encode' => false,
+                'items' => $arrayNotifications
             ]
         );
     }
