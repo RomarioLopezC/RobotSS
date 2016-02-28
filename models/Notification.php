@@ -22,6 +22,7 @@ class Notification extends \yii\db\ActiveRecord
 
     const ROLE_STUDENT = 'student';
     const ROLE_PROJECT_MANAGER = 'projectManager';
+    //notification messages
     const NEW_TASK = 'Tienes 1 nueva tarea';
     const EDITED_TASK = '1 Tarea ha sido modificada';
     const ACCEPTED_TASK = 'Tu tarea fue aceptada';

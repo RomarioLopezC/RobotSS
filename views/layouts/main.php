@@ -67,7 +67,7 @@ AppAsset::register($this);
         if ($notifications->count() == 0) {
             array_push($arrayNotifications,
                 [
-                    'label' => 'No hay notificaciones nuevas',
+                    'label' => 'No tienes nuevas notificaciones',
                     'options' => [
                         'class' => 'content'
                     ]
