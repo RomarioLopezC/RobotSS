@@ -22,8 +22,7 @@ use yii\db\Expression;
  * @property StudentEvidence[] $studentEvidences
  * @property Project $project
  */
-class Task extends \yii\db\ActiveRecord
-{
+class Task extends \yii\db\ActiveRecord{
     public $students;
 
     const NEWTASK = 'Nuevo';
@@ -33,16 +32,14 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName ()
-    {
+    public static function tableName (){
         return 'task';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules ()
-    {
+    public function rules (){
         return [
             [['description'], 'string'],
             [['delivery_date', 'created_at', 'updated_at'], 'safe'],
@@ -53,8 +50,7 @@ class Task extends \yii\db\ActiveRecord
         ];
     }
 
-    public function validateDate ()
-    {
+    public function validateDate (){
         if (strtotime ($this->delivery_date) < strtotime (Yii::$app->formatter->asDate ('now', 'yyyy-MM-dd'))) {
             $this->addError ('delivery_date', 'La fecha de entrega no puede ser anterior a la fecha actual');
 
@@ -64,8 +60,7 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels ()
-    {
+    public function attributeLabels (){
         return [
             'id' => 'ID',
             'name' => 'Nombre',
@@ -81,21 +76,18 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStudentEvidences ()
-    {
+    public function getStudentEvidences (){
         return $this->hasMany (StudentEvidence::className (), ['task_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProject ()
-    {
+    public function getProject (){
         return $this->hasOne (Project::className (), ['id' => 'project_id']);
     }
 
-    public function behaviors ()
-    {
+    public function behaviors (){
         return [
             [
                 'class' => TimestampBehavior::className (),
