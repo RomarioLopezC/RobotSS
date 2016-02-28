@@ -94,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ///////////////////////////////
 
 
-//////////////////////////7BOTON RETROALIMENTACION
+//////////////////////////BOTON RETROALIMENTACION
             ['class' => 'yii\grid\ActionColumn',
                 'template' => '{view}{edit}',
                 'buttons' => [
