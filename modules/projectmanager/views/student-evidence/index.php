@@ -35,7 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= GridView::widget([
                 'dataProvider' => $dataProviderNews,
-                'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
@@ -51,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => 'task.delivery_date',
                         'format' => ['date', 'php:d/F/Y'],
                     ],
-                    ['class' => 'yii\grid\ActionColumn'],
+                    ['class' => 'yii\grid\ActionColumn', 'template' => '{update}'],
                 ],
             ]); ?>
 
@@ -68,7 +67,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= GridView::widget([
                 'dataProvider' => $dataProviderPending,
-                'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
@@ -89,7 +87,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => 'task.delivery_date',
                         'format' => ['date', 'php:d/F/Y'],
                     ],
-                    ['class' => 'yii\grid\ActionColumn'],
+                    ['class' => 'yii\grid\ActionColumn',
+                        'template'=>'{update} {retro}',
+                        'buttons'=>[
+                            'retro' => function ($url, $model) {
+                                return Html::a('Dar retroalimentación', $url);
+                            }
+                        ]
+                    ],
                 ],
             ]); ?>
 
@@ -106,7 +111,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= GridView::widget([
                 'dataProvider' => $dataProviderAccepted,
-                'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
@@ -122,7 +126,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => 'evidence.accepted_date',
                         'format' => ['date', 'php:d/F/Y'],
                     ],
-                    ['class' => 'yii\grid\ActionColumn'],
                 ],
             ]); ?>
 

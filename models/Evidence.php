@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "evidence".
@@ -16,7 +18,9 @@ use Yii;
  *
  * @property StudentEvidence[] $studentEvidences
  */
-class Evidence extends \yii\db\ActiveRecord {
+class Evidence extends \yii\db\ActiveRecord
+{
+    public $file;
 
     public static $NEW = 'Nuevo';
     public static $PENDING = 'Pendiente';
@@ -25,39 +29,58 @@ class Evidence extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'evidence';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
+            [['description'], 'required'],
+            [['file'], 'file', 'skipOnEmpty' => false],
             [['description'], 'string'],
             [['accepted_date', 'updated_at'], 'safe'],
-            [['attachment_path', 'status'], 'string', 'max' => 255]
+            [['attachment_path', 'attachment_name', 'status'], 'string', 'max' => 255]
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => 'ID',
-            'attachment_path' => 'Archivo adjunto',
+            'attachment_path' => 'Archivo',
             'description' => 'Descripción',
-            'status' => 'Status',
-            'accepted_date' => 'Accepted Date',
-            'updated_at' => 'Updated At',
+            'status' => 'Estatus',
+            'accepted_date' => 'Fecha de aceptación',
+            'updated_at' => 'Fecha de actualización',
+            'attachment_name' => 'Nombre del archivo'
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStudentEvidences() {
+    public function getStudentEvidences()
+    {
         return $this->hasMany(StudentEvidence::className(), ['evidence_id' => 'id']);
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'updated_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => new Expression('NOW()')
+            ]
+        ];
     }
 }
