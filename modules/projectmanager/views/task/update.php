@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_editform', [
         'model' => $model,
+        'project_id'=>$project_id
     ]) ?>
 
 </div>
