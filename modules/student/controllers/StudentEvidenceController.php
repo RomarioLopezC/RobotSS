@@ -203,7 +203,7 @@ class StudentEvidenceController extends Controller {
                 // call mPDF methods on the fly
                 'methods' =>
                     [
-                        'SetFooter' => ['Fecha de expedición: ' . $formatter->asDate(date('Y-m-d'), 'long')],
+                        'SetFooter' => ['Fecha de expedición: ' . $formatter->asDate(date('d-F-Y'))],
                     ]
             ]);
 

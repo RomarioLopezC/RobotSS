@@ -17,7 +17,8 @@ $this->title = /** @lang text */
     <div class="wide">
         <div class="row">
             <div class="col-xs-5 line"><hr></div>
-            <div class="col-xs-2 logo"><?= Html::img(Url::to(['/images/uady-logo-small.jpg']), ['class' => 'img-responsive center-block']) ?></div>
+            <div class="col-xs-2 logo"><?= Html::img(Url::to(['/images/uady-logo-small.jpg']),
+                    ['class' => 'img-responsive center-block']) ?></div>
             <div class="col-xs-5 line"><hr></div>
         </div>
     </div>
