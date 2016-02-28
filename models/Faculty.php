@@ -17,21 +17,18 @@ use Yii;
  * @property SocialServiceManager[] $socialServiceManagers
  * @property Student[] $students
  */
-class Faculty extends \yii\db\ActiveRecord
-{
+class Faculty extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'faculty';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'campus_id', 'code', 'name'], 'required'],
             [['id', 'campus_id'], 'integer'],
@@ -43,8 +40,7 @@ class Faculty extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'Facultad',
             'campus_id' => 'Campus',
@@ -56,32 +52,28 @@ class Faculty extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDegrees()
-    {
+    public function getDegrees() {
         return $this->hasMany(Degree::className(), ['faculty_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCampus()
-    {
+    public function getCampus() {
         return $this->hasOne(Campus::className(), ['id' => 'campus_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSocialServiceManagers()
-    {
+    public function getSocialServiceManagers() {
         return $this->hasMany(SocialServiceManager::className(), ['faculty_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStudents()
-    {
+    public function getStudents() {
         return $this->hasMany(Student::className(), ['faculty_id' => 'id']);
     }
 }

@@ -32,8 +32,7 @@ class ProjectForm extends Model {
     /**
      * @return array the validation rules.
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['name', 'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestrcture', 'ammount', 'approved'], 'required'],
             [['ammount'], 'integer'],
@@ -45,12 +44,11 @@ class ProjectForm extends Model {
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'name' => 'Nombre del proyecto',
-            'studentProfiles'=>'Perfiles solicitados',
+            'studentProfiles' => 'Perfiles solicitados',
             'dependency' => 'Dependencia solicitante',
             'objective' => 'Objetivos del proyecto',
             'goals' => 'Metas del proyecto',
