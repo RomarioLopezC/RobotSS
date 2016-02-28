@@ -96,6 +96,7 @@ class StudentEvidenceController extends Controller
 
                 $evidence->file->saveAs(Yii::getAlias('@webroot') . '/uploads/evidence/' . $evidence->id . '.' . $evidence->file->extension);
                 $evidence->attachment_path = '/uploads/evidence/' . $evidence->id . '.' . $evidence->file->extension;
+                $evidence->attachment_name = $evidence->file->baseName . '.' . $evidence->file->getExtension();
                 $evidence->update(false);
 
                 $student_evidence->evidence_id = $evidence->id;
@@ -140,7 +141,10 @@ class StudentEvidenceController extends Controller
     public function actionDownload($evidence_id)
     {
         $studentEvidence = $this->findModelByEvidence($evidence_id);
-        return Yii::$app->response->sendFile(Yii::getAlias('@webroot') . $studentEvidence->evidence->attachment_path)->send();
+        return Yii::$app->response->sendFile(
+            Yii::getAlias('@webroot') . $studentEvidence->evidence->attachment_path,
+            $studentEvidence->evidence->attachment_name
+        )->send();
     }
 
     public function actionPrintEvidenceReport()

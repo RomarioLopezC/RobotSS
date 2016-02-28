@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="panel-footer text-right">
                     <?php if ($model->evidence_id): ?>
-                        <?= Html::a('Descarga', ['download', 'evidence_id' => $model->evidence_id]) ?>
+                        <?= Html::a('Descarga ' . $model->evidence->attachment_name, ['download', 'evidence_id' => $model->evidence_id]) ?>
                     <?php endif; ?>
                 </div>
             </div>
