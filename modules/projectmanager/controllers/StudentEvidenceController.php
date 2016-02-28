@@ -3,13 +3,13 @@
 namespace app\modules\projectmanager\controllers;
 
 use app\models\Person;
-use app\models\User;
-use Yii;
 use app\models\StudentEvidence;
 use app\models\StudentEvidenceSearch;
+use app\models\User;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * StudentEvidenceController implements the CRUD actions for StudentEvidence model.

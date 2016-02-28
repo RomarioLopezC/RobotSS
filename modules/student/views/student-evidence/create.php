@@ -32,7 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <div class="form-group row">
                     <div class="col-md-12 text-center">
-                        <?= Html::a('Cancelar', '#', ['class' => 'btn btn-danger']) ?>
+                        <?= Html::a('Cancelar', ['view', 'task_id' => $student_evidence->task_id,
+                            'project_id' => $student_evidence->project_id,
+                            'student_id' => $student_evidence->student_id], ['class' => 'btn btn-danger']) ?>
                         <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
                     </div>
                 </div>

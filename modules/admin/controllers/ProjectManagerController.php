@@ -2,21 +2,19 @@
 
 namespace app\modules\admin\controllers;
 
-use Yii;
 use app\models\ProjectManager;
 use app\models\ProjectManagerSearch;
+use Yii;
+use yii\bootstrap\Alert;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\bootstrap\Alert;
 
 /**
  * ProjectManagerController implements the CRUD actions for ProjectManager model.
  */
-class ProjectManagerController extends Controller
-{
-    public function behaviors()
-    {
+class ProjectManagerController extends Controller {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -31,8 +29,7 @@ class ProjectManagerController extends Controller
      * Lists all ProjectManager models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new ProjectManagerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -47,8 +44,7 @@ class ProjectManagerController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -59,8 +55,7 @@ class ProjectManagerController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new ProjectManager();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -78,8 +73,7 @@ class ProjectManagerController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -97,11 +91,10 @@ class ProjectManagerController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($user_id)
-    {
+    public function actionDelete($user_id) {
         //$this->findModel($id)->delete();
-        Yii::$app->db->createCommand()->delete('project_manager', 'user_id ='.$user_id.'')->execute();
-        Yii::$app->db->createCommand()->delete('user', 'id ='.$user_id.'')->execute();
+        Yii::$app->db->createCommand()->delete('project_manager', 'user_id =' . $user_id . '')->execute();
+        Yii::$app->db->createCommand()->delete('user', 'id =' . $user_id . '')->execute();
         echo Alert::widget([
 
             'body' => 'El usuario se eliminó exitosamente!'
@@ -117,8 +110,7 @@ class ProjectManagerController extends Controller
      * @return ProjectManager the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = ProjectManager::findOne($id)) !== null) {
             return $model;
         } else {

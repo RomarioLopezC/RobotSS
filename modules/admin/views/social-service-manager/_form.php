@@ -1,10 +1,10 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 use app\models\Faculty;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\SocialServiceManager */
@@ -26,24 +26,24 @@ use yii\helpers\Url;
                 </div>
 
                 <div class="panel-body">
-    <?php $form = ActiveForm::begin(); ?>
+                    <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput() ?>
-    <?= $form->field($model, 'lastName')->textInput() ?>
-    <?= $form->field($model, 'email')->textInput() ?>
-    <?= $form->field($model, 'phone')->textInput() ?>
-    <?= $form->field($model, 'username')->textInput() ?>
-    <?= $form->field($model, 'password')->passwordInput() ?>
-    <?= $form->field($model, 'faculty_id')->dropDownList(
-        ArrayHelper::map(Faculty::find()->all(), 'id', 'name')
-    ) ?>
-</div>
+                    <?= $form->field($model, 'name')->textInput() ?>
+                    <?= $form->field($model, 'lastName')->textInput() ?>
+                    <?= $form->field($model, 'email')->textInput() ?>
+                    <?= $form->field($model, 'phone')->textInput() ?>
+                    <?= $form->field($model, 'username')->textInput() ?>
+                    <?= $form->field($model, 'password')->passwordInput() ?>
+                    <?= $form->field($model, 'faculty_id')->dropDownList(
+                        ArrayHelper::map(Faculty::find()->all(), 'id', 'name')
+                    ) ?>
                 </div>
-    <div class="form-group pull-right">
-        <?= Html::submitButton($model->isNewRecord ? 'Completar Registro' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
+            </div>
+            <div class="form-group pull-right">
+                <?= Html::submitButton($model->isNewRecord ? 'Completar Registro' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            </div>
 
-    <?php ActiveForm::end(); ?>
+            <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\bootstrap\Alert;
+use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
@@ -17,10 +17,10 @@ $this->title = 'Solicitud cuenta de Alumno';
     <br>
 
     <?php
-    foreach(Yii::$app->getSession()->getAllFlashes() as $key => $message) {
+    foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
         echo Alert::widget([
             'options' => [
-                'class' => 'alert-'.$key,
+                'class' => 'alert-' . $key,
             ],
             'body' => $message,
         ]);

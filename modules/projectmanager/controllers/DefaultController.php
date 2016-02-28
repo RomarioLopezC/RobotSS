@@ -9,7 +9,7 @@ class DefaultController extends Controller {
         return $this->render('index');
     }
 
-    public function actionEditAccount(){
+    public function actionEditAccount() {
 
     }
 }
