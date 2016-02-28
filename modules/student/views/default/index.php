@@ -4,10 +4,6 @@ use app\models\Project;
 use app\models\Registration;
 use app\models\student;
 use app\models\StudentEvidenceSearch;
-use yii\base\InvalidConfigException;
-use yii\grid\GridView;
-use yii\helpers\Html;
-use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StudentSearch */
