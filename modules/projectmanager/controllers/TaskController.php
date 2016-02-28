@@ -138,16 +138,15 @@ class TaskController extends Controller
             Yii::$app->db->createCommand ()->delete ('student_evidence', 'task_id=' . $model->id)->execute ();
 
             foreach ($students as $value) {
-
-
-                Yii::$app->db->createCommand ()->insert ('student_evidence', [
-                    'task_id' => $model->id,
-                    'project_id' => $model->project_id,
-                    'evidence_id' => null,
-                    'student_id' => $value,
-                    'status' => Task::PENDING,
-                ])->execute ();
-
+                if (!$status = StudentEvidence::findOne (['task_id' => $model->id, 'student_id' => $value])) {
+                    Yii::$app->db->createCommand ()->insert ('student_evidence', [
+                        'task_id' => $model->id,
+                        'project_id' => $model->project_id,
+                        'evidence_id' => null,
+                        'student_id' => $value,
+                        'status' => Task::NEWTASK,
+                    ])->execute ();
+                }
                 Yii::$app->getSession ()->setFlash ('success', 'Petición creada exitosamente');
             }
             return $this->redirect (['student-evidence/index']);
@@ -217,16 +216,16 @@ class TaskController extends Controller
             ->where ("task_id=" . $task->id)
             ->one ();
         $evidence_id = $student_evidence->evidence_id;
-        $student_id=$student_evidence->student_id;
+        $student_id = $student_evidence->student_id;
 
         if ($accepted == 1) {
 
             //Yii::$app->db->createCommand ()->update ('student_evidence', ['comment' => $comment], 'task_id=' . $task->id)->execute ();
-            Yii::$app->db->createCommand('UPDATE student_evidence SET comment="'.$comment.'" WHERE task_id='.$task->id.' AND student_id='.$student_id)
-                ->execute();
+            Yii::$app->db->createCommand ('UPDATE student_evidence SET comment="' . $comment . '" WHERE task_id=' . $task->id . ' AND student_id=' . $student_id)
+                ->execute ();
             $task->status = Task::ACCEPTED;
-            Yii::$app->db->createCommand('UPDATE student_evidence SET status="'.Task::ACCEPTED.'" WHERE task_id='.$task->id.' AND student_id='.$student_id)
-                ->execute();
+            Yii::$app->db->createCommand ('UPDATE student_evidence SET status="' . Task::ACCEPTED . '" WHERE task_id=' . $task->id . ' AND student_id=' . $student_id)
+                ->execute ();
 
             $task->update ();
 
