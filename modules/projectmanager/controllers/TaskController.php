@@ -87,7 +87,6 @@ class TaskController extends Controller {
             }
             return $this->redirect(['student-evidence/index']);
 
-
         } else {
             return $this->render('create', [
                 'model' => $model,
