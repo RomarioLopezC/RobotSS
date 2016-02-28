@@ -31,12 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php
 
-    $studentEvidence = StudentEvidence::find()->where("task_id=" . $model->id)
-        ->one();
-    $evidenceId = $studentEvidence->evidence_id;
+    //$studentEvidence = StudentEvidence::find()->where("task_id=" . $model->id)
+    //    ->one();
+    //$evidenceId = $studentEvidence->evidence_id;
 
-    $evidence = Evidence::find()->where("id=" . $evidenceId)
-        ->one();
+    //$evidence = Evidence::find()->where("id=" . $evidenceId)
+     //   ->one();
     echo DetailView::widget([
         'model' => $evidence,
         'attributes' => [
@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
     <?= Html::label('Archivo adjunto: ') ?>
 
-    <?= Html::a($evidence->attachment_name, ['download', 'evidence_id' => $evidence->id]); ?>
+    <?= Html::a($evidence->attachment_name, ['download', 'evidenceId' => $evidence->id]); ?>
 
     <?= Html::beginForm(['give-feedback', 'id' => $model['id']], 'post') ?>
     <?php

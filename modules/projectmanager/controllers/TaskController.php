@@ -249,16 +249,17 @@ class TaskController extends Controller
 
     }
 
-    public function actionShowFeedbackScreen ($id)
+    public function actionShowFeedbackScreen ($taskId,$evidenceId)
     {
         return $this->render ('feedback', [
-            'model' => $this->findModel ($id),
+            'model' => $this->findModel ($taskId),
+            'evidence'=>Evidence::find()->where("id=" . $evidenceId)->one()
         ]);
     }
 
-    public function actionDownload ($evidence_id)
+    public function actionDownload ($evidenceId)
     {
-        $studentEvidence = StudentEvidence::find ()->where ("evidence_id=" . $evidence_id)
+        $studentEvidence = StudentEvidence::find ()->where ("evidence_id=" . $evidenceId)
             ->one ();
         return Yii::$app->response->sendFile (
             Yii::getAlias ('@webroot') . $studentEvidence->evidence->attachment_path,

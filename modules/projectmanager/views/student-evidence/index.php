@@ -158,7 +158,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a('<span class="glyphicon glyphicon-file"></span>',
-                                    ['task/show-feedback-screen', 'id' => $model['task_id']]);
+                                    ['task/show-feedback-screen', 'taskId' => $model['task_id'],'evidenceId' => $model['evidence_id']]);
                             }
                         ],
                     ],
