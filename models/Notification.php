@@ -26,6 +26,8 @@ class Notification extends \yii\db\ActiveRecord
     const EDITED_TASK = '1 Tarea ha sido modificada';
     const ACCEPTED_TASK = 'Tu tarea fue aceptada';
     const REJECTED_TASK = 'Tu tarea fue rechazada';
+    const RECEIVED_TASK = 'Ha recibido una nueva tarea';
+    const EDITED_RECEIVED_TASK = 'Se ha editado una entrega';
 
     /**
      * @inheritdoc

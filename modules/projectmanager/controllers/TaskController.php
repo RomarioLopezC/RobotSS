@@ -160,15 +160,15 @@ class TaskController extends Controller
                     'created_at' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'),
                     'viewed' => false,
                     'url' => Url::to(['/student/student-evidence/view',
-                        'task_id'=>$model->id,
-                        'project_id'=>$model->project_id,
-                        'student_id'=>$value
+                        'task_id' => $model->id,
+                        'project_id' => $model->project_id,
+                        'student_id' => $value
                     ])
                 ]);
 
                 $notification->save(false);
             }
-                Yii::$app->getSession()->setFlash('success', 'Petición creada exitosamente');
+            Yii::$app->getSession()->setFlash('success', 'Petición creada exitosamente');
             return $this->redirect(['student-evidence/index']);
         } else {
             return $this->render('update', [
@@ -226,9 +226,7 @@ class TaskController extends Controller
         $task = $this->findModel($id);
         $comment = $_POST['feedback'];
         $accepted = $_POST['aceptado'];
-        $studentEvidence = StudentEvidence::find()
-            ->where("task_id=" . $task->id)
-            ->one();
+        $studentEvidence = StudentEvidence::findOne(['task_id'=>$task->id]);
         $evidenceId = $studentEvidence->evidence_id;
         $studentId = $studentEvidence->student_id;
         if ($accepted == 1) {
@@ -245,25 +243,58 @@ class TaskController extends Controller
             //$evidence->status = Task::ACCEPTED;
             $evidence->accepted_date = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
             $evidence->update();
+
+            //set notification
+            $notification = Yii::createObject([
+                'class' => Notification::className(),
+                'user_id' => Student::findOne([$studentId])->user_id,
+                'description' => Notification::ACCEPTED_TASK,
+                'role' => Notification::ROLE_STUDENT,
+                'created_at' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'),
+                'viewed' => false,
+                'url' => Url::to(['/student/student-evidence/view',
+                    'task_id'=>$task->id,
+                    'project_id'=>$studentEvidence->project_id,
+                    'student_id'=>$studentId
+                ])
+            ]);
+            $notification->save(false);
+
             Yii::$app->getSession()->setFlash('success', 'Sus cambios se han guardado exitosamente');
         } else {
             $studentEvidence->comment = $comment;
             $studentEvidence->update();
+            //set notification
+            $notification = Yii::createObject([
+                'class' => Notification::className(),
+                'user_id' => Student::findOne([$studentId])->user_id,
+                'description' => Notification::REJECTED_TASK,
+                'role' => Notification::ROLE_STUDENT,
+                'created_at' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'),
+                'viewed' => false,
+                'url' => Url::to(['/student/student-evidence/view',
+                    'task_id'=>$task->id,
+                    'project_id'=>$studentEvidence->project_id,
+                    'student_id'=>$studentId
+                ])
+            ]);
+            $notification->save(false);
             Yii::$app->getSession()->setFlash('success', 'Sus cambios se han guardado exitosamente');
         }
         return $this->redirect(['student-evidence/index']);
     }
 
-    public function actionShowFeedbackScreen($id)
+    public function actionShowFeedbackScreen($taskId, $evidenceId)
     {
         return $this->render('feedback', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($taskId),
+            'evidence' => Evidence::find()->where("id=" . $evidenceId)->one()
         ]);
     }
 
-    public function actionDownload($evidence_id)
+    public function actionDownload($evidenceId)
     {
-        $studentEvidence = StudentEvidence::find()->where("evidence_id=" . $evidence_id)
+        $studentEvidence = StudentEvidence::find()->where("evidence_id=" . $evidenceId)
             ->one();
         return Yii::$app->response->sendFile(
             Yii::getAlias('@webroot') . $studentEvidence->evidence->attachment_path,

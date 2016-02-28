@@ -19,6 +19,10 @@ AppAsset::register($this);
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
+    <?php
+    $notifications = Notification::find()->where(['user_id' => Yii::$app->user->id]);
+    $this->title = $notifications->count() == 0 ? $this->title : '(' . $notifications->count() . ') ' . $this->title;
+    ?>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
@@ -58,7 +62,7 @@ AppAsset::register($this);
 
 
     if (Yii::$app->user->can('student') or Yii::$app->user->can('projectManager')) {
-        $notifications = Notification::find()->where(['user_id' => Yii::$app->user->id]);
+
         $arrayNotifications = [];
         if ($notifications->count() == 0) {
             array_push($arrayNotifications,
@@ -74,7 +78,7 @@ AppAsset::register($this);
                 array_push($arrayNotifications,
                     [
                         'label' => $notification->description,
-                        'url'=>Url::to(['/site/view-notification','id'=>$notification->id])
+                        'url' => Url::to(['/site/view-notification', 'id' => $notification->id])
                     ]
                 );
             }

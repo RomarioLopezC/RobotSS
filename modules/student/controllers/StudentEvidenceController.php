@@ -3,6 +3,8 @@
 namespace app\modules\student\controllers;
 
 use app\models\Evidence;
+use app\models\Notification;
+use yii\helpers\Url;
 use app\models\Person;
 use app\models\Project;
 use app\models\ProjectManager;
@@ -97,6 +99,21 @@ class StudentEvidenceController extends Controller {
                 $student_evidence->evidence_id = $evidence->id;
                 $student_evidence->update();
 
+                $notification = Yii::createObject([
+                    'class' => Notification::className(),
+                    'user_id' => ProjectManager::findOne([Project::findOne([$project_id])->manager_id])->user_id,
+                    'description' => Notification::RECEIVED_TASK,
+                    'role' => Notification::ROLE_STUDENT,
+                    'created_at' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'),
+                    'viewed' => false,
+                    'url' => Url::to(['/project_manager/task/show-feedback-screen',
+                        'taskId'=>$task_id,
+                        'evidenceId'=>$evidence->id
+                    ])
+                ]);
+
+                $notification->save(false);
+
                 return $this->redirect(['view', 'task_id' => $student_evidence->task_id,
                     'project_id' => $student_evidence->project_id, 'student_id' => $student_evidence->student_id]);
             } else {
@@ -137,6 +154,22 @@ class StudentEvidenceController extends Controller {
                 $this->saveEvidenceFile($evidence);
             }
             $evidence->update(false);
+            //set notification
+            $notification = Yii::createObject([
+                'class' => Notification::className(),
+                'user_id' => ProjectManager::findOne([Project::findOne([$student_evidence->project_id])->manager_id])->user_id,
+                'description' => Notification::EDITED_RECEIVED_TASK,
+                'role' => Notification::ROLE_STUDENT,
+                'created_at' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'),
+                'viewed' => false,
+                'url' => Url::to(['/project_manager/task/show-feedback-screen',
+                    'taskId'=>$student_evidence->task_id,
+                    'evidenceId'=>$evidence->id
+                ])
+            ]);
+
+            $notification->save(false);
+
             return $this->redirect(['view', 'task_id' => $student_evidence->task_id,
                 'project_id' => $student_evidence->project_id, 'student_id' => $student_evidence->student_id]);
         } else {

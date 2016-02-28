@@ -22,12 +22,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="student-evidence-index">
 
     <div class="well well-sm">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode ($this->title) ?></h1>
     </div>
 
     <?php
-    foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
-        echo Alert::widget([
+    foreach (Yii::$app->getSession ()->getAllFlashes () as $key => $message) {
+        echo Alert::widget ([
             'options' => [
                 'class' => 'alert-' . $key,
             ],
@@ -39,19 +39,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     // ////////////////////////BOTON CREAR/////////////////////7
-    $user = User::find()
-        ->where("id=" . Yii::$app->user->id)
-        ->one();
+    $user = User::find ()
+        ->where ("id=" . Yii::$app->user->id)
+        ->one ();
     $userId = $user->id;
-    $manager = ProjectManager::find()
-        ->where("user_id=" . $userId)
-        ->one();
+    $manager = ProjectManager::find ()
+        ->where ("user_id=" . $userId)
+        ->one ();
     $managerId = $manager->id;
-    $projects = Project::find()
-        ->where("manager_id=" . $managerId)
-        ->all();
+    $projects = Project::find ()
+        ->where ("manager_id=" . $managerId)
+        ->all ();
 
-    Modal::begin([
+    Modal::begin ([
         'header' => '<h2>Seleccione el proyecto</h2>',
         'toggleButton' => [
             'label' => 'Crear nueva petición',
@@ -61,14 +61,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
     ?>
 
-    <?= Html::beginForm(['task/select-project'], 'post') ?>
-    <?= Html::dropDownList('list', null, ArrayHelper::map($projects, 'id', 'name'), ['class' => 'form-control']) ?>
-    <?= Html::submitButton('Crear', ['class' => 'btn btn-success']) ?>
-    <?= Html::endForm() ?>
+    <?= Html::beginForm (['task/select-project'], 'post') ?>
+    <?= Html::dropDownList ('list', null, ArrayHelper::map ($projects, 'id', 'name'), ['class' => 'form-control']) ?>
+    <?= Html::submitButton ('Crear', ['class' => 'btn btn-success']) ?>
+    <?= Html::endForm () ?>
 
     <?php
 
-    Modal::end();
+    Modal::end ();
     ////////////////////////////// BOTON CREAR///////////////////////////////////7
     ?>
 
@@ -82,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="panel-body">
 
-            <?= GridView::widget([
+            <?= GridView::widget ([
                 'dataProvider' => $dataProviderNews,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'template' => '{update}',
                         'buttons' => [
                             'update' => function ($url, $model) {
-                                return Html::a('<span class="glyphicon glyphicon-pencil"></span>',
+                                return Html::a ('<span class="glyphicon glyphicon-pencil"></span>',
                                     ['task/update', 'id' => $model['task_id']]);
                             }
                         ],
@@ -122,7 +122,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="panel-body">
 
-            <?= GridView::widget([
+            <?= GridView::widget ([
                 'dataProvider' => $dataProviderPending,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
@@ -148,7 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'template' => '{update}',
                         'buttons' => [
                             'update' => function ($url, $model) {
-                                return Html::a('<span class="glyphicon glyphicon-pencil"></span>',
+                                return Html::a ('<span class="glyphicon glyphicon-pencil"></span>',
                                     ['task/update', 'id' => $model['task_id']]);
                             }
                         ],
@@ -157,8 +157,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'template' => '{view}',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::a('<span class="glyphicon glyphicon-file"></span>',
-                                    ['task/show-feedback-screen', 'id' => $model['task_id']]);
+                                return Html::a ('<span class="glyphicon glyphicon-file"></span>',
+                                    ['task/show-feedback-screen', 'taskId' => $model['task_id'],
+                                        'evidenceId' => $model['evidence_id']]);
                             }
                         ],
                     ],
@@ -176,7 +177,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="panel-body">
 
-            <?= GridView::widget([
+            <?= GridView::widget ([
                 'dataProvider' => $dataProviderAccepted,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
