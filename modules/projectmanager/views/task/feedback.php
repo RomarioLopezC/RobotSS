@@ -48,6 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
     <?= Html::label ('Archivo adjunto: ') ?>
 
+
     <?= Html::a ($evidence->attachment_name, ['download', 'evidenceId' => $evidence->id]); ?>
 
     <?= Html::beginForm (['give-feedback', 'id' => $model['id']], 'post') ?>
