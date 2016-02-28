@@ -41,7 +41,7 @@ class Evidence extends \yii\db\ActiveRecord
     {
         return [
             [['description'], 'required'],
-            [['file'], 'file', 'skipOnEmpty' => false],
+            [['file'], 'file'],
             [['description'], 'string'],
             [['accepted_date', 'updated_at'], 'safe'],
             [['attachment_path', 'attachment_name', 'status'], 'string', 'max' => 255]
