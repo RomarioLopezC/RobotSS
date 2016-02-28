@@ -13,33 +13,46 @@ use Yii;
  * @property string $role
  * @property string $created_at
  * @property integer $viewed
+ * @property string $url
  *
  * @property User $user
  */
-class Notification extends \yii\db\ActiveRecord {
+class Notification extends \yii\db\ActiveRecord
+{
+
+    const ROLE_STUDENT = 'student';
+    const ROLE_PROJECT_MANAGER = 'projectManager';
+    const NEW_TASK = 'Tienes 1 Nueva Tarea';
+    const ACCEPTED_TASK = 'Tarea Aceptada';
+    const REJECTED_TASK = 'Tarea Rechazada';
+
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'notification';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['user_id', 'viewed'], 'integer'],
             [['description'], 'string'],
             [['created_at'], 'safe'],
-            [['role'], 'string', 'max' => 255]
+            [['url'], 'required'],
+            [['role', 'url'], 'string', 'max' => 255]
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => Yii::t('app', 'ID'),
             'user_id' => Yii::t('app', 'User ID'),
@@ -47,13 +60,15 @@ class Notification extends \yii\db\ActiveRecord {
             'role' => Yii::t('app', 'Role'),
             'created_at' => Yii::t('app', 'Created At'),
             'viewed' => Yii::t('app', 'Viewed'),
+            'url' => Yii::t('app', 'Url'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser() {
+    public function getUser()
+    {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

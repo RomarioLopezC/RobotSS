@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Notification;
 use app\models\Person;
 use app\models\ProjectManager;
 use app\models\ProjectManagerForm;
@@ -101,8 +102,12 @@ class SiteController extends Controller {
             'user' => $user,
             'person' => $person,
         ]);
-
-
     }
 
+    public function actionViewNotification($id){
+        $notification = Notification::findOne([$id]);
+        $url = $notification->url;
+        $notification->delete();
+        $this->redirect($url);
+    }
 }

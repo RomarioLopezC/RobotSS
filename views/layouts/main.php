@@ -70,10 +70,11 @@ AppAsset::register($this);
                 ]
             );
         } else {
-            foreach ($notifications as $notification) {
+            foreach ($notifications->all() as $notification) {
                 array_push($arrayNotifications,
                     [
-                        'label' => $notification->description
+                        'label' => $notification->description,
+                        'url'=>Url::to(['/site/view-notification','id'=>$notification->id])
                     ]
                 );
             }
