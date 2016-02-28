@@ -151,8 +151,24 @@ class TaskController extends Controller
                         'status' => Task::NEW_TASK,
                     ])->execute();
                 }
-                Yii::$app->getSession()->setFlash('success', 'Petición creada exitosamente');
+
+                $notification = Yii::createObject([
+                    'class' => Notification::className(),
+                    'user_id' => Student::findOne([$value])->user_id,
+                    'description' => Notification::EDITED_TASK,
+                    'role' => Notification::ROLE_STUDENT,
+                    'created_at' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'),
+                    'viewed' => false,
+                    'url' => Url::to(['/student/student-evidence/view',
+                        'task_id'=>$model->id,
+                        'project_id'=>$model->project_id,
+                        'student_id'=>$value
+                    ])
+                ]);
+
+                $notification->save(false);
             }
+                Yii::$app->getSession()->setFlash('success', 'Petición creada exitosamente');
             return $this->redirect(['student-evidence/index']);
         } else {
             return $this->render('update', [
