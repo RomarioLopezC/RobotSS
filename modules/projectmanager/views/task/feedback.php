@@ -1,10 +1,10 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\DetailView;
-use yii\helpers\ArrayHelper;
 use app\models\Evidence;
 use app\models\StudentEvidence;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Task */
@@ -15,10 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="task-view">
 
-    <h1><?= Html::encode ($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
 
-    <?= DetailView::widget ([
+    <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
 
@@ -28,16 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
-    <h1><?= Html::encode ($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
     <?php
 
-    $student_evidence = StudentEvidence::find ()->where ("task_id=" . $model->id)
-        ->one ();
+    $student_evidence = StudentEvidence::find()->where("task_id=" . $model->id)
+        ->one();
     $evidence_id = $student_evidence->evidence_id;
 
-    $evidence = Evidence::find ()->where ("id=" . $evidence_id)
-        ->one ();
-    echo DetailView::widget ([
+    $evidence = Evidence::find()->where("id=" . $evidence_id)
+        ->one();
+    echo DetailView::widget([
         'model' => $evidence,
         'attributes' => [
 
@@ -46,24 +46,24 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]); ?>
-    <?= Html::label ('Archivo adjunto: ') ?>
+    <?= Html::label('Archivo adjunto: ') ?>
 
-    <?= Html::a ($evidence->attachment_name, ['download', 'evidence_id' => $evidence->id]); ?>
+    <?= Html::a($evidence->attachment_name, ['download', 'evidence_id' => $evidence->id]); ?>
 
-    <?= Html::beginForm (['give-feedback', 'id' => $model['id']], 'post') ?>
+    <?= Html::beginForm(['give-feedback', 'id' => $model['id']], 'post') ?>
     <?php
     $array = [['value' => 1, 'estado' => 'Aceptado'], ['value' => 2, 'estado' => 'No aceptado']];
     ?>
-    <?= Html::label ('Aceptar avance?') ?>
+    <?= Html::label('Aceptar avance?') ?>
 
-    <?= Html::radioList ('aceptado', null, ArrayHelper::map ($array, 'value', 'estado'), ['class' => "form-control"]) ?>
+    <?= Html::radioList('aceptado', null, ArrayHelper::map($array, 'value', 'estado'), ['class' => "form-control"]) ?>
 
-    <?= Html::label ('Retroalimentación') ?>
+    <?= Html::label('Retroalimentación') ?>
 
-    <?= Html::textarea ('feedback', null, ['class' => "form-control"]) ?>
+    <?= Html::textarea('feedback', null, ['class' => "form-control"]) ?>
 
-    <?= Html::submitButton ('Guardar', ['class' => 'btn btn-success']) ?>
+    <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
 
-    <?= Html::endForm () ?>
+    <?= Html::endForm() ?>
 
 </div>

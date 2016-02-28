@@ -1,14 +1,11 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-use yii\bootstrap\Modal;
-use yii\helpers\ArrayHelper;
-use app\models\User;
-use app\models\Project;
-use app\models\Registration;
 use app\models\ProjectManager;
+use app\models\User;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 
 
 /* @var $this yii\web\View */
@@ -18,29 +15,29 @@ use yii\helpers\Url;
 
 <div class="task-form">
 
-    <?php $form = ActiveForm::begin (['action' => Url::to (['create'])]); ?>
+    <?php $form = ActiveForm::begin(['action' => Url::to(['create'])]); ?>
 
-    <?= $form->field ($model, 'name')->textInput (['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field ($model, 'description')->textarea (['rows' => 6]) ?>
+    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field ($model, 'delivery_date')->widget (\yii\jui\DatePicker::classname (), [
+    <?= $form->field($model, 'delivery_date')->widget(\yii\jui\DatePicker::classname(), [
 
         'dateFormat' => 'yyyy-MM-dd'
     ]) ?>
 
     <?php
 
-    $user = User::find ()
-        ->where ("id=" . Yii::$app->user->id)
-        ->one ();
+    $user = User::find()
+        ->where("id=" . Yii::$app->user->id)
+        ->one();
     $user_id = $user->id;
-    $manager = ProjectManager::find ()
-        ->where ("user_id=" . $user_id)
-        ->one ();
+    $manager = ProjectManager::find()
+        ->where("user_id=" . $user_id)
+        ->one();
     $manager_id = $manager->id;
 
-    $students = Yii::$app->db->createCommand ('Select
+    $students = Yii::$app->db->createCommand('Select
         registration.student_id,
         student.id,
         person.name,
@@ -54,18 +51,18 @@ use yii\helpers\Url;
         person
         On user.person_id = person.id
         where registration.project_id=' . $project_id)
-        ->queryAll ();
+        ->queryAll();
 
 
-    echo $form->field ($model, 'students')->checkboxList (ArrayHelper::map ($students, 'student_id', 'name'));
+    echo $form->field($model, 'students')->checkboxList(ArrayHelper::map($students, 'student_id', 'name'));
 
     ?>
 
 
     <div class="form-group">
-        <?= Html::submitButton ($model->isNewRecord ? 'Guardar' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end (); ?>
+    <?php ActiveForm::end(); ?>
 
 </div>

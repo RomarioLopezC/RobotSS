@@ -5,12 +5,9 @@
  * Date: 14/02/2016
  * Time: 03:39 PM
  */
+use app\models\Person;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
-use app\models\Student;
-use app\models\Person;
-use app\models\Degree;
-use app\models\Project;
 
 ?>
 <div class="row">
@@ -36,7 +33,7 @@ use app\models\Project;
     </div>
     <div class="col-xs-5">
         <?= $student->enrollment_id ?><br>
-        <?= $person->name .' '. $person->lastname ?><br>
+        <?= $person->name . ' ' . $person->lastname ?><br>
         <?= $student->getFaculty()->all()[0]['name'] ?><br>
         <?= $degree->name ?><br>
     </div>

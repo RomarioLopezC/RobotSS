@@ -3,15 +3,14 @@
 namespace app\modules\admin\controllers;
 
 use app\models\Project;
-use yii\web\Controller;
-use yii\data\ActiveDataProvider;
 use Yii;
+use yii\data\ActiveDataProvider;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 
-class ProjectController extends Controller
-{
-    public function actionViewProjects(){
+class ProjectController extends Controller {
+    public function actionViewProjects() {
         $dataProvider = new ActiveDataProvider([
             'query' => Project::find()->where(['approved' => null]),
         ]);
@@ -21,8 +20,7 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function actionApproveProject($id)
-    {
+    public function actionApproveProject($id) {
         if (($model = Project::findOne($id)) !== null) {
             if ($model->approved == null) {
                 //Se registra como aprovado
@@ -49,8 +47,7 @@ class ProjectController extends Controller
         }
     }
 
-    public function actionCancelProject($id)
-    {
+    public function actionCancelProject($id) {
         if (($model = Project::findOne($id)) !== null) {
             if ($model->approved == false) {
                 //Se registra como cancelado

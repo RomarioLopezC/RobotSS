@@ -5,9 +5,10 @@
  * Date: 13/02/2016
  * Time: 07:54 PM
  */
+use app\models\Person;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
-use app\models\Person;
+
 ?>
 
 <div class="row">
@@ -27,7 +28,7 @@ use app\models\Person;
 $formatter = \Yii::$app->formatter;
 ?>
 <p class="text-right">
-    <?='Mérida, Yucatán a '.$formatter->asDate(date('Y-m-d'), 'long');?>
+    <?= 'Mérida, Yucatán a ' . $formatter->asDate(date('Y-m-d'), 'long'); ?>
 </p>
 <div class="row">
     <h4 class="text-center" style="margin: 2em 0">DATOS DEL PRESTADOR</h4>
@@ -40,7 +41,7 @@ $formatter = \Yii::$app->formatter;
     </div>
     <div class="col-xs-5">
         <?= $student->enrollment_id ?><br>
-        <?= $person->name .' '. $person->lastname ?><br>
+        <?= $person->name . ' ' . $person->lastname ?><br>
         <?= $degree->name ?><br>
         <?= $user->email ?><br>
         <?= $person->phone ?><br>
@@ -54,7 +55,7 @@ $formatter = \Yii::$app->formatter;
         <strong>Responsable del proyecto:</strong><br>
     </div>
     <div class="col-xs-5">
-        <?= $project->id .' - '.$project->name ?><br>
+        <?= $project->id . ' - ' . $project->name ?><br>
         <?= Person::findOne(\app\models\User::findOne($projectM->user_id)->person_id)->name . ' ' .
         Person::findOne(\app\models\User::findOne($projectM->user_id)->person_id)->lastname ?>
         <br>

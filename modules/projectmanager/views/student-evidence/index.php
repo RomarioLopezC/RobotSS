@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StudentEvidenceSearch */
@@ -88,8 +88,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => ['date', 'php:d/F/Y'],
                     ],
                     ['class' => 'yii\grid\ActionColumn',
-                        'template'=>'{update} {retro}',
-                        'buttons'=>[
+                        'template' => '{update} {retro}',
+                        'buttons' => [
                             'retro' => function ($url, $model) {
                                 return Html::a('Dar retroalimentación', $url);
                             }

@@ -1,15 +1,15 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-//use yii\web\User;
-use app\models\ProjectManager;
 use app\models\Project;
-use yii\helpers\ArrayHelper;
+use app\models\ProjectManager;
 use app\models\User;
-use yii\bootstrap\Modal;
-use app\models\Registration;
 use yii\bootstrap\Alert;
+use yii\bootstrap\Modal;
+use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+
+//use yii\web\User;
 
 
 /* @var $this yii\web\View */
@@ -21,10 +21,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="task-index">
 
-    <h1><?= Html::encode ($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
     <?php
-    foreach (Yii::$app->getSession ()->getAllFlashes () as $key => $message) {
-        echo Alert::widget ([
+    foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
+        echo Alert::widget([
             'options' => [
                 'class' => 'alert-' . $key,
             ],
@@ -37,19 +37,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     // ////////////////////////BOTON CREAR/////////////////////7
-    $user = User::find ()
-        ->where ("id=" . Yii::$app->user->id)
-        ->one ();
+    $user = User::find()
+        ->where("id=" . Yii::$app->user->id)
+        ->one();
     $user_id = $user->id;
-    $manager = ProjectManager::find ()
-        ->where ("user_id=" . $user_id)
-        ->one ();
+    $manager = ProjectManager::find()
+        ->where("user_id=" . $user_id)
+        ->one();
     $manager_id = $manager->id;
-    $projects = Project::find ()
-        ->where ("manager_id=" . $manager_id)
-        ->all ();
+    $projects = Project::find()
+        ->where("manager_id=" . $manager_id)
+        ->all();
 
-    Modal::begin ([
+    Modal::begin([
         'header' => '<h2>Seleccione el proyecto</h2>',
         'toggleButton' => [
             'label' => 'Crear nueva petición',
@@ -60,18 +60,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
     ?>
 
-    <?= Html::beginForm (['select-project'], 'post') ?>
-    <?= Html::dropDownList ('list', null, ArrayHelper::map ($projects, 'id', 'name'), ['class' => 'form-control']) ?>
-    <?= Html::submitButton ('Crear', ['class' => 'btn btn-success']) ?>
-    <?= Html::endForm () ?>
+    <?= Html::beginForm(['select-project'], 'post') ?>
+    <?= Html::dropDownList('list', null, ArrayHelper::map($projects, 'id', 'name'), ['class' => 'form-control']) ?>
+    <?= Html::submitButton('Crear', ['class' => 'btn btn-success']) ?>
+    <?= Html::endForm() ?>
 
     <?php
 
-    Modal::end ();
+    Modal::end();
     /////////////////////////////7 BOTON CREAR///////////////////////////////////7
     ?>
 
-    <?= GridView::widget ([
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -98,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{view}{edit}',
                 'buttons' => [
                     'view' => function ($url, $model) {
-                        return Html::a ('<span class="glyphicon glyphicon-file"></span>',
+                        return Html::a('<span class="glyphicon glyphicon-file"></span>',
                             ['show-feedback-screen', 'id' => $model['id']]);
                     }
                 ],

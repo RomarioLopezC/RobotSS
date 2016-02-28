@@ -2,23 +2,18 @@
 
 namespace app\modules\admin\controllers;
 
-use dektrium\user\controllers\RegistrationController;
-use dektrium\user\models\User;
-use yii\web\Controller;
-use yii\data\ActiveDataProvider;
 use app\models\SocialServiceManager;
-use Yii;
 use kartik\mpdf\Pdf;
+use Yii;
+use yii\data\ActiveDataProvider;
+use yii\web\Controller;
 
-class DefaultController extends Controller
-{
-    public function actionIndex()
-    {
+class DefaultController extends Controller {
+    public function actionIndex() {
         return $this->render('index');
     }
 
-    public function actionListSocialServiceManagers()
-    {
+    public function actionListSocialServiceManagers() {
         $dataProvider = new ActiveDataProvider([
             'query' => SocialServiceManager::find(),
         ]);
@@ -54,8 +49,8 @@ class DefaultController extends Controller
             'options' => ['title' => 'Krajee Report Title'],
             // call mPDF methods on the fly
             'methods' => [
-                'SetHeader'=>['Krajee Report Header'],
-                'SetFooter'=>['{PAGENO}'],
+                'SetHeader' => ['Krajee Report Header'],
+                'SetFooter' => ['{PAGENO}'],
             ]
         ]);
 

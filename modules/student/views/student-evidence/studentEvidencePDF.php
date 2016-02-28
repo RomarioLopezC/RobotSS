@@ -27,7 +27,7 @@ $formatter = \Yii::$app->formatter;
         <strong>Alumno:</strong><br>
     </div>
     <div class="col-xs-2">
-        <?= $person->name .' '. $person->lastname ?><br>
+        <?= $person->name . ' ' . $person->lastname ?><br>
     </div>
     <div class="col-xs-2">
         <strong>Fecha inicio:</strong><br>
@@ -64,7 +64,7 @@ $formatter = \Yii::$app->formatter;
 <br><br>
 <div class="panel panel-default">
     <div class="panel-heading center-block">
-        <h4 class= "text-center" style="font-weight: bold;">Lista de avances completados</h4>
+        <h4 class="text-center" style="font-weight: bold;">Lista de avances completados</h4>
     </div>
     <div class="panel-body">
         <?= GridView::widget([
