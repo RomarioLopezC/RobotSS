@@ -43,7 +43,8 @@ if ($registration = Registration::findOne(['student_id' => $student->id])) {
         "<div class = 'panel-footer'><h4>Da click en el menú <i>Avances</i> para ver los detalles.</h4></div>";
 } else {
     $textProject = 'No estás asignado a un proyecto';
-    $textDetails = 'Inicia el preregistro a un proyecto disponible y espera a que el encargado del servicio social confirme tu asignación.';
+    $textDetails = 'Inicia el preregistro a un proyecto disponible y espera a que el encargado del servicio social'.
+        ' confirme tu asignación.';
     $textFooter = '';
 }
 ?>
