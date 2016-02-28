@@ -64,11 +64,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row text-right">
         <div class="col-md-12">
+            <?= Html::a('Regresar', ['index'],
+                ['class' => 'btn btn-warning']);
+            ?>
             <?php
             if ($model->evidence_id == null) {
-                print Html::a('Registrar avance', ['create', 'task_id' => $model->task_id, 'project_id' => $model->project_id, 'student_id' => $model->student_id], ['class' => 'btn btn-primary']);
+                print Html::a('Registrar avance', ['create', 'task_id' => $model->task_id,
+                    'project_id' => $model->project_id, 'student_id' => $model->student_id],
+                    ['class' => 'btn btn-primary']);
             } else {
-                print Html::a('Editar avance', ['update', 'evidence_id' => $model->evidence_id], ['class' => 'btn btn-primary']);
+                print Html::a('Editar avance', ['update', 'evidence_id' => $model->evidence_id],
+                    ['class' => 'btn btn-primary']);
             }
             ?>
         </div>

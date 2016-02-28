@@ -85,7 +85,7 @@ class StudentEvidenceController extends Controller {
             $evidence->load($params);
 
             //Cambiar estado de evidencia a pendiente
-            $student_evidence->status = Evidence::$PENDING;
+            $student_evidence->status = StudentEvidence::$PENDING;
 
             $evidence->file = UploadedFile::getInstance($evidence, 'file');
             if ($evidence->validate() && $evidence->save()) {
