@@ -10,13 +10,11 @@ use app\models\SocialServiceManager;
 /**
  * SocialServiceManagerSearch represents the model behind the search form about `app\models\SocialServiceManager`.
  */
-class SocialServiceManagerSearch extends SocialServiceManager
-{
+class SocialServiceManagerSearch extends SocialServiceManager {
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'user_id', 'faculty_id'], 'integer'],
         ];
@@ -25,8 +23,7 @@ class SocialServiceManagerSearch extends SocialServiceManager
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -38,8 +35,7 @@ class SocialServiceManagerSearch extends SocialServiceManager
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = SocialServiceManager::find();
 
         $dataProvider = new ActiveDataProvider([

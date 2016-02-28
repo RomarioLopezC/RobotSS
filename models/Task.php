@@ -75,8 +75,7 @@ class Task extends \yii\db\ActiveRecord {
         return $this->hasOne(Project::className(), ['id' => 'project_id']);
     }
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             [
                 'class' => TimestampBehavior::className(),

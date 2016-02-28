@@ -17,21 +17,18 @@ use Yii;
  * @property User $user
  * @property Faculty $faculty
  */
-class Student extends \yii\db\ActiveRecord
-{
+class Student extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'student';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'user_id', 'faculty_id', 'current_semester'], 'required'],
             [['id', 'user_id', 'faculty_id', 'current_semester', 'degree_id'], 'integer'],
@@ -42,8 +39,7 @@ class Student extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => Yii::t('app', 'ID'),
             'user_id' => Yii::t('app', 'User ID'),
@@ -57,16 +53,14 @@ class Student extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFaculty()
-    {
+    public function getFaculty() {
         return $this->hasOne(Faculty::className(), ['id' => 'faculty_id']);
     }
 

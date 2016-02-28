@@ -13,21 +13,18 @@ use Yii;
  * @property Project $project
  * @property Degree $degree
  */
-class StudentProfile extends \yii\db\ActiveRecord
-{
+class StudentProfile extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'student_profile';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['project_id', 'degree_id'], 'required'],
             [['project_id', 'degree_id'], 'integer']
@@ -37,8 +34,7 @@ class StudentProfile extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'project_id' => 'Project ID',
             'degree_id' => 'Degree ID',
@@ -48,16 +44,14 @@ class StudentProfile extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProject()
-    {
+    public function getProject() {
         return $this->hasOne(Project::className(), ['id' => 'project_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDegree()
-    {
+    public function getDegree() {
         return $this->hasOne(Degree::className(), ['id' => 'degree_id']);
     }
 }

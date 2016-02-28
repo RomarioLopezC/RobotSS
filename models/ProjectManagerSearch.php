@@ -10,13 +10,11 @@ use app\models\ProjectManager;
 /**
  * ProjectManagerSearch represents the model behind the search form about `app\models\ProjectManager`.
  */
-class ProjectManagerSearch extends ProjectManager
-{
+class ProjectManagerSearch extends ProjectManager {
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'user_id'], 'integer'],
             [['last_name', 'organization'], 'safe'],
@@ -26,8 +24,7 @@ class ProjectManagerSearch extends ProjectManager
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +36,7 @@ class ProjectManagerSearch extends ProjectManager
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = ProjectManager::find();
 
         $dataProvider = new ActiveDataProvider([

@@ -10,13 +10,11 @@ use app\models\Task;
 /**
  * TaskSearch represents the model behind the search form about `app\models\Task`.
  */
-class TaskSearch extends Task
-{
+class TaskSearch extends Task {
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'project_id'], 'integer'],
             [['name', 'description', 'delivery_date', 'created_at', 'updated_at', 'status'], 'safe'],
@@ -26,8 +24,7 @@ class TaskSearch extends Task
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +36,7 @@ class TaskSearch extends Task
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Task::find();
 
         $dataProvider = new ActiveDataProvider([
