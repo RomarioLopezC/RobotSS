@@ -9,25 +9,22 @@ namespace app\modules\socialservicemanager\controllers;
 
 use app\models\Person;
 use app\models\ProjectVacancy;
-use dektrium\user\models\User;
-use Yii;
+use app\models\Registration;
 use app\models\SocialServiceManager;
 use app\models\SocialServiceManagerSearch;
-use app\models\Registration;
-use app\models\Student;
+use dektrium\user\models\User;
+use Yii;
+use yii\bootstrap\Alert;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\bootstrap\Alert;
 
 /**
  * SocialServiceManagerController implements the CRUD actions for SocialServiceManager model.
  */
-class SocialServiceManagerController extends Controller
-{
-    public function behaviors()
-    {
+class SocialServiceManagerController extends Controller {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -42,8 +39,7 @@ class SocialServiceManagerController extends Controller
      * Lists all SocialServiceManager models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new SocialServiceManagerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -58,8 +54,7 @@ class SocialServiceManagerController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -70,8 +65,7 @@ class SocialServiceManagerController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new SocialServiceManager();
 
         if ($model->load(Yii::$app->request->post())) {
@@ -113,8 +107,7 @@ class SocialServiceManagerController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = SocialServiceManager::findOne(['user_id' => $id]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -132,8 +125,7 @@ class SocialServiceManagerController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($user_id)
-    {
+    public function actionDelete($user_id) {
         //$this->findModel($user_id)->delete();
         Yii::$app->db->createCommand()->delete('social_service_manager', 'user_id =' . $user_id . '')->execute();
         Yii::$app->db->createCommand()->delete('user', 'id =' . $user_id . '')->execute();
@@ -153,8 +145,7 @@ class SocialServiceManagerController extends Controller
      * @return SocialServiceManager the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = SocialServiceManager::findOne($id)) !== null) {
             return $model;
         } else {
@@ -162,8 +153,7 @@ class SocialServiceManagerController extends Controller
         }
     }
 
-    public function actionViewPreregisteredStudents()
-    {
+    public function actionViewPreregisteredStudents() {
         $dataProvider = new ActiveDataProvider([
             'query' => Registration::find()->where(['student_status' => Registration::UNASSIGNED]),
         ]);
@@ -172,8 +162,7 @@ class SocialServiceManagerController extends Controller
         ]);
     }
 
-    public function actionAssignStudent($id)
-    {
+    public function actionAssignStudent($id) {
         if (($model = Registration::findOne($id)) !== null) {
             if ($model->student_status != Registration::ASSIGNED) {
                 //Se registra como asignado
@@ -214,8 +203,7 @@ class SocialServiceManagerController extends Controller
         }
     }
 
-    public function actionCancelPreregistration($id)
-    {
+    public function actionCancelPreregistration($id) {
         if (($model = Registration::findOne($id)) !== null) {
             $model->student_status = Registration::PREREGISTRATION_CANCELLED;
             $model->save();

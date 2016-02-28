@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StudentEvidenceSearch */
@@ -71,8 +71,8 @@ Yii::$app->formatter->locale = 'es_ES';
                         'value' => 'task.name',
                     ],
                     [
-                        'attribute' => 'evidence_updated_at',
-                        'value' => 'evidence.updated_at',
+                        'attribute' => 'task_updated_at',
+                        'value' => 'task.updated_at',
                         'format' => 'date',
                     ],
                     [

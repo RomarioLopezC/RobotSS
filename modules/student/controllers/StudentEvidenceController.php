@@ -84,6 +84,9 @@ class StudentEvidenceController extends Controller {
             $params = Yii::$app->request->post();
             $evidence->load($params);
 
+            //Cambiar estado de evidencia a pendiente
+            $student_evidence->status = StudentEvidence::$PENDING;
+
             $evidence->file = UploadedFile::getInstance($evidence, 'file');
             if ($evidence->validate() && $evidence->save()) {
 
@@ -94,7 +97,8 @@ class StudentEvidenceController extends Controller {
                 $student_evidence->evidence_id = $evidence->id;
                 $student_evidence->update();
 
-                return $this->redirect(['view', 'task_id' => $student_evidence->task_id, 'project_id' => $student_evidence->project_id, 'student_id' => $student_evidence->student_id]);
+                return $this->redirect(['view', 'task_id' => $student_evidence->task_id,
+                    'project_id' => $student_evidence->project_id, 'student_id' => $student_evidence->student_id]);
             } else {
                 Yii::$app->session->setFlash('danger', 'Ocurrió un error al guardar. Vuelve a intentar');
                 echo $evidence->validate();
@@ -237,7 +241,10 @@ class StudentEvidenceController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($task_id, $project_id, $evidence_id, $student_id) {
-        if (($model = StudentEvidence::findOne(['task_id' => $task_id, 'project_id' => $project_id, 'evidence_id' => $evidence_id, 'student_id' => $student_id])) !== null) {
+        if (($model = StudentEvidence::findOne(['task_id' => $task_id,
+                'project_id' => $project_id, 'evidence_id' => $evidence_id,
+                'student_id' => $student_id])) !== null
+        ) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -245,7 +252,9 @@ class StudentEvidenceController extends Controller {
     }
 
     protected function findModelWithoutEvidence($task_id, $project_id, $student_id) {
-        if (($model = StudentEvidence::findOne(['task_id' => $task_id, 'project_id' => $project_id, 'student_id' => $student_id])) !== null) {
+        if (($model = StudentEvidence::findOne(['task_id' => $task_id,
+                'project_id' => $project_id, 'student_id' => $student_id])) !== null
+        ) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -264,7 +273,10 @@ class StudentEvidenceController extends Controller {
      * @param $evidence
      */
     private function saveEvidenceFile($evidence) {
-        $evidence->file->saveAs(Yii::getAlias('@webroot') . '/uploads/evidence/' . $evidence->id . '.' . $evidence->file->extension);
+        $evidence->
+        file->
+        saveAs(Yii::getAlias('@webroot') . '/uploads/evidence/' . $evidence->id . '.' .
+            $evidence->file->extension);
         $evidence->attachment_path = '/uploads/evidence/' . $evidence->id . '.' . $evidence->file->extension;
         $evidence->attachment_name = $evidence->file->baseName . '.' . $evidence->file->getExtension();
     }

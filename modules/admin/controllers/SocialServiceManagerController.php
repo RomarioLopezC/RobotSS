@@ -3,22 +3,20 @@
 namespace app\modules\admin\controllers;
 
 use app\models\Person;
-use dektrium\user\models\User;
-use Yii;
 use app\models\SocialServiceManager;
 use app\models\SocialServiceManagerSearch;
+use dektrium\user\models\User;
+use Yii;
+use yii\bootstrap\Alert;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\bootstrap\Alert;
 
 /**
  * SocialServiceManagerController implements the CRUD actions for SocialServiceManager model.
  */
-class SocialServiceManagerController extends Controller
-{
-    public function behaviors()
-    {
+class SocialServiceManagerController extends Controller {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -33,8 +31,7 @@ class SocialServiceManagerController extends Controller
      * Lists all SocialServiceManager models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new SocialServiceManagerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -49,8 +46,7 @@ class SocialServiceManagerController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -61,8 +57,7 @@ class SocialServiceManagerController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new SocialServiceManager();
 
         if ($model->load(Yii::$app->request->post())) {
@@ -76,15 +71,15 @@ class SocialServiceManagerController extends Controller
             $user->password = $model->password;
             $user->email = $model->email;
             $user->person_id = $person->id;
-            $user->scenario='register';
+            $user->scenario = 'register';
             if ($user->validate()) {
                 $user->register();
                 $model->user_id = $user->id;
                 $model->save(false);
                 //set the success message
-                Yii::$app->getSession()->setFlash('success','Usuario creado con éxito');
+                Yii::$app->getSession()->setFlash('success', 'Usuario creado con éxito');
                 return $this->redirect(['view', 'id' => $model->id]);
-            }else{
+            } else {
                 $model->addErrors($user->errors);
             }
         }
@@ -100,8 +95,7 @@ class SocialServiceManagerController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -119,11 +113,10 @@ class SocialServiceManagerController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($user_id)
-    {
+    public function actionDelete($user_id) {
         //$this->findModel($user_id)->delete();
-        Yii::$app->db->createCommand()->delete('social_service_manager', 'user_id ='.$user_id.'')->execute();
-        Yii::$app->db->createCommand()->delete('user', 'id ='.$user_id.'')->execute();
+        Yii::$app->db->createCommand()->delete('social_service_manager', 'user_id =' . $user_id . '')->execute();
+        Yii::$app->db->createCommand()->delete('user', 'id =' . $user_id . '')->execute();
         echo Alert::widget([
 
             'body' => 'El usuario se eliminó exitosamente!'
@@ -140,8 +133,7 @@ class SocialServiceManagerController extends Controller
      * @return SocialServiceManager the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = SocialServiceManager::findOne($id)) !== null) {
             return $model;
         } else {

@@ -1,10 +1,10 @@
 <?php
 
+use app\models\Degree;
+use app\models\Faculty;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use app\models\Faculty;
-use app\models\Degree;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Student */

@@ -18,10 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-md-6">
             Estado:
-            <?php if ($model->evidence_id == null): ?>
+            <?php if ($model->status == null): ?>
                 Nuevo
             <?php else:
-                print $model->evidence->status;
+                print $model->status;
             endif; ?>
         </div>
         <div class="col-md-6 text-right">
@@ -54,7 +54,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="panel-footer text-right">
                     <?php if ($model->evidence_id): ?>
-                        <h4 style="display: inline">Archivo:</h4> <?= Html::a('Descarga ' . $model->evidence->attachment_name, ['download', 'evidence_id' => $model->evidence_id]) ?>
+                        <h4 style="display: inline">
+                            Archivo:</h4> <?= Html::a('Descarga ' . $model->evidence->attachment_name, ['download', 'evidence_id' => $model->evidence_id]) ?>
                     <?php endif; ?>
                 </div>
             </div>
@@ -63,11 +64,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row text-right">
         <div class="col-md-12">
+            <?= Html::a('Regresar', ['index'],
+                ['class' => 'btn btn-warning']);
+            ?>
             <?php
             if ($model->evidence_id == null) {
-                print Html::a('Registrar avance', ['create', 'task_id' => $model->task_id, 'project_id' => $model->project_id, 'student_id' => $model->student_id], ['class' => 'btn btn-primary']);
+                print Html::a('Registrar avance', ['create', 'task_id' => $model->task_id,
+                    'project_id' => $model->project_id, 'student_id' => $model->student_id],
+                    ['class' => 'btn btn-primary']);
             } else {
-                print Html::a('Editar avance', ['update', 'evidence_id' => $model->evidence_id], ['class' => 'btn btn-primary']);
+                print Html::a('Editar avance', ['update', 'evidence_id' => $model->evidence_id],
+                    ['class' => 'btn btn-primary']);
             }
             ?>
         </div>
