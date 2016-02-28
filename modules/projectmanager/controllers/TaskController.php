@@ -249,11 +249,11 @@ class TaskController extends Controller
 
     }
 
-    public function actionShowFeedbackScreen ($taskId,$evidenceId)
+    public function actionShowFeedbackScreen ($taskId, $evidenceId)
     {
         return $this->render ('feedback', [
             'model' => $this->findModel ($taskId),
-            'evidence'=>Evidence::find()->where("id=" . $evidenceId)->one()
+            'evidence' => Evidence::find ()->where ("id=" . $evidenceId)->one ()
         ]);
     }
 
