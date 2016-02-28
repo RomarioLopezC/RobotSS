@@ -1,14 +1,12 @@
 <?php
-
 namespace app\modules\projectmanager\controllers;
 
+use Yii;
 use app\models\Notification;
 use app\models\Student;
-use app\models\User;
-use Yii;
+use yii\helpers\Url;
 use app\models\Task;
 use app\models\TaskSearch;
-use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -16,7 +14,6 @@ use app\models\StudentEvidence;
 use app\models\Registration;
 use app\models\Evidence;
 use yii\helpers\ArrayHelper;
-
 
 /**
  * TaskController implements the CRUD actions for Task model.
@@ -43,13 +40,10 @@ class TaskController extends Controller
     {
         $searchModel = new TaskSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('student-evidence/index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-
-
     }
 
     /**
@@ -69,29 +63,25 @@ class TaskController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($project_id)
+    public function actionCreate($projectId)
     {
         $model = new Task();
-
         if ($model->load(Yii::$app->request->post())) {
-
             if (strtotime($model->delivery_date) >= strtotime(Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'))) {
                 $students = $_POST['Task']['students'];
                 //$model->setIsNewRecord (true);
                 //$model->id = null;
-                $model->status = Task::NEWTASK;
+                $model->status = Task::NEW_TASK;
                 //$project = Registration::find ()->where ("student_id=" . $value)->one ();
-                $model->project_id = $project_id;
+                $model->project_id = $projectId;
                 $model->save();
-
                 foreach ($students as $value) {
-
                     Yii::$app->db->createCommand()->insert('student_evidence', [
                         'task_id' => $model->id,
                         'project_id' => $model->project_id,
                         'evidence_id' => null,
                         'student_id' => $value,
-                        'status' => Task::NEWTASK
+                        'status' => Task::NEW_TASK
                     ])->execute();
 
                     $notification = Yii::createObject([
@@ -102,9 +92,9 @@ class TaskController extends Controller
                         'created_at' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'),
                         'viewed' => false,
                         'url' => Url::to(['/student/student-evidence/view',
-                            'task_id'=>$model->id,
-                            'project_id'=>$model->project_id,
-                            'student_id'=>$value
+                            'task_id' => $model->id,
+                            'project_id' => $model->project_id,
+                            'student_id' => $value
                         ])
                     ]);
 
@@ -116,10 +106,9 @@ class TaskController extends Controller
                 Yii::$app->getSession()->setFlash('danger', 'La fecha de entrega no puede ser anterior a la fecha actual');
                 return $this->render('create', [
                     'model' => $model,
-                    'project_id' => $project_id,
+                    'projectId' => $projectId,
                 ]);
             }
-
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -136,16 +125,14 @@ class TaskController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $project_id = $model->project_id;
-        $students_ids = Yii::$app->db->createCommand('SELECT * FROM student_evidence WHERE task_id=' . $model->id)
+        $projectId = $model->project_id;
+        $studentIds = Yii::$app->db->createCommand('SELECT * FROM student_evidence WHERE task_id=' . $model->id)
             ->queryAll();
-        $ids = ArrayHelper::getColumn($students_ids, 'student_id');
+        $ids = ArrayHelper::getColumn($studentIds, 'student_id');
         $model->students = $ids;
         $status = Yii::$app->db->createCommand('SELECT * FROM student_evidence WHERE task_id=' . $model->id)
             ->queryOne();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
             $students = $_POST['Task']['students'];
             //$model->setIsNewRecord (true);
             //$model->id = null;
@@ -154,26 +141,23 @@ class TaskController extends Controller
             //$model->project_id = $project_id;
             //$model->save ();
             Yii::$app->db->createCommand()->delete('student_evidence', 'task_id=' . $model->id)->execute();
-
             foreach ($students as $value) {
-
-
-                Yii::$app->db->createCommand()->insert('student_evidence', [
-                    'task_id' => $model->id,
-                    'project_id' => $model->project_id,
-                    'evidence_id' => null,
-                    'student_id' => $value,
-                    'status' => Task::PENDING,
-                ])->execute();
-
+                if (!$status = StudentEvidence::findOne(['task_id' => $model->id, 'student_id' => $value])) {
+                    Yii::$app->db->createCommand()->insert('student_evidence', [
+                        'task_id' => $model->id,
+                        'project_id' => $model->project_id,
+                        'evidence_id' => null,
+                        'student_id' => $value,
+                        'status' => Task::NEW_TASK,
+                    ])->execute();
+                }
                 Yii::$app->getSession()->setFlash('success', 'Petición creada exitosamente');
             }
             return $this->redirect(['student-evidence/index']);
-
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'project_id' => $project_id,
+                'projectId' => $projectId,
             ]);
         }
     }
@@ -187,7 +171,6 @@ class TaskController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
         return $this->redirect(['student-evidence/index']);
     }
 
@@ -211,12 +194,10 @@ class TaskController extends Controller
     {
         $model = new Task();
         $project = $_POST['list'];
-
         if (Registration::find()->where("project_id=" . $project)->all()) {
             return $this->render('create', [
                 'model' => $model,
-                'project_id' => $project,
-
+                'projectId' => $project,
             ]);
         } else {
             Yii::$app->getSession()->setFlash('danger', 'No hay estudiantes en el proyecto seleccionado ');
@@ -227,45 +208,34 @@ class TaskController extends Controller
     public function actionGiveFeedback($id)
     {
         $task = $this->findModel($id);
-
-
         $comment = $_POST['feedback'];
         $accepted = $_POST['aceptado'];
-        $student_evidence = StudentEvidence::find()
+        $studentEvidence = StudentEvidence::find()
             ->where("task_id=" . $task->id)
             ->one();
-        $evidence_id = $student_evidence->evidence_id;
-        $student_id = $student_evidence->student_id;
-
+        $evidenceId = $studentEvidence->evidence_id;
+        $studentId = $studentEvidence->student_id;
         if ($accepted == 1) {
-
             //Yii::$app->db->createCommand ()->update ('student_evidence', ['comment' => $comment], 'task_id=' . $task->id)->execute ();
-            Yii::$app->db->createCommand('UPDATE student_evidence SET comment="' . $comment . '" WHERE task_id=' . $task->id . ' AND student_id=' . $student_id)
+            Yii::$app->db->createCommand('UPDATE student_evidence SET comment="' . $comment . '" WHERE task_id=' . $task->id . ' AND student_id=' . $studentId)
                 ->execute();
             $task->status = Task::ACCEPTED;
-            Yii::$app->db->createCommand('UPDATE student_evidence SET status="' . Task::ACCEPTED . '" WHERE task_id=' . $task->id . ' AND student_id=' . $student_id)
+            Yii::$app->db->createCommand('UPDATE student_evidence SET status="' . Task::ACCEPTED . '" WHERE task_id=' . $task->id . ' AND student_id=' . $studentId)
                 ->execute();
-
             $task->update();
-
             $evidence = Evidence::find()
-                ->where("id=" . $evidence_id)
+                ->where("id=" . $evidenceId)
                 ->one();
             //$evidence->status = Task::ACCEPTED;
             $evidence->accepted_date = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
             $evidence->update();
             Yii::$app->getSession()->setFlash('success', 'Sus cambios se han guardado exitosamente');
-
         } else {
-            $student_evidence->comment = $comment;
-
-            $student_evidence->update();
+            $studentEvidence->comment = $comment;
+            $studentEvidence->update();
             Yii::$app->getSession()->setFlash('success', 'Sus cambios se han guardado exitosamente');
         }
-
-
         return $this->redirect(['student-evidence/index']);
-
     }
 
     public function actionShowFeedbackScreen($id)
@@ -277,11 +247,11 @@ class TaskController extends Controller
 
     public function actionDownload($evidence_id)
     {
-        $student_evidence = StudentEvidence::find()->where("evidence_id=" . $evidence_id)
+        $studentEvidence = StudentEvidence::find()->where("evidence_id=" . $evidence_id)
             ->one();
         return Yii::$app->response->sendFile(
-            Yii::getAlias('@webroot') . $student_evidence->evidence->attachment_path,
-            $student_evidence->evidence->attachment_name
+            Yii::getAlias('@webroot') . $studentEvidence->evidence->attachment_path,
+            $studentEvidence->evidence->attachment_name
         )->send();
     }
 }

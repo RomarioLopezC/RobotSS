@@ -31,11 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php
 
-    $student_evidence = StudentEvidence::find()->where("task_id=" . $model->id)
+    $studentEvidence = StudentEvidence::find()->where("task_id=" . $model->id)
         ->one();
-    $evidence_id = $student_evidence->evidence_id;
+    $evidenceId = $studentEvidence->evidence_id;
 
-    $evidence = Evidence::find()->where("id=" . $evidence_id)
+    $evidence = Evidence::find()->where("id=" . $evidenceId)
         ->one();
     echo DetailView::widget([
         'model' => $evidence,

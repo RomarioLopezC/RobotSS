@@ -18,7 +18,7 @@ use yii\helpers\Url;
 
 <div class="task-form">
 
-    <?php $form = ActiveForm::begin (['action' => Url::to (['create', 'project_id' => $project_id])]); ?>
+    <?php $form = ActiveForm::begin (['action' => Url::to (['create', 'projectId' => $projectId])]); ?>
 
     <?= $form->field ($model, 'name')->textInput (['maxlength' => true]) ?>
 
@@ -34,11 +34,11 @@ use yii\helpers\Url;
     $user = User::find ()
         ->where ("id=" . Yii::$app->user->id)
         ->one ();
-    $user_id = $user->id;
+    $userId = $user->id;
     $manager = ProjectManager::find ()
-        ->where ("user_id=" . $user_id)
+        ->where ("user_id=" . $userId)
         ->one ();
-    $manager_id = $manager->id;
+    $managerId = $manager->id;
 
     $students = Yii::$app->db->createCommand ('Select
         registration.student_id,
@@ -53,7 +53,7 @@ use yii\helpers\Url;
         On student.user_id = user.id Inner Join
         person
         On user.person_id = person.id
-        where registration.project_id=' . $project_id)
+        where registration.project_id=' . $projectId)
         ->queryAll ();
 
 
