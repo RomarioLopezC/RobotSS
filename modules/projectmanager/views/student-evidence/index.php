@@ -99,7 +99,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => 'task.delivery_date',
                         'format' => ['date', 'php:d/F/Y'],
                     ],
-                    ['class' => 'yii\grid\ActionColumn', 'template' => '{update}'],
+                    ['class' => 'yii\grid\ActionColumn',
+                        'template' => '{update}',
+                        'buttons' => [
+                            'update' => function ($url, $model) {
+                                return Html::a('<span class="glyphicon glyphicon-pencil"></span>',
+                                    ['task/update', 'id' => $model['task_id']]);
+                            }
+                        ],
+                    ],
                 ],
             ]); ?>
 
@@ -137,12 +145,22 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => ['date', 'php:d/F/Y'],
                     ],
                     ['class' => 'yii\grid\ActionColumn',
-                        'template' => '{update} {retro}',
+                        'template' => '{update}',
                         'buttons' => [
-                            'retro' => function ($url, $model) {
-                                return Html::a('Dar retroalimentación', $url);
+                            'update' => function ($url, $model) {
+                                return Html::a('<span class="glyphicon glyphicon-pencil"></span>',
+                                    ['task/update', 'id' => $model['task_id']]);
                             }
-                        ]
+                        ],
+                    ],
+                    ['class' => 'yii\grid\ActionColumn',
+                        'template' => '{view}',
+                        'buttons' => [
+                            'view' => function ($url, $model) {
+                                return Html::a('<span class="glyphicon glyphicon-file"></span>',
+                                    ['task/show-feedback-screen', 'id' => $model['task_id']]);
+                            }
+                        ],
                     ],
                 ],
             ]); ?>

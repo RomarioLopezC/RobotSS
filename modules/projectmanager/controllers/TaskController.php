@@ -40,7 +40,7 @@ class TaskController extends Controller
         $searchModel = new TaskSearch();
         $dataProvider = $searchModel->search (Yii::$app->request->queryParams);
 
-        return $this->render ('index', [
+        return $this->render ('student-evidence/index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -93,7 +93,7 @@ class TaskController extends Controller
 
                     Yii::$app->getSession ()->setFlash ('success', 'Petición creada exitosamente');
                 }
-                return $this->redirect (['index']);
+                return $this->redirect (['student-evidence/index']);
             } else {
                 Yii::$app->getSession ()->setFlash ('danger', 'La fecha de entrega no puede ser anterior a la fecha actual');
                 return $this->render ('create', [
@@ -150,7 +150,7 @@ class TaskController extends Controller
 
                 Yii::$app->getSession ()->setFlash ('success', 'Petición creada exitosamente');
             }
-            return $this->redirect (['index']);
+            return $this->redirect (['student-evidence/index']);
 
         } else {
             return $this->render ('update', [
@@ -170,7 +170,7 @@ class TaskController extends Controller
     {
         $this->findModel ($id)->delete ();
 
-        return $this->redirect (['index']);
+        return $this->redirect (['student-evidence/index']);
     }
 
     /**
@@ -202,7 +202,7 @@ class TaskController extends Controller
             ]);
         } else {
             Yii::$app->getSession ()->setFlash ('danger', 'No hay estudiantes en el proyecto seleccionado ');
-            return $this->redirect (['index']);
+            return $this->redirect (['student-evidence/index']);
         }
     }
 
@@ -246,7 +246,7 @@ class TaskController extends Controller
         }
 
 
-        return $this->redirect (['index']);
+        return $this->redirect (['student-evidence/index']);
 
     }
 

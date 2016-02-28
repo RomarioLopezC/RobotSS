@@ -52,7 +52,7 @@ class StudentEvidence extends \yii\db\ActiveRecord {
             'task_name' => 'Nombre',
             'task_description' => 'Descripción',
             'task_delivery_date' => 'Fecha límite de entrega',
-            'task_updated_at' => 'Fecha de última edición',
+            'evidence_updated_at' => 'Fecha de última edición',
             'student_asign' => 'Alumno Asignado',
             'evidence_accepted_date' => 'Fecha de aceptación',
         ];
