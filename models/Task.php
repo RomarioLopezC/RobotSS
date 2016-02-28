@@ -45,14 +45,14 @@ class Task extends \yii\db\ActiveRecord{
             [['delivery_date', 'created_at', 'updated_at'], 'safe'],
             [['project_id'], 'integer'],
             [['name', 'status'], 'string', 'max' => 255],
-            //[['delivery_date'],'validateDate']
+
 
         ];
     }
 
-    public function validateDate (){
-        if (strtotime ($this->delivery_date) < strtotime (Yii::$app->formatter->asDate ('now', 'yyyy-MM-dd'))) {
-            $this->addError ('delivery_date', 'La fecha de entrega no puede ser anterior a la fecha actual');
+    public function validateDate ($attribute, $params){
+        if (strtotime ($this->$attribute) < strtotime (Yii::$app->formatter->asDate ('now', 'yyyy-MM-dd'))) {
+            $this->addError ($attribute, 'La fecha de entrega no puede ser anterior a la fecha actual');
 
         }
     }
