@@ -25,7 +25,7 @@ use yii\db\Expression;
 class Task extends \yii\db\ActiveRecord{
     public $students;
 
-    const NEWTASK = 'Nuevo';
+    const NEW_TASK = 'Nuevo';
     const PENDING = 'Pendiente';
     const ACCEPTED = 'Aceptado';
 
@@ -50,12 +50,6 @@ class Task extends \yii\db\ActiveRecord{
         ];
     }
 
-    public function validateDate ($attribute, $params){
-        if (strtotime ($this->$attribute) < strtotime (Yii::$app->formatter->asDate ('now', 'yyyy-MM-dd'))) {
-            $this->addError ($attribute, 'La fecha de entrega no puede ser anterior a la fecha actual');
-
-        }
-    }
 
     /**
      * @inheritdoc

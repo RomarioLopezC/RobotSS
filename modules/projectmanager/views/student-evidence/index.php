@@ -42,13 +42,13 @@ $this->params['breadcrumbs'][] = $this->title;
     $user = User::find()
         ->where("id=" . Yii::$app->user->id)
         ->one();
-    $user_id = $user->id;
+    $userId = $user->id;
     $manager = ProjectManager::find()
-        ->where("user_id=" . $user_id)
+        ->where("user_id=" . $userId)
         ->one();
-    $manager_id = $manager->id;
+    $managerId = $manager->id;
     $projects = Project::find()
-        ->where("manager_id=" . $manager_id)
+        ->where("manager_id=" . $managerId)
         ->all();
 
     Modal::begin([
