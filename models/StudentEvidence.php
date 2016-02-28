@@ -40,10 +40,10 @@ class StudentEvidence extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'task_id' => 'Task ID',
-            'project_id' => 'Project ID',
-            'evidence_id' => 'Evidence ID',
-            'student_id' => 'Student ID',
+            'task_id' => 'ID de tarea',
+            'project_id' => 'ID de proyecto',
+            'evidence_id' => 'ID de evidencia',
+            'student_id' => 'ID de alumno',
             'task_name' => 'Nombre',
             'task_description' => 'Descripción',
             'task_delivery_date' => 'Fecha límite de entrega',
