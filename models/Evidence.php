@@ -41,7 +41,7 @@ class Evidence extends \yii\db\ActiveRecord
     {
         return [
             [['description'], 'required'],
-            [['file'], 'file'],
+            ['file', 'file', 'maxSize' => 1024*1024*10],
             [['description'], 'string'],
             [['accepted_date', 'updated_at'], 'safe'],
             [['attachment_path', 'attachment_name', 'status'], 'string', 'max' => 255]
@@ -60,7 +60,8 @@ class Evidence extends \yii\db\ActiveRecord
             'status' => 'Estatus',
             'accepted_date' => 'Fecha de aceptación',
             'updated_at' => 'Fecha de actualización',
-            'attachment_name' => 'Nombre del archivo'
+            'attachment_name' => 'Nombre del archivo',
+            'file' => 'Archivo'
         ];
     }
 

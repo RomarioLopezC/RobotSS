@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\StudentEvidence */
 
 $this->title = 'Registrar avance';
-$this->params['breadcrumbs'][] = ['label' => 'Student Evidences', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Avances', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

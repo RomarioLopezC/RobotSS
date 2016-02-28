@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\StudentEvidence */
 
 $this->title = 'Registrar avance';
-$this->params['breadcrumbs'][] = ['label' => 'Student Evidences', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Avances', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -29,11 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($evidence, 'description')->textarea() ?>
 
                 <p>
+                    <?= $form->field($evidence, 'file')->fileInput(['required' => true, 'disabled' => true, 'id' => 'file_upload']) ?>
                     <button class="btn btn-success"
                             onclick="$('#file_upload').prop('disabled',false); $(this).hide();event.preventDefault();">
                         Actualizar archivo
                     </button>
-                    <?= $form->field($evidence, 'file')->fileInput(['required' => true, 'disabled' => true, 'id' => 'file_upload']) ?>
                 </p>
 
                 <div class="form-group row">
