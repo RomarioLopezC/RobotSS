@@ -46,8 +46,8 @@ class Evidence extends \yii\db\ActiveRecord {
     public function attributeLabels() {
         return [
             'id' => 'ID',
-            'attachment_path' => 'Attachment Path',
-            'description' => 'Description',
+            'attachment_path' => 'Archivo adjunto',
+            'description' => 'Descripción',
             'status' => 'Status',
             'accepted_date' => 'Accepted Date',
             'updated_at' => 'Updated At',

@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\StudentEvidence;
 use app\models\Registration;
+use app\models\Evidence;
 
 /**
  * TaskController implements the CRUD actions for Task model.
@@ -65,13 +66,14 @@ class TaskController extends Controller
         $model = new Task();
 
         if ($model->load(Yii::$app->request->post()) ) {
+            //if($model->delivery_date)
             $students = $_POST['Task']['students'];
             foreach ($students as $value) {
 
                 $model->setIsNewRecord(true);
                 $temp=$model->id;
                 $model->id=null;
-                $model->status="nueva";
+                $model->status=Task::NEWTASK;
                 $project=Registration::find()
                     ->where("student_id=" . $value)->one();
                 $model->project_id=$project->project_id;
@@ -86,24 +88,11 @@ class TaskController extends Controller
                     'student_id'=> $value
                 ])->execute();
 
-
-                //$newEvidence = new StudentEvidence();
-                //$newEvidence->project_id=$model->project_id;
-                //$newEvidence->student_id=$value;
-                //$newEvidence->save();
-
-
-
-
-
-
-
-                //$newStudentEvidence = new StudentEvidence();
-                //$newStudentEvidence->project_id = $model->id;
-                //$newProfile->degree_id = $value;
-                //$newProfile->save();
+                Yii::$app->getSession()->setFlash('success', 'Petición creada exitosamente');
             }
             return $this->redirect(['index']);
+
+
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -158,4 +147,69 @@ class TaskController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionSelectProject(){
+        $model=new Task();
+        $project = $_POST['list'];
+        if(Registration::find()->where("project_id=" . $project)->all()) {
+            return $this->render('create', [
+                'model' => $model,
+
+                'project_id' => $project,
+            ]);
+        }else{
+            Yii::$app->getSession()->setFlash('danger', 'No hay estudiantes en el proyecto seleccionado ');
+            return $this->redirect(['index']);
+        }
+    }
+
+    public function actionGiveFeedback($id)
+    {
+        $task = $this->findModel($id);
+
+
+        $comment = $_POST['feedback'];
+        $aceptado= $_POST['aceptado'];
+        $studentEvidence = StudentEvidence::find()
+            ->where("task_id=" . $task->id)
+            ->one();
+        $evidence_id = $studentEvidence->evidence_id;
+
+        if ($aceptado==1){
+
+            //$studentEvidence->comment=$comment;
+            //$studentEvidence->update();
+            Yii::$app->db->createCommand()->update('student_evidence', ['comment' => $comment], 'task_id='.$task->id)->execute();
+
+            $task->status=Task::ACCEPTED;
+            $task->update();
+
+            $evidence = Evidence::find()
+                ->where("id=" .$evidence_id)
+                ->one();
+            $evidence->status=Task::ACCEPTED;
+            $evidence->accepted_date=Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
+            $evidence->update();
+            Yii::$app->getSession()->setFlash('success', 'Sus cambios se han guardado exitosamente');
+
+        }else{
+            $studentEvidence->comment=$comment;
+            $studentEvidence->update();
+            Yii::$app->getSession()->setFlash('success', 'Sus cambios se han guardado exitosamente');
+        }
+
+
+
+
+            return $this->redirect(['index']);
+
+    }
+    public function actionShowFeedbackScreen($id)
+    {
+        return $this->render('feedback', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+
 }
