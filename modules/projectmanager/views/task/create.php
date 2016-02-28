@@ -12,15 +12,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="task-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode ($this->title) ?></h1>
 
-    <?= $this->render('_form', [
+    <?= $this->render ('_form', [
         'model' => $model,
-        'project_id'=>$project_id,
+        'project_id' => $project_id,
     ]) ?>
-
-    <?php
-    //echo $project_id;
-    ?>
 
 </div>

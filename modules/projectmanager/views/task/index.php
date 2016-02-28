@@ -21,10 +21,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="task-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode ($this->title) ?></h1>
     <?php
-    foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
-        echo Alert::widget([
+    foreach (Yii::$app->getSession ()->getAllFlashes () as $key => $message) {
+        echo Alert::widget ([
             'options' => [
                 'class' => 'alert-' . $key,
             ],
@@ -37,43 +37,41 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     // ////////////////////////BOTON CREAR/////////////////////7
-    $user = User::find()
-        ->where("id=" . Yii::$app->user->id)
-        ->one();
+    $user = User::find ()
+        ->where ("id=" . Yii::$app->user->id)
+        ->one ();
     $user_id = $user->id;
-    $manager = ProjectManager::find()
-        ->where("user_id=" . $user_id)
-        ->one();
+    $manager = ProjectManager::find ()
+        ->where ("user_id=" . $user_id)
+        ->one ();
     $manager_id = $manager->id;
-    $projects=Project::find()
-        ->where("manager_id=" . $manager_id)
-        ->all();
+    $projects = Project::find ()
+        ->where ("manager_id=" . $manager_id)
+        ->all ();
 
-    Modal::begin([
+    Modal::begin ([
         'header' => '<h2>Seleccione el proyecto</h2>',
         'toggleButton' => [
-            'label' =>'Crear nueva petición',
+            'label' => 'Crear nueva petición',
             'class' => 'btn btn-success'
         ],
     ]);
 
 
-
-
     ?>
 
-    <?= Html::beginForm(['select-project'], 'post') ?>
-    <?= Html::dropDownList('list', null, ArrayHelper::map($projects, 'id', 'name'),['class' => 'form-control']) ?>
-    <?= Html::submitButton('Crear', ['class' => 'btn btn-success']) ?>
-    <?= Html::endForm() ?>
+    <?= Html::beginForm (['select-project'], 'post') ?>
+    <?= Html::dropDownList ('list', null, ArrayHelper::map ($projects, 'id', 'name'), ['class' => 'form-control']) ?>
+    <?= Html::submitButton ('Crear', ['class' => 'btn btn-success']) ?>
+    <?= Html::endForm () ?>
 
     <?php
 
-    Modal::end();
+    Modal::end ();
     /////////////////////////////7 BOTON CREAR///////////////////////////////////7
     ?>
 
-    <?= GridView::widget([
+    <?= GridView::widget ([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -98,9 +96,10 @@ $this->params['breadcrumbs'][] = $this->title;
 //////////////////////////7BOTON RETROALIMENTACION
             ['class' => 'yii\grid\ActionColumn',
                 'template' => '{view}{edit}',
-                'buttons'  => [
-                    'view' => function($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-file"></span>', ['show-feedback-screen', 'id' => $model['id']]);
+                'buttons' => [
+                    'view' => function ($url, $model) {
+                        return Html::a ('<span class="glyphicon glyphicon-file"></span>',
+                            ['show-feedback-screen', 'id' => $model['id']]);
                     }
                 ],
 
