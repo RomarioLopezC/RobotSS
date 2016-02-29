@@ -5,6 +5,7 @@ use app\models\StudentEvidence;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\bootstrap\Alert;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Task */
@@ -17,6 +18,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode ($this->title) ?></h1>
 
+    <?php
+    foreach (Yii::$app->getSession ()->getAllFlashes () as $key => $message) {
+        echo Alert::widget ([
+            'options' => [
+                'class' => 'alert-' . $key,
+            ],
+            'body' => $message,
+        ]);
+    }
+    ?>
 
     <?= DetailView::widget ([
         'model' => $model,
@@ -57,11 +68,12 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
     <?= Html::label ('Aceptar avance?') ?>
 
-    <?= Html::radioList ('aceptado', null, ArrayHelper::map ($array, 'value', 'estado'), ['class' => "form-control"]) ?>
+    <?= Html::radioList ('aceptado', 1 , ArrayHelper::map ($array, 'value', 'estado'),
+        ['class' => "form-control",'required'=>true]) ?>
 
     <?= Html::label ('Retroalimentación') ?>
 
-    <?= Html::textarea ('feedback', null, ['class' => "form-control"]) ?>
+    <?= Html::textarea ('feedback', null, ['class' => "form-control",'required'=>true]) ?>
 
     <?= Html::submitButton ('Guardar', ['class' => 'btn btn-success']) ?>
 
