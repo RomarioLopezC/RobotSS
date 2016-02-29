@@ -221,20 +221,20 @@ class TaskController extends Controller
         }
     }
 
-    public function actionGiveFeedback($id)
+    public function actionGiveFeedback($id,$evidenceId)
     {
         $task = $this->findModel($id);
         $comment = $_POST['feedback'];
         $accepted = $_POST['aceptado'];
         $studentEvidence = StudentEvidence::findOne(['task_id'=>$task->id]);
-        $evidenceId = $studentEvidence->evidence_id;
+        //$evidenceId = $studentEvidence->evidence_id;
         $studentId = $studentEvidence->student_id;
         if ($accepted == 1) {
             //Yii::$app->db->createCommand ()->update ('student_evidence', ['comment' => $comment], 'task_id=' . $task->id)->execute ();
-            Yii::$app->db->createCommand('UPDATE student_evidence SET comment="' . $comment . '" WHERE task_id=' . $task->id . ' AND student_id=' . $studentId)
+            Yii::$app->db->createCommand('UPDATE student_evidence SET comment="' . $comment . '" WHERE task_id=' . $task->id . ' AND evidence_id=' . $evidenceId)
                 ->execute();
             $task->status = Task::ACCEPTED;
-            Yii::$app->db->createCommand('UPDATE student_evidence SET status="' . Task::ACCEPTED . '" WHERE task_id=' . $task->id . ' AND student_id=' . $studentId)
+            Yii::$app->db->createCommand('UPDATE student_evidence SET status="' . Task::ACCEPTED . '" WHERE task_id=' . $task->id . ' AND evidence_id=' . $evidenceId)
                 ->execute();
             $task->update();
             $evidence = Evidence::find()
@@ -262,8 +262,10 @@ class TaskController extends Controller
 
             Yii::$app->getSession()->setFlash('success', 'Sus cambios se han guardado exitosamente');
         } else {
-            $studentEvidence->comment = $comment;
-            $studentEvidence->update();
+            //$studentEvidence->comment = $comment;
+            //$studentEvidence->update();
+            Yii::$app->db->createCommand('UPDATE student_evidence SET comment="' . $comment . '" WHERE task_id=' . $task->id . ' AND evidence_id=' . $evidenceId)
+                ->execute();
             //set notification
             $notification = Yii::createObject([
                 'class' => Notification::className(),

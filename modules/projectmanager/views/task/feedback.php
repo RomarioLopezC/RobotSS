@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= Html::a ($evidence->attachment_name, ['download', 'evidenceId' => $evidence->id]); ?>
 
-    <?= Html::beginForm (['give-feedback', 'id' => $model['id']], 'post') ?>
+    <?= Html::beginForm (['give-feedback', 'id' => $model['id'],'evidenceId'=>$evidence['id']], 'post') ?>
     <?php
     $array = [['value' => 1, 'estado' => 'Aceptado'], ['value' => 2, 'estado' => 'No aceptado']];
     ?>
