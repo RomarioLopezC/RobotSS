@@ -19,24 +19,22 @@ use Yii;
  * @property Student $student
  * @property Task $task
  */
-class StudentEvidence extends \yii\db\ActiveRecord
-{
+class StudentEvidence extends \yii\db\ActiveRecord {
     public static $NEW = 'Nuevo';
     public static $PENDING = 'Pendiente';
     public static $ACCEPTED = 'Aceptado';
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'student_evidence';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['task_id', 'project_id', 'student_id'], 'required'],
             [['task_id', 'project_id', 'student_id', 'evidence_id'], 'integer'],
@@ -65,32 +63,28 @@ class StudentEvidence extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEvidence()
-    {
+    public function getEvidence() {
         return $this->hasOne(Evidence::className(), ['id' => 'evidence_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProject()
-    {
+    public function getProject() {
         return $this->hasOne(Project::className(), ['id' => 'project_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStudent()
-    {
+    public function getStudent() {
         return $this->hasOne(Student::className(), ['id' => 'student_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTask()
-    {
+    public function getTask() {
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }
 }
