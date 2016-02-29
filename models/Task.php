@@ -45,6 +45,7 @@ class Task extends \yii\db\ActiveRecord{
             [['delivery_date', 'created_at', 'updated_at'], 'safe'],
             [['project_id'], 'integer'],
             [['name', 'status'], 'string', 'max' => 255],
+            [['name', 'description', 'delivery_date', 'students'],'required']
 
 
         ];
@@ -64,6 +65,7 @@ class Task extends \yii\db\ActiveRecord{
             'updated_at' => 'Fecha de última edición',
             'status' => 'Estado',
             'project_id' => 'Project ID',
+            'students' => 'Estudiantes'
         ];
     }
 
