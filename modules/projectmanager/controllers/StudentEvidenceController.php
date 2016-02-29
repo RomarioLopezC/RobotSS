@@ -62,10 +62,10 @@ class StudentEvidenceController extends Controller {
         $model = new Task();
         $project = $_POST['list'];
 
-        if (Registration::find()->where("project_id=" . $project)->all()) {
+        if (Registration::find()->where("projectId=" . $project)->all()) {
             return $this->render('create', [
                 'model' => $model,
-                'project_id' => $project,
+                'projectId' => $project,
 
             ]);
         } else {
@@ -76,15 +76,15 @@ class StudentEvidenceController extends Controller {
 
     /**
      * Displays a single StudentEvidence model.
-     * @param integer $task_id
-     * @param integer $project_id
-     * @param integer $evidence_id
-     * @param integer $student_id
+     * @param integer $taskId
+     * @param integer $projectId
+     * @param integer $evidenceId
+     * @param integer $studentId
      * @return mixed
      */
-    public function actionView($task_id, $project_id, $evidence_id, $student_id) {
+    public function actionView($taskId, $projectId, $evidenceId, $studentId) {
         return $this->render('view', [
-            'model' => $this->findModel($task_id, $project_id, $evidence_id, $student_id),
+            'model' => $this->findModel($taskId, $projectId, $evidenceId, $studentId),
         ]);
     }
 
@@ -97,8 +97,8 @@ class StudentEvidenceController extends Controller {
         $model = new StudentEvidence();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'task_id' => $model->task_id, 'project_id' => $model->project_id,
-                'evidence_id' => $model->evidence_id, 'student_id' => $model->student_id]);
+            return $this->redirect(['view', 'taskId' => $model->task_id, 'projectId' => $model->project_id,
+                'evidenceId' => $model->evidence_id, 'studentId' => $model->student_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -109,18 +109,18 @@ class StudentEvidenceController extends Controller {
     /**
      * Updates an existing StudentEvidence model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $task_id
-     * @param integer $project_id
-     * @param integer $evidence_id
-     * @param integer $student_id
+     * @param integer $taskId
+     * @param integer $projectId
+     * @param integer $evidenceId
+     * @param integer $studentId
      * @return mixed
      */
-    public function actionUpdate($task_id, $project_id, $evidence_id, $student_id) {
-        $model = $this->findModel($task_id, $project_id, $evidence_id, $student_id);
+    public function actionUpdate($taskId, $projectId, $evidenceId, $studentId) {
+        $model = $this->findModel($taskId, $projectId, $evidenceId, $studentId);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'task_id' => $model->task_id, 'project_id' => $model->project_id,
-                'evidence_id' => $model->evidence_id, 'student_id' => $model->student_id]);
+            return $this->redirect(['view', 'taskId' => $model->task_id, 'projectId' => $model->project_id,
+                'evidenceId' => $model->evidence_id, 'studentId' => $model->student_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -131,14 +131,14 @@ class StudentEvidenceController extends Controller {
     /**
      * Deletes an existing StudentEvidence model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $task_id
-     * @param integer $project_id
-     * @param integer $evidence_id
-     * @param integer $student_id
+     * @param integer $taskId
+     * @param integer $projectId
+     * @param integer $evidenceId
+     * @param integer $studentId
      * @return mixed
      */
-    public function actionDelete($task_id, $project_id, $evidence_id, $student_id) {
-        $this->findModel($task_id, $project_id, $evidence_id, $student_id)->delete();
+    public function actionDelete($taskId, $projectId, $evidenceId, $studentId) {
+        $this->findModel($taskId, $projectId, $evidenceId, $studentId)->delete();
 
         return $this->redirect(['index']);
     }
@@ -146,16 +146,16 @@ class StudentEvidenceController extends Controller {
     /**
      * Finds the StudentEvidence model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $task_id
-     * @param integer $project_id
-     * @param integer $evidence_id
-     * @param integer $student_id
+     * @param integer $taskId
+     * @param integer $projectId
+     * @param integer $evidenceId
+     * @param integer $studentId
      * @return StudentEvidence the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($task_id, $project_id, $evidence_id, $student_id) {
-        if (($model = StudentEvidence::findOne(['task_id' => $task_id, 'project_id' => $project_id,
-                'evidence_id' => $evidence_id, 'student_id' => $student_id])) !== null) {
+    protected function findModel($taskId, $projectId, $evidenceId, $studentId) {
+        if (($model = StudentEvidence::findOne(['taskId' => $taskId, 'projectId' => $projectId,
+                'evidenceId' => $evidenceId, 'studentId' => $studentId])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
