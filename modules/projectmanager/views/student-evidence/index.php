@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'header' => '<h2>Seleccione el proyecto</h2>',
         'toggleButton' => [
             'label' => 'Crear nueva petición',
-            'class' => 'btn btn-success'
+            'class' => 'btn btn-success pull-right'
         ],
     ]);
 
@@ -63,6 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= Html::beginForm (['task/select-project'], 'post') ?>
     <?= Html::dropDownList ('list', null, ArrayHelper::map ($projects, 'id', 'name'), ['class' => 'form-control']) ?>
+    <br>
     <?= Html::submitButton ('Crear', ['class' => 'btn btn-success']) ?>
     <?= Html::endForm () ?>
 
