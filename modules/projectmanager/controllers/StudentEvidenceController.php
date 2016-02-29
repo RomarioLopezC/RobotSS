@@ -38,10 +38,10 @@ class StudentEvidenceController extends Controller {
         $dataProviderPending = $searchModel->searchPendingByProjectManager(Yii::$app->request->queryParams);
         $dataProviderAccepted = $searchModel->searchAcceptedByProjectManager(Yii::$app->request->queryParams);
 
-        if($id_user = $dataProviderNews->getModels()){
-            $id_user = $dataProviderNews->getModels()[0]['student']['user_id'];
+        if ($userId = $dataProviderNews->getModels()) {
+            $userId = $dataProviderNews->getModels()[0]['student']['user_id'];
 
-            $user = User::findOne($id_user);
+            $user = User::findOne($userId);
             $person = Person::findOne($user->person_id);
 
             $dataProviderNews->getModels()[0]['student']['user_id'] = $person->name;
@@ -97,7 +97,8 @@ class StudentEvidenceController extends Controller {
         $model = new StudentEvidence();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'task_id' => $model->task_id, 'project_id' => $model->project_id, 'evidence_id' => $model->evidence_id, 'student_id' => $model->student_id]);
+            return $this->redirect(['view', 'task_id' => $model->task_id, 'project_id' => $model->project_id,
+                'evidence_id' => $model->evidence_id, 'student_id' => $model->student_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -118,7 +119,8 @@ class StudentEvidenceController extends Controller {
         $model = $this->findModel($task_id, $project_id, $evidence_id, $student_id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'task_id' => $model->task_id, 'project_id' => $model->project_id, 'evidence_id' => $model->evidence_id, 'student_id' => $model->student_id]);
+            return $this->redirect(['view', 'task_id' => $model->task_id, 'project_id' => $model->project_id,
+                'evidence_id' => $model->evidence_id, 'student_id' => $model->student_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -152,7 +154,8 @@ class StudentEvidenceController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($task_id, $project_id, $evidence_id, $student_id) {
-        if (($model = StudentEvidence::findOne(['task_id' => $task_id, 'project_id' => $project_id, 'evidence_id' => $evidence_id, 'student_id' => $student_id])) !== null) {
+        if (($model = StudentEvidence::findOne(['task_id' => $task_id, 'project_id' => $project_id,
+                'evidence_id' => $evidence_id, 'student_id' => $student_id])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
