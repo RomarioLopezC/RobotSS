@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
-    <h1><?= Html::encode ($this->title) ?></h1>
+
     <?php
 
     //$studentEvidence = StudentEvidence::find()->where("task_id=" . $model->id)

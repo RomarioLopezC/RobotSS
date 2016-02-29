@@ -165,7 +165,7 @@ class TaskController extends Controller
                 return $this->redirect (['student-evidence/index']);
             } else {
                 Yii::$app->getSession ()->setFlash ('danger', 'La fecha de entrega no puede ser anterior a la fecha actual');
-                return $this->render ('create', [
+                return $this->render ('update', [
                     'model' => $model,
                     'projectId' => $projectId,
                 ]);
