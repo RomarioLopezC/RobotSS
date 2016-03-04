@@ -78,7 +78,7 @@ class StudentEvidenceController extends Controller {
      * @return mixed
      */
     public function actionCreate($task_id, $project_id, $student_id) {
-        $student_evidence = $this->findModelWithoutEvidence($task_id, $project_id, $student_id);
+        $studentEvidence = $this->findModelWithoutEvidence($task_id, $project_id, $student_id);
 
         $evidence = new Evidence();
 
@@ -87,7 +87,7 @@ class StudentEvidenceController extends Controller {
             $evidence->load($params);
 
             //Cambiar estado de evidencia a pendiente
-            $student_evidence->status = StudentEvidence::$PENDING;
+            $studentEvidence->status = StudentEvidence::$PENDING;
 
             $evidence->file = UploadedFile::getInstance($evidence, 'file');
             if ($evidence->validate() && $evidence->save()) {
@@ -96,8 +96,8 @@ class StudentEvidenceController extends Controller {
 
                 $evidence->update(false);
 
-                $student_evidence->evidence_id = $evidence->id;
-                $student_evidence->update();
+                $studentEvidence->evidence_id = $evidence->id;
+                $studentEvidence->update();
 
                 $notification = Yii::createObject([
                     'class' => Notification::className(),
@@ -107,26 +107,26 @@ class StudentEvidenceController extends Controller {
                     'created_at' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'),
                     'viewed' => false,
                     'url' => Url::to(['/project_manager/task/show-feedback-screen',
-                        'taskId'=>$task_id,
-                        'evidenceId'=>$evidence->id
+                        'taskId' => $task_id,
+                        'evidenceId' => $evidence->id
                     ])
                 ]);
 
                 $notification->save(false);
 
-                return $this->redirect(['view', 'task_id' => $student_evidence->task_id,
-                    'project_id' => $student_evidence->project_id, 'student_id' => $student_evidence->student_id]);
+                return $this->redirect(['view', 'task_id' => $studentEvidence->task_id,
+                    'project_id' => $studentEvidence->project_id, 'student_id' => $studentEvidence->student_id]);
             } else {
                 Yii::$app->session->setFlash('danger', 'Ocurrió un error al guardar. Vuelve a intentar');
                 echo $evidence->validate();
                 return $this->render('create', [
-                    'student_evidence' => $student_evidence,
+                    'studentEvidence' => $studentEvidence,
                     'evidence' => $evidence,
                 ]);
             }
         } else {
             return $this->render('create', [
-                'student_evidence' => $student_evidence,
+                'studentEvidence' => $studentEvidence,
                 'evidence' => $evidence,
             ]);
         }
@@ -139,8 +139,8 @@ class StudentEvidenceController extends Controller {
      * @return mixed
      */
     public function actionUpdate($evidence_id) {
-        $student_evidence = $this->findModelByEvidence($evidence_id);
-        $evidence = $student_evidence->evidence;
+        $studentEvidence = $this->findModelByEvidence($evidence_id);
+        $evidence = $studentEvidence->evidence;
 
         if (Yii::$app->request->post()) {
             $params = Yii::$app->request->post();
@@ -157,24 +157,25 @@ class StudentEvidenceController extends Controller {
             //set notification
             $notification = Yii::createObject([
                 'class' => Notification::className(),
-                'user_id' => ProjectManager::findOne([Project::findOne([$student_evidence->project_id])->manager_id])->user_id,
+                'user_id' => ProjectManager::findOne([Project::findOne([$studentEvidence->project_id])->manager_id])
+                    ->user_id,
                 'description' => Notification::EDITED_RECEIVED_TASK,
                 'role' => Notification::ROLE_STUDENT,
                 'created_at' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'),
                 'viewed' => false,
                 'url' => Url::to(['/project_manager/task/show-feedback-screen',
-                    'taskId'=>$student_evidence->task_id,
-                    'evidenceId'=>$evidence->id
+                    'taskId' => $studentEvidence->task_id,
+                    'evidenceId' => $evidence->id
                 ])
             ]);
 
             $notification->save(false);
 
-            return $this->redirect(['view', 'task_id' => $student_evidence->task_id,
-                'project_id' => $student_evidence->project_id, 'student_id' => $student_evidence->student_id]);
+            return $this->redirect(['view', 'task_id' => $studentEvidence->task_id,
+                'project_id' => $studentEvidence->project_id, 'student_id' => $studentEvidence->student_id]);
         } else {
             return $this->render('update', [
-                'student_evidence' => $student_evidence,
+                'studentEvidence' => $studentEvidence,
                 'evidence' => $evidence,
             ]);
         }

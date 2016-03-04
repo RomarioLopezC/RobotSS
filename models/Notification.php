@@ -17,32 +17,29 @@ use Yii;
  *
  * @property User $user
  */
-class Notification extends \yii\db\ActiveRecord
-{
+class Notification extends \yii\db\ActiveRecord {
 
     const ROLE_STUDENT = 'student';
     const ROLE_PROJECT_MANAGER = 'projectManager';
     //notification messages
-    const NEW_TASK = 'Tienes 1 nueva tarea';
-    const EDITED_TASK = '1 Tarea ha sido modificada';
-    const ACCEPTED_TASK = 'Tu tarea fue aceptada';
-    const REJECTED_TASK = 'Tu tarea fue rechazada';
-    const RECEIVED_TASK = 'Ha recibido una nueva tarea';
-    const EDITED_RECEIVED_TASK = 'Se ha editado una entrega';
+    const NEW_TASK = 'Tienes una nueva tarea';
+    const EDITED_TASK = 'Se modificó una tarea';
+    const ACCEPTED_TASK = 'Tu avance fue aceptado';
+    const REJECTED_TASK = 'Tu avance fue rechazado';
+    const RECEIVED_TASK = 'Se registró un nuevo avance';
+    const EDITED_RECEIVED_TASK = 'Se editó un avance';
 
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'notification';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['user_id', 'viewed'], 'integer'],
             [['description'], 'string'],
@@ -55,8 +52,7 @@ class Notification extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => Yii::t('app', 'ID'),
             'user_id' => Yii::t('app', 'User ID'),
@@ -71,8 +67,7 @@ class Notification extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }
