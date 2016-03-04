@@ -17,22 +17,29 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-    <?= GridView::widget([
+    <?= GridView::widget ([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'user_id',
+            [
+                'attribute' => 'Nombre',
+                'value' => function ($dataProvider) {
+                    $user = \app\models\User::findOne (['id' => $dataProvider->user_id]);
+                    $person = \app\models\Person::findOne (['id' => $user->person_id]);
+
+                    return $person->name . ' ' . $person->lastname;
+                }
+            ],
             'organization',
 
             ['class' => 'yii\grid\ActionColumn',
                 'template' => '{delete}',
                 'buttons' => [
                     'delete' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'user_id' => $model['user_id']], [
-                            'title' => Yii::t('app', 'Delete'), 'data-confirm' => Yii::t('app', '¿Estas seguro que deseas eliminar?'), 'data-method' => 'post']);
+                        return Html::a ('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'user_id' => $model['user_id']], [
+                            'title' => Yii::t ('app', 'Delete'), 'data-confirm' => Yii::t ('app', '¿Estas seguro que deseas eliminar?'), 'data-method' => 'post']);
                     }
                 ],
 
