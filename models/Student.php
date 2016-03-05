@@ -30,7 +30,7 @@ class Student extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['id', 'user_id', 'faculty_id', 'current_semester'], 'required'],
+            [['faculty_id', 'current_semester', 'enrollment_id'], 'required'],
             [['id', 'user_id', 'faculty_id', 'current_semester', 'degree_id'], 'integer'],
             [['enrollment_id'], 'string', 'max' => 255]
         ];
