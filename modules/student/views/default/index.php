@@ -1,37 +1,64 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
+use app\models\Project;
+use app\models\Registration;
+use app\models\student;
+use app\models\StudentEvidenceSearch;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StudentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Students';
-$this->params['breadcrumbs'][] = $this->title;
+
+$this->title = 'Página principal';
+Yii::$app->formatter->locale = 'es_ES';
+
+$student = Student::findOne(['user_id' => Yii::$app->user->id]);
+
+if ($registration = Registration::findOne(['student_id' => $student->id])) {
+    $project = Project::findOne($registration->project_id);
+    $textProject = 'Avances de proyecto: ' . $project->name;
+
+    $searchModel = new StudentEvidenceSearch();
+    $dataProviderNews = $searchModel->searchNews(Yii::$app->request->queryParams);
+    $dataProviderPending = $searchModel->searchPending(Yii::$app->request->queryParams);
+
+    $countNews = $dataProviderNews->getTotalCount();
+    $countPending = $dataProviderPending->getTotalCount();
+
+    if ($countNews == 1) {
+        $textDetails = 'Tienes ' . $countNews . ' avance nuevo.';
+    } else {
+        $textDetails = 'Tienes ' . $countNews . ' avances nuevos.';
+    }
+    if ($countPending == 1) {
+        $textDetails .= /** @lang text */
+            '<br>Tienes ' . $countPending . ' avance pendiente.';
+    } else {
+        $textDetails .= /** @lang text */
+            '<br>Tienes ' . $countPending . ' avances pendientes.';
+    }
+    $textFooter = /** @lang text */
+        "<div class = 'panel-footer'><h4>Da click en el menú <i>Avances</i> para ver los detalles.</h4></div>";
+} else {
+    $textProject = 'No estás asignado a un proyecto';
+    $textDetails = 'Inicia el preregistro a un proyecto disponible y espera a que el encargado del servicio social'.
+        ' confirme tu asignación.';
+    $textFooter = '';
+}
 ?>
 <div class="student-index">
+    <div class="body-content center-block">
+        <div class="panel panel-default">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+            <div class="panel-heading">
+                <h3><?= $textProject ?></h3>
+            </div>
 
-    <p>
-        <?= Html::a('Create Student', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'user_id',
-            'faculty_id',
-            'current_semester',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-
+            <div class="panel-body">
+                <p><?= $textDetails ?></p>
+            </div>
+            <?= $textFooter ?>
+        </div>
+    </div>
 </div>

@@ -94,10 +94,6 @@ class ProjectController extends Controller {
                 Yii::$app->getSession()->setFlash('danger', 'Ya te has pre-registrado a un proyecto');
                 return $this->redirect(['view', 'id' => $model->id]);
 
-
-
-
-
             } else {
                 if( $vacancyValue > 0) {
 

@@ -16,8 +16,7 @@ use Yii;
  * @property Project $project
  * @property Student $student
  */
-class Registration extends \yii\db\ActiveRecord
-{
+class Registration extends \yii\db\ActiveRecord {
     const ASSIGNED = 'assigned';
     const UNASSIGNED = 'preregistered';
     const PREREGISTRATION_CANCELLED = 'cancelled';
@@ -25,16 +24,14 @@ class Registration extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'registration';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['project_id', 'student_id', 'student_status', 'begining_date', 'endind_date'], 'required'],
             [['project_id', 'student_id'], 'integer'],
@@ -45,8 +42,7 @@ class Registration extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'project_id' => 'Proyecto',
             'student_id' => 'Estudiante',
@@ -59,26 +55,22 @@ class Registration extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProject()
-    {
+    public function getProject() {
         return $this->hasOne(Project::className(), ['id' => 'project_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStudent()
-    {
+    public function getStudent() {
         return $this->hasOne(Student::className(), ['id' => 'student_id']);
     }
 
-    public function getStudentName()
-    {
+    public function getStudentName() {
         return $this->student->user->person->name . ' ' . $this->student->user->person->lastname;
     }
 
-    public function getProjectName()
-    {
+    public function getProjectName() {
         return $this->project->name;
     }
 }

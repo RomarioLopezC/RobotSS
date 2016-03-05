@@ -1,10 +1,10 @@
 <?php
 
+use app\models\Degree;
+use app\models\Faculty;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use app\models\Faculty;
-use app\models\Degree;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Student */
@@ -40,7 +40,7 @@ use app\models\Degree;
 
     <div class="form-group">
         <div class="pull-right">
-            <?= Html::a('Cancelar', '#', ['class' => 'btn btn-danger']) ?>
+            <?= Html::a('Cancelar', '../../user/login', ['class' => 'btn btn-danger']) ?>
             <?= Html::submitButton($student->isNewRecord ? 'Completar solicitud' : 'Guardar', ['class' => 'btn btn-primary']) ?>
         </div>
     </div>

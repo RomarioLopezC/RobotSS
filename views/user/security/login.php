@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php endif ?>
         <?php if ($module->enableRegistration): ?>
             <p class="text-right">
-                <?= Html::a(Yii::t('user', '¿Quieres registar tu proyecto y no tienes una cuenta?'), ['/site/project-manager-request']) ?>
+                <?= Html::a(Yii::t('user', '¿Quieres registrar tu proyecto y no tienes una cuenta?'), ['/site/project-manager-request']) ?>
             </p>
         <?php endif ?>
         <?= Connect::widget([

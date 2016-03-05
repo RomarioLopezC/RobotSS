@@ -10,24 +10,21 @@ use app\models\ProjectManager;
 /**
  * ProjectManagerSearch represents the model behind the search form about `app\models\ProjectManager`.
  */
-class ProjectManagerSearch extends ProjectManager
-{
+class ProjectManagerSearch extends ProjectManager {
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'user_id'], 'integer'],
-            [['last_name', 'organization'], 'safe'],
+            [['organization'], 'safe'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +36,7 @@ class ProjectManagerSearch extends ProjectManager
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = ProjectManager::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -60,8 +56,7 @@ class ProjectManagerSearch extends ProjectManager
             'user_id' => $this->user_id,
         ]);
 
-        $query->andFilterWhere(['like', 'last_name', $this->last_name])
-            ->andFilterWhere(['like', 'organization', $this->organization]);
+        $query->andFilterWhere(['like', 'organization', $this->organization]);
 
         return $dataProvider;
     }

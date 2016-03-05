@@ -2,20 +2,19 @@
 
 namespace app\modules\projectmanager\controllers;
 
-use app\models\Degree;
-use app\models\ProjectManager;
-use Yii;
 use app\models\Project;
+use app\models\ProjectManager;
 use app\models\ProjectSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\models\StudentProfile;
-use yii\helpers\ArrayHelper;
 use app\models\ProjectVacancy;
-use app\models\User;
 use app\models\Registration;
 use app\models\Student;
+use app\models\StudentProfile;
+use app\models\User;
+use Yii;
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * ProjectController implements the CRUD actions for Project model.

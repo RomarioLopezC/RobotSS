@@ -2,32 +2,28 @@
 
 namespace app\modules\student\controllers;
 
+use app\models\Degree;
 use app\models\Person;
-use app\models\User;
-use Yii;
+use app\models\Project;
+use app\models\ProjectManager;
+use app\models\Registration;
 use app\models\Student;
 use app\models\StudentSearch;
-use yii\base\ErrorException;
-use yii\base\Exception;
+use app\models\User;
+use kartik\mpdf\Pdf;
+use Yii;
 use yii\base\InvalidConfigException;
+use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use kartik\mpdf\Pdf;
-use app\models\Degree;
-use app\models\Project;
-use app\models\ProjectManager;
-use app\models\Registration;
 
 /**
  * StudentController implements the CRUD actions for Student model.
  */
-class DefaultController extends Controller
-{
-    public function behaviors()
-    {
+class DefaultController extends Controller {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -42,8 +38,7 @@ class DefaultController extends Controller
      * Lists all Student models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new StudentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -58,8 +53,7 @@ class DefaultController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -70,8 +64,7 @@ class DefaultController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $student = new Student();
         $user = new User();
         $person = new Person();
@@ -95,7 +88,7 @@ class DefaultController extends Controller
                 Yii::$app->session->setFlash('success', 'Se envío un correo de confirmación. Por favor verifique su correo electrónico');
                 return $this->refresh();
             } else {
-                Yii::$app->session->setFlash('danger', 'Ocurrió un error al guardar. Vuelve a intentar');
+                Yii::$app->session->setFlash('danger', 'Ocurrió ff un error al guardar. Vuelve a intentar');
                 return $this->refresh();
             }
 
@@ -114,8 +107,7 @@ class DefaultController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $student = Student::findOne($id);
         $user = $student->getUser();
         $person = $user->getPerson();
@@ -160,15 +152,13 @@ class DefaultController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-    public function actionPrintPreregistrationPDF()
-    {
+    public function actionPrintPreregistrationPDF() {
         $student = Student::findOne(['user_id' => Yii::$app->user->id]);
         date_default_timezone_set("America/Mexico_City");
         try {
@@ -220,8 +210,7 @@ class DefaultController extends Controller
         }
     }
 
-    public function actionPrintProjectAssignmentPDF()
-    {
+    public function actionPrintProjectAssignmentPDF() {
         $student = Student::findOne(['user_id' => Yii::$app->user->id]);
         date_default_timezone_set("America/Mexico_City");
         try {
@@ -278,8 +267,7 @@ class DefaultController extends Controller
         }
     }
 
-    public function actionSetBeginningAndEndingDates()
-    {
+    public function actionSetBeginningAndEndingDates() {
         $beginningDate = new \DateTime(Yii::$app->request->post('Registration')['beginning_date']);
         $endingDate = new \DateTime(Yii::$app->request->post('Registration')['ending_date']);
         $interval = $beginningDate->diff($endingDate);
@@ -293,10 +281,10 @@ class DefaultController extends Controller
                 $registration->save(false);
                 $this->actionPrintProjectAssignmentPDF();
             } catch (InvalidConfigException $e) {
-                throw new BadRequestHttpException('No se tiene asignado ningun proyecto');
+                throw new BadRequestHttpException('No se tiene asignado ningún proyecto');
             }
         } else {
-            throw new BadRequestHttpException('Las fechas ingresadas no son validas,
+            throw new BadRequestHttpException('Las fechas ingresadas no son válidas,
             deben tener una diferencia de al menos 6 meses');
         }
     }
@@ -308,8 +296,7 @@ class DefaultController extends Controller
      * @return Student the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Student::findOne($id)) !== null) {
             return $model;
         } else {

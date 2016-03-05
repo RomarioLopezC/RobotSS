@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Notification;
 use app\models\Person;
 use app\models\ProjectManager;
 use app\models\ProjectManagerForm;
@@ -90,7 +91,7 @@ class SiteController extends Controller {
                 $projectManager->save();
 
                 Yii::$app->session->setFlash('success', 'Se envío un correo de confirmación. Por favor verifique su correo electrónico');
-
+                return $this->refresh();
             } else {
                 Yii::$app->session->setFlash('danger', 'Ocurrió un error al guardar. Vuelve a intentar');
             }
@@ -101,8 +102,12 @@ class SiteController extends Controller {
             'user' => $user,
             'person' => $person,
         ]);
-
-
     }
 
+    public function actionViewNotification($id){
+        $notification = Notification::findOne([$id]);
+        $url = $notification->url;
+        $notification->delete();
+        $this->redirect($url);
+    }
 }

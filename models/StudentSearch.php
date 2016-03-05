@@ -10,13 +10,11 @@ use app\models\Student;
 /**
  * StudentSearch represents the model behind the search form about `app\models\Student`.
  */
-class StudentSearch extends Student
-{
+class StudentSearch extends Student {
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'user_id', 'faculty_id', 'current_semester'], 'integer'],
         ];
@@ -25,8 +23,7 @@ class StudentSearch extends Student
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -38,8 +35,7 @@ class StudentSearch extends Student
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Student::find();
 
         $dataProvider = new ActiveDataProvider([

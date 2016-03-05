@@ -77,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <div class="form-group">
                 <div class="pull-right">
-                    <?= Html::a('Cancelar', '#', ['class' => 'btn btn-danger']) ?>
+                    <?= Html::a('Cancelar', '../user/login', ['class' => 'btn btn-danger']) ?>
                     <?= Html::submitButton('Completar Solicitud', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
                 </div>
             </div>
