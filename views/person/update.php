@@ -12,8 +12,6 @@ use dektrium\user\models\SettingsForm;
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
         'modelClass' => 'Perfil',
     ]) . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'People'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="person-update">

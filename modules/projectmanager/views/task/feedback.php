@@ -11,12 +11,14 @@ use yii\bootstrap\Alert;
 /* @var $model app\models\Task */
 
 $this->title = "Retroalimentación: " . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Tasks', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Avances', 'url' => ['/project_manager/student-evidence/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="task-view">
 
-    <h1><?= Html::encode ($this->title) ?></h1>
+    <div class="well well-sm">
+        <h1><?= Html::encode ($this->title) ?></h1>
+    </div>
 
     <?php
     foreach (Yii::$app->getSession ()->getAllFlashes () as $key => $message) {
@@ -42,12 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
 
-    //$studentEvidence = StudentEvidence::find()->where("task_id=" . $model->id)
-    //    ->one();
-    //$evidenceId = $studentEvidence->evidence_id;
-
-    //$evidence = Evidence::find()->where("id=" . $evidenceId)
-    //   ->one();
     echo DetailView::widget ([
         'model' => $evidence,
         'attributes' => [
@@ -61,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?= Html::a ($evidence->attachment_name, ['download', 'evidenceId' => $evidence->id]); ?>
-
+    <br><br>
     <?= Html::beginForm (['give-feedback', 'id' => $model['id'],'evidenceId'=>$evidence['id']], 'post') ?>
     <?php
     $array = [['value' => 1, 'estado' => 'Aceptado'], ['value' => 2, 'estado' => 'No aceptado']];
@@ -71,11 +67,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= Html::radioList ('aceptado', 1 , ArrayHelper::map ($array, 'value', 'estado'),
         ['class' => "form-control",'required'=>true]) ?>
 
+    <br>
     <?= Html::label ('Retroalimentación') ?>
+    <br>
 
     <?= Html::textarea ('feedback', null, ['class' => "form-control",'required'=>true]) ?>
-
-    <?= Html::submitButton ('Guardar', ['class' => 'btn btn-success']) ?>
+    <br>
+    <?= Html::submitButton ('Guardar', ['class' => 'btn btn-success pull-right']) ?>
 
     <?= Html::endForm () ?>
 

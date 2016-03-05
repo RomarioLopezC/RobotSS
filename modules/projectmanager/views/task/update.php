@@ -7,13 +7,15 @@ use yii\bootstrap\Alert;
 /* @var $model app\models\Task */
 
 $this->title = 'Actualizar petición: ' . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Tasks', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Avances', 'url' => ['/project_manager/student-evidence/index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 <div class="task-update">
 
-    <h1><?= Html::encode ($this->title) ?></h1>
+    <div class="well well-sm">
+        <h1><?= Html::encode ($this->title) ?></h1>
+    </div>
     <?php
     foreach (Yii::$app->getSession ()->getAllFlashes () as $key => $message) {
         echo Alert::widget ([

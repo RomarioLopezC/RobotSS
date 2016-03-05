@@ -12,8 +12,13 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="project-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="well well-sm">
+        <h1><?= Html::encode ($this->title) ?></h1>
+    </div>
 
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-2"></div>
+    </div>
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

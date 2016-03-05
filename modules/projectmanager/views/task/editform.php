@@ -63,7 +63,7 @@ use yii\helpers\Url;
 
 
     <div class="form-group">
-        <?= Html::submitButton ($model->isNewRecord ? 'Guardar' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton ($model->isNewRecord ? 'Guardar' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success pull-right' : 'btn btn-primary pull-right']) ?>
     </div>
 
     <?php ActiveForm::end (); ?>

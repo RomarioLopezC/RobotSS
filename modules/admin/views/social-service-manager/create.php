@@ -7,7 +7,6 @@ use yii\helpers\Html;
 /* @var $model app\models\SocialServiceManager */
 
 $this->title = 'Registrar Encargado de Servicio Social';
-$this->params['breadcrumbs'][] = ['label' => 'Social Service Managers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="social-service-manager-create">

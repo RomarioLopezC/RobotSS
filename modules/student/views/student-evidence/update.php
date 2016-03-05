@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
     </div>
 
-    <h2>Tarea <?= $student_evidence->task->name ?></h2>
+    <h2>Tarea <?= $studentEvidence->task->name ?></h2>
 
 
     <div class="row">
@@ -37,11 +37,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     </button>
                 </p>
 
-                <div class="form-group row">
-                    <div class="col-md-12 text-center">
-                        <?= Html::a('Cancelar', ['view', 'task_id' => $student_evidence->task_id,
-                            'project_id' => $student_evidence->project_id,
-                            'student_id' => $student_evidence->student_id], ['class' => 'btn btn-danger']) ?>
+                <div class="form-group row pull-right">
+                    <div class="col-md-12 text-center ">
+                        <?= Html::a('Cancelar', ['view', 'task_id' => $studentEvidence->task_id,
+                            'project_id' => $studentEvidence->project_id,
+                            'student_id' => $studentEvidence->student_id], ['class' => 'btn btn-danger']) ?>
                         <?= Html::submitButton($evidence->isNewRecord ? 'Completar solicitud' : 'Guardar',
                             ['class' => 'btn btn-primary']) ?>
                     </div>

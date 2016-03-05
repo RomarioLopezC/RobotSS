@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
 
 <div class="project-form">
     <div class="row">
-        <div class="col-lg-7">
+        <div class="col-lg-8 col-lg-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4>Datos Generales</h4>
@@ -27,10 +27,6 @@ use yii\widgets\ActiveForm;
                     <?= $form->field($model, 'dependency')->textInput(['maxlength' => true]) ?>
 
                     <?php
-                    //$options = \yii\helpers\ArrayHelper::map($model->degrees, 'id', 'name');
-
-
-                    //$form->field($model, 'degrees')->checkboxList($options, ['unselect'=>NULL])
 
                     Modal::begin([
                         'header' => '<h2>Perfiles solicitados</h2>',
@@ -46,6 +42,8 @@ use yii\widgets\ActiveForm;
 
                     ?>
 
+                    <br><br>
+
                     <?= $form->field($model, 'vacancy')->textInput(['maxlength' => true]) ?>
 
 
@@ -57,7 +55,7 @@ use yii\widgets\ActiveForm;
             </div>
         </div>
 
-        <div class="col-lg-7">
+        <div class="col-lg-8 col-lg-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4>Información para el prestador</h4>
@@ -82,7 +80,7 @@ use yii\widgets\ActiveForm;
                 </div>
             </div>
             <div class="form-group">
-                <?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Guardar cambios', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                <?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Guardar cambios', ['class' => $model->isNewRecord ? 'btn btn-success pull-right' : 'btn btn-primary pull-right']) ?>
             </div>
         </div>
 

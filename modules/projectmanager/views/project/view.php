@@ -8,12 +8,15 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Project */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Projects', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Mis proyectos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="project-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="well well-sm">
+        <h1><?= Html::encode ($this->title) ?></h1>
+    </div>
+
     <?php
     foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
         echo Alert::widget([
@@ -24,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]);
     }
     ?>
-    <p>
+    <p class="pull-right">
         <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',

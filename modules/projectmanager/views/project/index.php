@@ -23,12 +23,15 @@ foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
 ?>
 <div class="project-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="well well-sm">
+        <h1><?= Html::encode ($this->title) ?></h1>
+    </div>
 
     <p>
-        <?= Html::a('Registrar nuevo proyecto', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Registrar nuevo proyecto', ['create'], ['class' => 'btn btn-success pull-right']) ?>
     </p>
+
+    <br><br><br>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

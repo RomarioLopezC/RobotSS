@@ -16,7 +16,6 @@ echo Nav::widget([
                 ['label' => 'Eliminar Responsables de Proyecto', 'url' => Url::to(['/admin/project-manager/index'])],
                 ['label' => 'Eliminar Responsables de SS', 'url' => Url::to(['/admin/social-service-manager/index'])],
                 ['label' => 'Eliminar Alumnos', 'url' => Url::to(['/admin/student/index'])],
-                ['label' => 'Aprobación de solicitudes', 'url' => '#'],
                 ['label' => 'Aprobación de proyectos', 'url' => Url::to(['/admin/project/view-projects'])],
                 ['label' => 'Registrar encargado de servicio social', 'url' => Url::to(['/admin/social-service-manager/create'])],
             ],

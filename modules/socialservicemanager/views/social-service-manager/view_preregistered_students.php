@@ -24,8 +24,9 @@ foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
 ?>
 <div class="student-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="well well-sm">
+        <h1><?= Html::encode ($this->title) ?></h1>
+    </div>
 
 
     <?php if ($dataProvider->totalCount == 0): ?>

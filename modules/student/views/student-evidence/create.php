@@ -17,9 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
     </div>
 
-    <h2>Tarea <?= $student_evidence->task->name ?></h2>
+    <h2>Tarea <?= $studentEvidence->task->name ?></h2>
 
-
+    <br>
     <div class="row">
         <div class="col-md-12">
             <div class="student-form">
@@ -30,11 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($evidence, 'file')->fileInput(['required' => true]) ?>
 
-                <div class="form-group row">
+                <div class="form-group row pull-right">
                     <div class="col-md-12 text-center">
-                        <?= Html::a('Cancelar', ['view', 'task_id' => $student_evidence->task_id,
-                            'project_id' => $student_evidence->project_id,
-                            'student_id' => $student_evidence->student_id], ['class' => 'btn btn-danger']) ?>
+                        <?= Html::a('Cancelar', ['view', 'task_id' => $studentEvidence->task_id,
+                            'project_id' => $studentEvidence->project_id,
+                            'student_id' => $studentEvidence->student_id], ['class' => 'btn btn-danger']) ?>
                         <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
                     </div>
                 </div>

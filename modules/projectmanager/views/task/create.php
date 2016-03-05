@@ -8,12 +8,14 @@ use yii\bootstrap\Alert;
 /* @var $model app\models\Task */
 
 $this->title = 'Crear nueva petición';
-$this->params['breadcrumbs'][] = ['label' => 'Tasks', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Avances', 'url' => ['/project_manager/student-evidence/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="task-create">
 
-    <h1><?= Html::encode ($this->title) ?></h1>
+    <div class="well well-sm">
+        <h1><?= Html::encode ($this->title) ?></h1>
+    </div>
     <?php
     foreach (Yii::$app->getSession ()->getAllFlashes () as $key => $message) {
         echo Alert::widget ([

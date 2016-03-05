@@ -11,7 +11,6 @@ use app\models\StudentEvidenceSearch;
 
 
 $this->title = 'Página principal';
-$this->params['breadcrumbs'][] = $this->title;
 Yii::$app->formatter->locale = 'es_ES';
 
 $student = Student::findOne(['user_id' => Yii::$app->user->id]);
