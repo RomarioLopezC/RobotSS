@@ -7,13 +7,14 @@ use yii\helpers\Html;
 /* @var $searchModel app\models\ProjectManagerSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Project Managers';
+$this->title = 'Eliminar responsables de proyecto';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="project-manager-index">
 
-    <h1>Eliminar responsables de proyecto</h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="well well-sm">
+        <h1><?= Html::encode ($this->title) ?></h1>
+    </div>
 
 
 

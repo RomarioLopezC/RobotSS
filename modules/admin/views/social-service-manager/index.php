@@ -9,13 +9,14 @@ use app\models\Person;
 /* @var $searchModel app\models\SocialServiceManagerSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Social Service Managers';
+$this->title = 'Eliminar responsables de servicio social';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="social-service-manager-index">
 
-    <h1>Eliminar responsables de servicio social</h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="well well-sm">
+        <h1><?= Html::encode ($this->title) ?></h1>
+    </div>
 
 
     <?= GridView::widget ([
