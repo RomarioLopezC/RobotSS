@@ -132,4 +132,24 @@ class User extends BaseUser {
     public function getPerson (){
         return $this->hasOne (Person::className (), ['id' => 'person_id']);
     }
+
+    /**
+     * Figure it out the person role and returns an
+     * object of that type.
+     */
+    public function getUserRole(){
+        $rol = null;
+        if (Yii::$app->user->can('projectManager')) {
+            return $rol = ProjectManager::findOne(['user_id' => $this->id]);
+        }
+
+        if (Yii::$app->user->can('socialServiceManager')) {
+            return $rol = SocialServiceManager::findOne(['user_id' => $this->id]);
+        }
+
+        if (Yii::$app->user->can('student')) {
+            return $rol = Student::findOne(['user_id' => $this->id]);
+        }
+        return $rol;
+    }
 }
