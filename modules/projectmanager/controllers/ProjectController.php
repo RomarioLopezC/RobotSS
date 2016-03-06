@@ -66,30 +66,27 @@ class ProjectController extends Controller {
      */
     public function actionCreate() {
         $model = new Project();
-        $user = User::find()
+
+        $user_id = User::find()
             ->where("id=" . Yii::$app->user->id)
-            ->one();
-        $user_id = $user->id;
-        $manager = ProjectManager::find()
+            ->one()->id;
+
+        $manager_id = ProjectManager::find()
             ->where("user_id=" . $user_id)
-            ->one();
-        $manager_id = $manager->id;
+            ->one()->id;
         $model->manager_id = $manager_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-            $vacancyvalue = $_POST['Project']['vacancy'];
+            $vacancyValue = $_POST['Project']['vacancy'];
             $newVacancy = new ProjectVacancy();
             $newVacancy->project_id = $model->id;
-            $newVacancy->vacancy = $vacancyvalue;
+            $newVacancy->vacancy = $vacancyValue;
             $newVacancy->save();
 
             $degreesList = $_POST['Project']['degrees1'];
             foreach ($degreesList as $value) {
-                $newProfile = new StudentProfile();
-                $newProfile->project_id = $model->id;
-                $newProfile->degree_id = $value;
-                $newProfile->save();
+                $this->createStudentProfile($model->id,$value);
             }
             Yii::$app->getSession()->setFlash('success', 'El proyecto se ha creado exitosamente');
             return $this->redirect(['view', 'id' => $model->id]);
@@ -101,6 +98,18 @@ class ProjectController extends Controller {
     }
 
     /**
+     * Creates a student profile for the project
+     * @param $modelId
+     * @param $value
+     */
+    private function createStudentProfile($modelId, $value){
+        $newProfile = new StudentProfile();
+        $newProfile->project_id =$modelId;
+        $newProfile->degree_id =$value;
+        $newProfile->save();
+    }
+
+    /**
      * Updates an existing Project model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -108,45 +117,40 @@ class ProjectController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-        $user = User::find()
+        $user_id = User::find()
             ->where("id=" . Yii::$app->user->id)
-            ->one();
-        $user_id = $user->id;
-        $manager = ProjectManager::find()
+            ->one()->id;
+
+        $manager_id = ProjectManager::find()
             ->where("user_id=" . $user_id)
-            ->one();
-        $manager_id = $manager->id;
+            ->one()->id;
         $model->manager_id = $manager_id;
 
-        $degreeids = StudentProfile::find()
+        $degreeIds = StudentProfile::find()
             ->where("project_id=" . $model->id)
             ->all();
-        $cupovalor = ProjectVacancy::find()
+        $cupoValor = ProjectVacancy::find()
             ->where("project_id=" . $model->id)
             ->all();
 
-        $ids = ArrayHelper::getColumn($degreeids, 'degree_id');
-        $cupo = ArrayHelper::getColumn($cupovalor, 'vacancy')[0];
+        $ids = ArrayHelper::getColumn($degreeIds, 'degree_id');
+        $cupo = ArrayHelper::getColumn($cupoValor, 'vacancy')[0];
         $model->degrees1 = $ids;
         $model->vacancy = $cupo;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             StudentProfile::deleteAll('project_id=' . $model->id);
             ProjectVacancy::deleteAll('project_id=' . $model->id);
-            $vacancyvalue = $_POST['Project']['vacancy'];
+            $vacancyValue = $_POST['Project']['vacancy'];
             $newVacancy = new ProjectVacancy();
             $newVacancy->project_id = $model->id;
-            $newVacancy->vacancy = $vacancyvalue;
+            $newVacancy->vacancy = $vacancyValue;
             $newVacancy->save();
 
             $degreesList = $_POST['Project']['degrees1'];
 
-
             foreach ($degreesList as $value) {
-                $newProfile = new StudentProfile();
-                $newProfile->project_id = $model->id;
-                $newProfile->degree_id = $value;
-                $newProfile->save();
+                $this->createStudentProfile($model->id,$value);
             }
             Yii::$app->getSession()->setFlash('success', 'Los cambios se han guardado exitosamente');
             return $this->redirect(['view', 'id' => $model->id]);
@@ -186,6 +190,13 @@ class ProjectController extends Controller {
         }
     }
 
+    /**
+     * Preregisters student to selected project
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \yii\db\Exception
+     */
     public function actionPreregister($id) {
         $model = $this->findModel($id);
         $user = User::find()
