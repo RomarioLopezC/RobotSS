@@ -71,7 +71,7 @@ class SocialServiceManagerController extends Controller {
         if ($model->load(Yii::$app->request->post())) {
             $person = new Person();
             $person->name = $model->name;
-            $person->lastname = $model->lastName;
+            $person->lastname = $model->last_name;
             $person->phone = $model->phone;
             $person->save(false);
             $user = new User();

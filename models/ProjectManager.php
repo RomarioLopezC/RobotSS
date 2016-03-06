@@ -17,14 +17,14 @@ class ProjectManager extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName () {
         return 'project_manager';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules () {
         return [
             [['organization'], 'required'],
             [['id', 'user_id'], 'integer'],
@@ -35,7 +35,7 @@ class ProjectManager extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels () {
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
@@ -46,19 +46,19 @@ class ProjectManager extends \yii\db\ActiveRecord {
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser() {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    public function getUser () {
+        return $this->hasOne (User::className (), ['id' => 'user_id']);
     }
 
 
-    public function afterSave($insert, $changedAttributes) {
+    public function afterSave ($insert, $changedAttributes) {
         if ($insert) {
             //assign the role to the user
-            $authManager = Yii::$app->getAuthManager();
-            $socialServiceMRole = $authManager->getRole('projectManager');
-            $authManager->assign($socialServiceMRole, $this->user_id);
+            $authManager = Yii::$app->getAuthManager ();
+            $socialServiceMRole = $authManager->getRole ('projectManager');
+            $authManager->assign ($socialServiceMRole, $this->user_id);
         }
-        parent::afterSave($insert, $changedAttributes);
+        parent::afterSave ($insert, $changedAttributes);
     }
 
 }
