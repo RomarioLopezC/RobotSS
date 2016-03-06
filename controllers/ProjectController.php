@@ -18,6 +18,9 @@ use app\models\StudentProfile;
  * ProjectController implements the CRUD actions for Project model.
  */
 class ProjectController extends Controller {
+    /**
+     * @return array
+     */
     public function behaviors() {
         return [
             'verbs' => [
@@ -69,9 +72,14 @@ class ProjectController extends Controller {
         }
     }
 
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \yii\db\Exception
+     */
     public function actionPreregister($id) {
         $model = $this->findModel($id);
-        //$user_id=User::findOne(Yii::$app->user->id)->id;
         $user = User::find()
             ->where("id=" . Yii::$app->user->id)
             ->one();
@@ -84,7 +92,6 @@ class ProjectController extends Controller {
         $vacancy = ProjectVacancy::find()
             ->where("project_id=" . $id)
             ->one();
-        //$vacancyValue=ArrayHelper::getColumn($vacancy, 'vacancy')[0];
         $vacancyValue = $vacancy->vacancy;
 
         if ($existe = StudentProfile::find()->where(['project_id' => $id, 'degree_id' => $student->degree_id])->one()) {
@@ -103,7 +110,6 @@ class ProjectController extends Controller {
                     $newRegistration->student_status = "preregistered";
                     $newRegistration->save();
 
-                    //$vacancy->vacancy=$vacancy->vacancy-1;
                     Yii::$app->db->createCommand()->update('project_vacancy', ['vacancy' => $vacancy->vacancy - 1],
                         'project_id=' . $id)->execute();
                     Yii::$app->getSession()->setFlash('success', 'Te has pre-registrado al proyecto');

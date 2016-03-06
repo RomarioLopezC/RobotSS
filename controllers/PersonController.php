@@ -19,6 +19,9 @@ use yii\filters\VerbFilter;
  * PersonController implements the CRUD actions for Person model.
  */
 class PersonController extends Controller {
+    /**
+     * @return array
+     */
     public function behaviors() {
         return [
             'verbs' => [
@@ -28,31 +31,6 @@ class PersonController extends Controller {
                 ],
             ],
         ];
-    }
-
-    /**
-     * Lists all Person models.
-     * @return mixed
-     */
-    public function actionIndex() {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Person::find(),
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Person model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id) {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
     }
 
     /**
@@ -85,23 +63,31 @@ class PersonController extends Controller {
 
         if (Yii::$app->user->can('projectManager')) {
             $rol = ProjectManager::findOne(['user_id' => $user->id]);
-        } else if (Yii::$app->user->can('socialServiceManager')) {
+        }
+
+        if (Yii::$app->user->can('socialServiceManager')) {
             $rol = SocialServiceManager::findOne(['user_id' => $user->id]);
-        } else if (Yii::$app->user->can('student')) {
+        }
+
+        if (Yii::$app->user->can('student')) {
             $rol = Student::findOne(['user_id' => $user->id]);
         }
 
         if ($model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post())) {
+
             if (isset($rol)) {
                 $rol->load(Yii::$app->request->post());
                 $rol->save(false);
             }
+
             if ($model->save() && $user->save()) {
                 Yii::$app->getSession()->setFlash('success', 'Su información se actualizó exitosamente');
             } else {
                 Yii::$app->getSession()->setFlash('danger', 'Ocurrió un error al guardar. Vuelve a intentar');
             }
         }
+
+
         return $this->render('update', [
             'model' => $model,
             'user' => $user,
@@ -110,6 +96,9 @@ class PersonController extends Controller {
 
     }
 
+    /**
+     * @param $id
+     */
     public function actionChangePassword($id) {
         $userInfo = Yii::$app->request->post()['settings-form'];
         $user = User::findIdentity($id);
@@ -127,18 +116,6 @@ class PersonController extends Controller {
                 'La contraseña actual no corresponde, valide e intente nuevamente');
         }
         $this->redirect(['person/update', 'id' => Yii::$app->user->id]);
-    }
-
-    /**
-     * Deletes an existing Person model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id) {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**
