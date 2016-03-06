@@ -20,6 +20,9 @@ use yii\web\NotFoundHttpException;
  * ProjectController implements the CRUD actions for Project model.
  */
 class ProjectController extends Controller {
+    /**
+     * @return array
+     */
     public function behaviors() {
         return [
             'verbs' => [
@@ -185,7 +188,6 @@ class ProjectController extends Controller {
 
     public function actionPreregister($id) {
         $model = $this->findModel($id);
-        //$user_id=User::findOne(Yii::$app->user->id)->id;
         $user = User::find()
             ->where("id=" . Yii::$app->user->id)
             ->one();

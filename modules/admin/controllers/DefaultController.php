@@ -9,10 +9,16 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 
 class DefaultController extends Controller {
+    /**
+     * @return string
+     */
     public function actionIndex() {
         return $this->render('index');
     }
 
+    /**
+     * @return string
+     */
     public function actionListSocialServiceManagers() {
         $dataProvider = new ActiveDataProvider([
             'query' => SocialServiceManager::find(),
@@ -23,7 +29,9 @@ class DefaultController extends Controller {
         ]);
     }
 
-
+    /**
+     * @return mixed
+     */
     public function actionReport() {
         // get your HTML raw content without any layouts or scripts
         $content = $this->render('index');

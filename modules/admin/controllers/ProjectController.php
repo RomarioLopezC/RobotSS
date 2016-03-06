@@ -10,6 +10,9 @@ use yii\web\NotFoundHttpException;
 
 
 class ProjectController extends Controller {
+    /**
+     * @return string
+     */
     public function actionViewProjects() {
         $dataProvider = new ActiveDataProvider([
             'query' => Project::find()->where(['approved' => null]),
@@ -20,6 +23,10 @@ class ProjectController extends Controller {
         ]);
     }
 
+    /**
+     * @param $id
+     * @throws NotFoundHttpException
+     */
     public function actionApproveProject($id) {
         if (($model = Project::findOne($id)) !== null) {
             if ($model->approved == null) {
@@ -47,6 +54,10 @@ class ProjectController extends Controller {
         }
     }
 
+    /**
+     * @param $id
+     * @throws NotFoundHttpException
+     */
     public function actionCancelProject($id) {
         if (($model = Project::findOne($id)) !== null) {
             if ($model->approved == false) {

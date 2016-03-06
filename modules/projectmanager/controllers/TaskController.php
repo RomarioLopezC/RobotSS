@@ -19,6 +19,9 @@ use yii\helpers\ArrayHelper;
  * TaskController implements the CRUD actions for Task model.
  */
 class TaskController extends Controller {
+    /**
+     * @return array
+     */
     public function behaviors() {
         return [
             'verbs' => [
@@ -28,30 +31,6 @@ class TaskController extends Controller {
                 ],
             ],
         ];
-    }
-
-    /**
-     * Lists all Task models.
-     * @return mixed
-     */
-    public function actionIndex() {
-        $searchModel = new TaskSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('student-evidence/index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Task model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id) {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
     }
 
     /**
@@ -76,21 +55,7 @@ class TaskController extends Controller {
                         'status' => Task::NEW_TASK
                     ])->execute();
 
-                    $notification = Yii::createObject([
-                        'class' => Notification::className(),
-                        'user_id' => Student::findOne([$value])->user_id,
-                        'description' => Notification::NEW_TASK,
-                        'role' => Notification::ROLE_STUDENT,
-                        'created_at' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'),
-                        'viewed' => false,
-                        'url' => Url::to(['/student/student-evidence/view',
-                            'task_id' => $model->id,
-                            'project_id' => $model->project_id,
-                            'student_id' => $value
-                        ])
-                    ]);
-
-                    $notification->save(false);
+                    $this->setNotification($value, $model->id, $model->project_id, Notification::NEW_TASK);
                 }
                 Yii::$app->getSession()->setFlash('success', 'Petición creada exitosamente');
                 return $this->redirect(['student-evidence/index']);
@@ -140,21 +105,7 @@ class TaskController extends Controller {
                         ])->execute();
                     }
 
-                    $notification = Yii::createObject([
-                        'class' => Notification::className(),
-                        'user_id' => Student::findOne([$value])->user_id,
-                        'description' => Notification::EDITED_TASK,
-                        'role' => Notification::ROLE_STUDENT,
-                        'created_at' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'),
-                        'viewed' => false,
-                        'url' => Url::to(['/student/student-evidence/view',
-                            'task_id' => $model->id,
-                            'project_id' => $model->project_id,
-                            'student_id' => $value
-                        ])
-                    ]);
-
-                    $notification->save(false);
+                    $this->setNotification($value, $model->id, $model->project_id, Notification::EDITED_TASK);
                 }
                 Yii::$app->getSession()->setFlash('success', 'Petición actualizada exitosamente');
                 return $this->redirect(['student-evidence/index']);
@@ -176,17 +127,6 @@ class TaskController extends Controller {
     }
 
     /**
-     * Deletes an existing Task model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id) {
-        $this->findModel($id)->delete();
-        return $this->redirect(['student-evidence/index']);
-    }
-
-    /**
      * Finds the Task model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
@@ -201,6 +141,9 @@ class TaskController extends Controller {
         }
     }
 
+    /**
+     * @return string|\yii\web\Response
+     */
     public function actionSelectProject() {
         $model = new Task();
         $project = $_POST['list'];
@@ -215,6 +158,15 @@ class TaskController extends Controller {
         }
     }
 
+    /**
+     * @param $id
+     * @param $evidenceId
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Exception
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\db\Exception
+     */
     public function actionGiveFeedback($id, $evidenceId) {
         $task = $this->findModel($id);
         $comment = $_POST['feedback'];
@@ -240,21 +192,8 @@ class TaskController extends Controller {
             $evidence->accepted_date = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
             $evidence->update();
 
-            //set notification
-            $notification = Yii::createObject([
-                'class' => Notification::className(),
-                'user_id' => Student::findOne([$studentId])->user_id,
-                'description' => Notification::ACCEPTED_TASK,
-                'role' => Notification::ROLE_STUDENT,
-                'created_at' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'),
-                'viewed' => false,
-                'url' => Url::to(['/student/student-evidence/view',
-                    'task_id' => $task->id,
-                    'project_id' => $studentEvidence->project_id,
-                    'student_id' => $studentId
-                ])
-            ]);
-            $notification->save(false);
+            $this->setNotification($studentId, $task->id, $studentEvidence->project_id, Notification::ACCEPTED_TASK);
+
 
             Yii::$app->getSession()->setFlash('success', 'Sus cambios se han guardado exitosamente');
         } else {
@@ -262,21 +201,7 @@ class TaskController extends Controller {
             Yii::$app->db->createCommand('UPDATE student_evidence SET comment="' . $comment .
                 '" WHERE task_id=' . $task->id . ' AND evidence_id=' . $evidenceId)
                 ->execute();
-            //set notification
-            $notification = Yii::createObject([
-                'class' => Notification::className(),
-                'user_id' => Student::findOne([$studentId])->user_id,
-                'description' => Notification::REJECTED_TASK,
-                'role' => Notification::ROLE_STUDENT,
-                'created_at' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'),
-                'viewed' => false,
-                'url' => Url::to(['/student/student-evidence/view',
-                    'task_id' => $task->id,
-                    'project_id' => $studentEvidence->project_id,
-                    'student_id' => $studentId
-                ])
-            ]);
-            $notification->save(false);
+            $this->setNotification($studentId, $task->id, $studentEvidence->project_id, Notification::REJECTED_TASK);
             Yii::$app->getSession()->setFlash('success', 'Sus cambios se han guardado exitosamente');
         }
 
@@ -284,6 +209,12 @@ class TaskController extends Controller {
         return $this->redirect(['student-evidence/index']);
     }
 
+    /**
+     * @param $taskId
+     * @param $evidenceId
+     * @return string
+     * @throws NotFoundHttpException
+     */
     public function actionShowFeedbackScreen($taskId, $evidenceId) {
         return $this->render('feedback', [
             'model' => $this->findModel($taskId),
@@ -291,6 +222,9 @@ class TaskController extends Controller {
         ]);
     }
 
+    /**
+     * @param $evidenceId
+     */
     public function actionDownload($evidenceId) {
         $studentEvidence = StudentEvidence::find()->where("evidence_id=" . $evidenceId)
             ->one();
@@ -298,5 +232,28 @@ class TaskController extends Controller {
             Yii::getAlias('@webroot') . $studentEvidence->evidence->attachment_path,
             $studentEvidence->evidence->attachment_name
         )->send();
+    }
+
+    /**
+     * @param $studentId
+     * @param $task
+     * @param $studentEvidence
+     * @throws \yii\base\InvalidConfigException
+     */
+    private function setNotification($studentId, $taskId, $proyectId, $description) {
+        $notification = Yii::createObject([
+            'class' => Notification::className(),
+            'user_id' => Student::findOne([$studentId])->user_id,
+            'description' => $description,
+            'role' => Notification::ROLE_STUDENT,
+            'created_at' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'),
+            'viewed' => false,
+            'url' => Url::to(['/student/student-evidence/view',
+                'task_id' => $taskId,
+                'project_id' => $proyectId,
+                'student_id' => $studentId
+            ])
+        ]);
+        $notification->save(false);
     }
 }

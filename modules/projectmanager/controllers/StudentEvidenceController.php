@@ -17,6 +17,9 @@ use yii\web\NotFoundHttpException;
  * StudentEvidenceController implements the CRUD actions for StudentEvidence model.
  */
 class StudentEvidenceController extends Controller {
+    /**
+     * @return array
+     */
     public function behaviors() {
         return [
             'verbs' => [
@@ -61,6 +64,9 @@ class StudentEvidenceController extends Controller {
         ]);
     }
 
+    /**
+     * @return string|\yii\web\Response
+     */
     public function actionSelectProject() {
         $model = new Task();
         $project = $_POST['list'];
