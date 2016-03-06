@@ -127,12 +127,6 @@ class ProjectController extends Controller {
         $model->degrees1 = $ids;
         $model->vacancy = $cupo;
 
-        //$degrees1 = Degree::find()->all();
-        //$model->degrees = \yii\helpers\ArrayHelper::getColumn(
-        //    $model->hasMany(StudentProfile::className(), ['project_id' => 'id'])->asArray()->all(),
-        //    'project_id'
-        //);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             StudentProfile::deleteAll('project_id=' . $model->id);
             ProjectVacancy::deleteAll('project_id=' . $model->id);
@@ -204,7 +198,7 @@ class ProjectController extends Controller {
         $vacancy = ProjectVacancy::find()
             ->where("project_id=" . $id)
             ->one();
-        //$vacancyValue=ArrayHelper::getColumn($vacancy, 'vacancy')[0];
+
         $vacancyValue = $vacancy->vacancy;
 
         if ($existe = StudentProfile::find()->where(['project_id' => $id, 'degree_id' => $student->degree_id])->one()) {
@@ -218,8 +212,9 @@ class ProjectController extends Controller {
                 $newRegistration->student_status = "preregistered";
                 $newRegistration->save();
 
-                //$vacancy->vacancy=$vacancy->vacancy-1;
-                Yii::$app->db->createCommand()->update('project_vacancy', ['vacancy' => $vacancy->vacancy - 1], 'project_id=' . $id)->execute();
+
+                Yii::$app->db->createCommand()->update('project_vacancy', ['vacancy' => $vacancy->vacancy - 1],
+                    'project_id=' . $id)->execute();
 
 
                 Yii::$app->getSession()->setFlash('success', 'Te has pre-registrado al proyecto');

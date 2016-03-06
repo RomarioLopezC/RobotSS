@@ -95,7 +95,8 @@ class TaskController extends Controller {
                 Yii::$app->getSession()->setFlash('success', 'Petición creada exitosamente');
                 return $this->redirect(['student-evidence/index']);
             } else {
-                Yii::$app->getSession()->setFlash('danger', 'La fecha de entrega no puede ser anterior a la fecha actual');
+                Yii::$app->getSession()->setFlash('danger',
+                    'La fecha de entrega no puede ser anterior a la fecha actual');
                 return $this->render('create', [
                     'model' => $model,
                     'projectId' => $projectId,
@@ -123,7 +124,7 @@ class TaskController extends Controller {
         $model->students = $ids;
         $status = Yii::$app->db->createCommand('SELECT * FROM student_evidence WHERE task_id=' . $model->id)
             ->queryOne();
-        //Yii::$app->db->createCommand ()->delete ('student_evidence', 'task_id=' . $model->id)->execute ();
+
         if ($model->load(Yii::$app->request->post())) {
             if (strtotime($model->delivery_date) >= strtotime(Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'))) {
                 $students = $_POST['Task']['students'];
@@ -158,7 +159,8 @@ class TaskController extends Controller {
                 Yii::$app->getSession()->setFlash('success', 'Petición actualizada exitosamente');
                 return $this->redirect(['student-evidence/index']);
             } else {
-                Yii::$app->getSession()->setFlash('danger', 'La fecha de entrega no puede ser anterior a la fecha actual');
+                Yii::$app->getSession()->setFlash('danger',
+                    'La fecha de entrega no puede ser anterior a la fecha actual');
                 return $this->render('update', [
                     'model' => $model,
                     'projectId' => $projectId,
@@ -223,10 +225,12 @@ class TaskController extends Controller {
         $studentId = $studentEvidence->student_id;
         if ($accepted == 1) {
 
-            Yii::$app->db->createCommand('UPDATE student_evidence SET comment="' . $comment . '" WHERE task_id=' . $task->id . ' AND evidence_id=' . $evidenceId)
+            Yii::$app->db->createCommand('UPDATE student_evidence SET comment="' . $comment .
+                '" WHERE task_id=' . $task->id . ' AND evidence_id=' . $evidenceId)
                 ->execute();
             $task->status = Task::ACCEPTED;
-            Yii::$app->db->createCommand('UPDATE student_evidence SET status="' . Task::ACCEPTED . '" WHERE task_id=' . $task->id . ' AND evidence_id=' . $evidenceId)
+            Yii::$app->db->createCommand('UPDATE student_evidence SET status="' .
+                Task::ACCEPTED . '" WHERE task_id=' . $task->id . ' AND evidence_id=' . $evidenceId)
                 ->execute();
             $task->update();
             $evidence = Evidence::find()

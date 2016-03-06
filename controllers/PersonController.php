@@ -123,7 +123,8 @@ class PersonController extends Controller {
                 Yii::$app->getSession()->setFlash('success', 'Nombre de usuario cambiado con éxito');
             }
         } else {
-            Yii::$app->getSession()->setFlash('danger', 'La contraseña actual no corresponde, valide e intente nuevamente');
+            Yii::$app->getSession()->setFlash('danger',
+                'La contraseña actual no corresponde, valide e intente nuevamente');
         }
         $this->redirect(['person/update', 'id' => Yii::$app->user->id]);
     }

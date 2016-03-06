@@ -155,7 +155,8 @@ class StudentEvidenceController extends Controller {
      */
     protected function findModel($taskId, $projectId, $evidenceId, $studentId) {
         if (($model = StudentEvidence::findOne(['taskId' => $taskId, 'projectId' => $projectId,
-                'evidenceId' => $evidenceId, 'studentId' => $studentId])) !== null) {
+                'evidenceId' => $evidenceId, 'studentId' => $studentId])) !== null
+        ) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

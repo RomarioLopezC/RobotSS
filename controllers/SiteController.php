@@ -90,7 +90,8 @@ class SiteController extends Controller {
                 $projectManager->user_id = $user->id;
                 $projectManager->save();
 
-                Yii::$app->session->setFlash('success', 'Se envío un correo de confirmación. Por favor verifique su correo electrónico');
+                Yii::$app->session->setFlash('success',
+                    'Se envío un correo de confirmación. Por favor verifique su correo electrónico');
                 return $this->refresh();
             } else {
                 Yii::$app->session->setFlash('danger', 'Ocurrió un error al guardar. Vuelve a intentar');
@@ -104,7 +105,7 @@ class SiteController extends Controller {
         ]);
     }
 
-    public function actionViewNotification($id){
+    public function actionViewNotification($id) {
         $notification = Notification::findOne([$id]);
         $url = $notification->url;
         $notification->delete();
