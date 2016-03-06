@@ -17,12 +17,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="task-view">
 
     <div class="well well-sm">
-        <h1><?= Html::encode ($this->title) ?></h1>
+        <h1><?= Html::encode($this->title) ?></h1>
     </div>
 
     <?php
-    foreach (Yii::$app->getSession ()->getAllFlashes () as $key => $message) {
-        echo Alert::widget ([
+    foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
+        echo Alert::widget([
             'options' => [
                 'class' => 'alert-' . $key,
             ],
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
     }
     ?>
 
-    <?= DetailView::widget ([
+    <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
 
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
 
-    echo DetailView::widget ([
+    echo DetailView::widget([
         'model' => $evidence,
         'attributes' => [
 
@@ -53,28 +53,28 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]); ?>
-    <?= Html::label ('Archivo adjunto: ') ?>
+    <?= Html::label('Archivo adjunto: ') ?>
 
 
-    <?= Html::a ($evidence->attachment_name, ['download', 'evidenceId' => $evidence->id]); ?>
+    <?= Html::a($evidence->attachment_name, ['download', 'evidenceId' => $evidence->id]); ?>
     <br><br>
-    <?= Html::beginForm (['give-feedback', 'id' => $model['id'],'evidenceId'=>$evidence['id']], 'post') ?>
+    <?= Html::beginForm(['give-feedback', 'id' => $model['id'], 'evidenceId' => $evidence['id']], 'post') ?>
     <?php
     $array = [['value' => 1, 'estado' => 'Aceptado'], ['value' => 2, 'estado' => 'No aceptado']];
     ?>
-    <?= Html::label ('Aceptar avance?') ?>
+    <?= Html::label('Aceptar avance?') ?>
 
-    <?= Html::radioList ('aceptado', 1 , ArrayHelper::map ($array, 'value', 'estado'),
-        ['class' => "form-control",'required'=>true]) ?>
+    <?= Html::radioList('aceptado', 1, ArrayHelper::map($array, 'value', 'estado'),
+        ['class' => "form-control", 'required' => true]) ?>
 
     <br>
-    <?= Html::label ('Retroalimentación') ?>
+    <?= Html::label('Retroalimentación') ?>
     <br>
 
-    <?= Html::textarea ('feedback', null, ['class' => "form-control",'required'=>true]) ?>
+    <?= Html::textarea('feedback', null, ['class' => "form-control", 'required' => true]) ?>
     <br>
-    <?= Html::submitButton ('Guardar', ['class' => 'btn btn-success pull-right']) ?>
+    <?= Html::submitButton('Guardar', ['class' => 'btn btn-success pull-right']) ?>
 
-    <?= Html::endForm () ?>
+    <?= Html::endForm() ?>
 
 </div>

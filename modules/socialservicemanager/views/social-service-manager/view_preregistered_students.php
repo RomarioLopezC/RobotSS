@@ -25,7 +25,7 @@ foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
 <div class="student-index">
 
     <div class="well well-sm">
-        <h1><?= Html::encode ($this->title) ?></h1>
+        <h1><?= Html::encode($this->title) ?></h1>
     </div>
 
 
@@ -64,7 +64,8 @@ foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
                                 [
                                     'title' => 'Cancelar preregistro',
                                     'data-pjax' => '0',
-                                    'data-confirm' => Yii::t('app', '¿Está seguro que desea cancelar el registro del estudiante?'),
+                                    'data-confirm' =>
+                                        Yii::t('app', '¿Está seguro que desea cancelar el registro del estudiante?'),
                                 ]
                             );
                         },
