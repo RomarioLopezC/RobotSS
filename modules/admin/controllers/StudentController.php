@@ -13,6 +13,9 @@ use yii\web\NotFoundHttpException;
  * StudentController implements the CRUD actions for Student model.
  */
 class StudentController extends Controller {
+    /**
+     * @return array
+     */
     public function behaviors() {
         return [
             'verbs' => [
@@ -91,7 +94,6 @@ class StudentController extends Controller {
      * @return mixed
      */
     public function actionDelete($user_id) {
-        //$this->findModel($id)->delete();
         Yii::$app->db->createCommand()->delete('student', 'user_id =' . $user_id . '')->execute();
         Yii::$app->db->createCommand()->delete('user', 'id =' . $user_id . '')->execute();
 

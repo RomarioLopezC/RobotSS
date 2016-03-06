@@ -13,6 +13,9 @@ use yii\web\NotFoundHttpException;
  * ProjectManagerController implements the CRUD actions for ProjectManager model.
  */
 class ProjectManagerController extends Controller {
+    /**
+     * @return array
+     */
     public function behaviors() {
         return [
             'verbs' => [

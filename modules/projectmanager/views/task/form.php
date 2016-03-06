@@ -25,7 +25,6 @@ use yii\helpers\Url;
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'delivery_date')->widget(\yii\jui\DatePicker::classname(), [
-
         'dateFormat' => 'yyyy-MM-dd'
     ]) ?>
 

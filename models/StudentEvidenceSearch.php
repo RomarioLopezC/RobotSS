@@ -11,10 +11,25 @@ use app\models\StudentEvidence;
  * StudentEvidenceSearch represents the model behind the search form about `app\models\StudentEvidence`.
  */
 class StudentEvidenceSearch extends StudentEvidence {
+    /**
+     * @var string
+     */
     public $task_name;
+    /**
+     * @var string
+     */
     public $task_delivery_date;
+    /**
+     * @var string
+     */
     public $evidence_updated_at;
+    /**
+     * @var string
+     */
     public $student_asign;
+    /**
+     * @var string
+     */
     public $evidence_accepted_date;
 
     /**
@@ -42,88 +57,20 @@ class StudentEvidenceSearch extends StudentEvidence {
      *
      * @return ActiveDataProvider
      */
-    public function searchNews($params) {
-        $query = StudentEvidence::find();
+    public function search($params, $studentEvidenceStatus, $student = true) {
 
-        $query->joinWith(['evidence', 'task', 'student']);
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        $query->andFilterWhere([
-            'student_evidence.status' => StudentEvidence::$NEW,
-            'student.user_id' => Yii::$app->user->id,
+        $dataArray = [
+            'student_evidence.status' => $studentEvidenceStatus,
             'task.name' => $this->task_name,
             'task.delivery_data' => $this->task_delivery_date,
-        ]);
+        ];
 
-        return $dataProvider;
-    }
-
-    public function searchPending($params) {
-        $query = StudentEvidence::find();
-
-        $query->joinWith(['evidence', 'task', 'student']);
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
+        if($student){
+            $dataArray['student.user_id'] = Yii::$app->user->id;
+        }else{
+            $dataArray['project.manager_id'] = 2;
         }
 
-        $query->andFilterWhere([
-            'student_evidence.status' => StudentEvidence::$PENDING,
-            'student.user_id' => Yii::$app->user->id,
-            'task.name' => $this->task_name,
-            'task.delivery_data' => $this->task_delivery_date,
-        ]);
-
-        return $dataProvider;
-    }
-
-    public function searchAccepted($params) {
-        $query = StudentEvidence::find();
-
-        $query->joinWith(['evidence', 'task', 'student']);
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        $query->andFilterWhere([
-            'student_evidence.status' => StudentEvidence::$ACCEPTED,
-            'student.user_id' => Yii::$app->user->id,
-            'task.name' => $this->task_name,
-            'task.delivery_data' => $this->task_delivery_date,
-        ]);
-
-        return $dataProvider;
-    }
-
-    public function searchNewsByProjectManager($params) {
         $query = StudentEvidence::find();
 
         $query->joinWith(['evidence', 'task', 'project', 'student']);
@@ -135,71 +82,10 @@ class StudentEvidenceSearch extends StudentEvidence {
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'project.manager_id' => 2,
-            'student_evidence.status' => StudentEvidence::$NEW,
-            'task.name' => $this->task_name,
-            'task.delivery_data' => $this->task_delivery_date,
-        ]);
-
-        return $dataProvider;
-    }
-
-    public function searchPendingByProjectManager($params) {
-        $query = StudentEvidence::find();
-
-        $query->joinWith(['evidence', 'task', 'project', 'student']);
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        $query->andFilterWhere([
-            'project.manager_id' => 2,
-            'student_evidence.status' => StudentEvidence::$PENDING,
-            'task.name' => $this->task_name,
-            'task.delivery_data' => $this->task_delivery_date,
-        ]);
-
-        return $dataProvider;
-    }
-
-    public function searchAcceptedByProjectManager($params) {
-        $query = StudentEvidence::find();
-
-        $query->joinWith(['evidence', 'task', 'project', 'student']);
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        $query->andFilterWhere([
-            'project.manager_id' => 2,
-            'student_evidence.status' => StudentEvidence::$ACCEPTED,
-            'task.name' => $this->task_name,
-            'task.delivery_data' => $this->task_delivery_date,
-        ]);
+        $query->andFilterWhere($dataArray);
 
         return $dataProvider;
     }

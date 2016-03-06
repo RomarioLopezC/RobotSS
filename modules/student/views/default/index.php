@@ -20,8 +20,8 @@ if ($registration = Registration::findOne(['student_id' => $student->id])) {
     $textProject = 'Avances de proyecto: ' . $project->name;
 
     $searchModel = new StudentEvidenceSearch();
-    $dataProviderNews = $searchModel->searchNews(Yii::$app->request->queryParams);
-    $dataProviderPending = $searchModel->searchPending(Yii::$app->request->queryParams);
+    $dataProviderNews = $searchModel->search(Yii::$app->request->queryParams, \app\models\StudentEvidence::$NEW);
+    $dataProviderPending = $searchModel->search(Yii::$app->request->queryParams, \app\models\StudentEvidence::$PENDING);
 
     $countNews = $dataProviderNews->getTotalCount();
     $countPending = $dataProviderPending->getTotalCount();
