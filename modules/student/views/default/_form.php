@@ -41,7 +41,8 @@ use yii\widgets\ActiveForm;
     <div class="form-group">
         <div class="pull-right">
             <?= Html::a('Cancelar', '../../user/login', ['class' => 'btn btn-danger']) ?>
-            <?= Html::submitButton($student->isNewRecord ? 'Completar solicitud' : 'Guardar', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton($student->isNewRecord ? 'Completar solicitud' : 'Guardar',
+                ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
 
