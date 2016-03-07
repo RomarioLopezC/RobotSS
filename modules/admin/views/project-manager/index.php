@@ -17,7 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
 
-
     <?= GridView::widget ([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -39,8 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{delete}',
                 'buttons' => [
                     'delete' => function ($url, $model) {
-                        return Html::a ('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'user_id' => $model['user_id']], [
-                            'title' => Yii::t ('app', 'Delete'), 'data-confirm' => Yii::t ('app', '¿Estas seguro que deseas eliminar?'), 'data-method' => 'post']);
+                        return Html::a ('<span class="glyphicon glyphicon-trash"></span>',
+                            ['delete', 'user_id' => $model['user_id']], [
+                                'title' => Yii::t ('app', 'Delete'), 'data-confirm' => Yii::t ('app',
+                                    '¿Estas seguro que deseas eliminar?'), 'data-method' => 'post']);
                     }
                 ],
 

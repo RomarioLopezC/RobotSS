@@ -10,22 +10,22 @@ use yii\widgets\ActiveForm;
 
 <div class="project-manager-search">
 
-    <?php $form = ActiveForm::begin([
+    <?php $form = ActiveForm::begin ([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field ($model, 'id') ?>
 
-    <?= $form->field($model, 'user_id') ?>
+    <?= $form->field ($model, 'user_id') ?>
 
-    <?= $form->field($model, 'organization') ?>
+    <?= $form->field ($model, 'organization') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton ('Search', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton ('Reset', ['class' => 'btn btn-default']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php ActiveForm::end (); ?>
 
 </div>

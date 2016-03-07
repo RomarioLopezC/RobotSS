@@ -10,20 +10,20 @@ use yii\widgets\ActiveForm;
 
 <div class="project-search">
 
-    <?php $form = ActiveForm::begin([
+    <?php $form = ActiveForm::begin ([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field ($model, 'id') ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field ($model, 'name') ?>
 
-    <?= $form->field($model, 'dependency') ?>
+    <?= $form->field ($model, 'dependency') ?>
 
-    <?= $form->field($model, 'objective') ?>
+    <?= $form->field ($model, 'objective') ?>
 
-    <?= $form->field($model, 'goals') ?>
+    <?= $form->field ($model, 'goals') ?>
 
     <?php // echo $form->field($model, 'actions_by_students') ?>
 
@@ -42,10 +42,10 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'approved') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton ('Search', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton ('Reset', ['class' => 'btn btn-default']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php ActiveForm::end (); ?>
 
 </div>

@@ -10,18 +10,18 @@ use yii\widgets\ActiveForm;
 
 <div class="social-service-manager-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin (); ?>
 
-    <?= $form->field($model, 'id')->textInput() ?>
+    <?= $form->field ($model, 'id')->textInput () ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <?= $form->field ($model, 'user_id')->textInput () ?>
 
-    <?= $form->field($model, 'faculty_id')->textInput() ?>
+    <?= $form->field ($model, 'faculty_id')->textInput () ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton ($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php ActiveForm::end (); ?>
 
 </div>

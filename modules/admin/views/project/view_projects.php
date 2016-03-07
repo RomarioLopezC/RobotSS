@@ -13,8 +13,8 @@ $this->title = 'Aprobación de proyectos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php
-foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
-    echo Alert::widget([
+foreach (Yii::$app->getSession ()->getAllFlashes () as $key => $message) {
+    echo Alert::widget ([
         'options' => [
             'class' => 'alert-' . $key,
         ],
@@ -35,7 +35,7 @@ foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
             No existen proyectos por aprobar
         </div>
     <?php else: ?>
-        <?= GridView::widget([
+        <?= GridView::widget ([
             'dataProvider' => $dataProvider,
             'columns' => [
                 'name',
@@ -46,24 +46,24 @@ foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
                     'template' => '{approve-project} {cancel-project}',
                     'buttons' => [
                         'approve-project' => function ($url) {
-                            return Html::a(
+                            return Html::a (
                                 '<span class="glyphicon glyphicon-ok"></span>',
                                 $url,
                                 [
                                     'title' => 'Aprobar proyecto',
                                     'data-pjax' => '0',
-                                    'data-confirm' => Yii::t('app', '¿Está seguro que desea aprobar el proyecto?'),
+                                    'data-confirm' => Yii::t ('app', '¿Está seguro que desea aprobar el proyecto?'),
                                 ]
                             );
                         },
                         'cancel-project' => function ($url) {
-                            return Html::a(
+                            return Html::a (
                                 '<span class="glyphicon glyphicon-remove"></span>',
                                 $url,
                                 [
                                     'title' => 'Cancelar proyecto',
                                     'data-pjax' => '0',
-                                    'data-confirm' => Yii::t('app', '¿Está seguro que desea cancelar el proyecto?'),
+                                    'data-confirm' => Yii::t ('app', '¿Está seguro que desea cancelar el proyecto?'),
                                 ]
                             );
                         },

@@ -12,19 +12,12 @@ class DefaultController extends Controller {
     /**
      * @return string
      */
-    public function actionIndex() {
-        return $this->render('index');
-    }
-
-    /**
-     * @return string
-     */
-    public function actionListSocialServiceManagers() {
+    public function actionListSocialServiceManagers () {
         $dataProvider = new ActiveDataProvider([
-            'query' => SocialServiceManager::find(),
+            'query' => SocialServiceManager::find (),
         ]);
 
-        return $this->render('SocialServiceManager/index', [
+        return $this->render ('SocialServiceManager/index', [
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -32,9 +25,9 @@ class DefaultController extends Controller {
     /**
      * @return mixed
      */
-    public function actionReport() {
+    public function actionReport () {
         // get your HTML raw content without any layouts or scripts
-        $content = $this->render('index');
+        $content = $this->render ('index');
 
         // setup kartik\mpdf\Pdf component
         $pdf = new Pdf([
@@ -63,6 +56,6 @@ class DefaultController extends Controller {
         ]);
 
         // return the pdf output as per the destination setting
-        return $pdf->render();
+        return $pdf->render ();
     }
 }

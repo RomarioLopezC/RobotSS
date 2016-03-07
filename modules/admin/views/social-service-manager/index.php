@@ -1,9 +1,9 @@
 <?php
 
+use app\models\Person;
+use app\models\User;
 use yii\grid\GridView;
 use yii\helpers\Html;
-use app\models\User;
-use app\models\Person;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SocialServiceManagerSearch */
@@ -52,8 +52,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{delete}',
                 'buttons' => [
                     'delete' => function ($url, $model) {
-                        return Html::a ('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'user_id' => $model['user_id']], [
-                            'title' => Yii::t ('app', 'Delete'), 'data-confirm' => Yii::t ('app', '¿Estas seguro que deseas eliminar?'), 'data-method' => 'post']);
+                        return Html::a ('<span class="glyphicon glyphicon-trash"></span>',
+                            ['delete', 'user_id' => $model['user_id']], [
+                                'title' => Yii::t ('app', 'Delete'),
+                                'data-confirm' => Yii::t ('app', '¿Estas seguro que deseas eliminar?'),
+                                'data-method' => 'post']);
                     }
                 ],
 

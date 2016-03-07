@@ -17,11 +17,11 @@ Yii::$app->formatter->locale = 'es_ES';
 <div class="student-evidence-index">
 
     <div class="well well-sm">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode ($this->title) ?></h1>
     </div>
 
     <p>
-        <?= Html::a('Imprimir reporte de avances', ['print-evidence-report'],
+        <?= Html::a ('Imprimir reporte de avances', ['print-evidence-report'],
             ['class' => 'btn btn-success pull-right']) ?>
     </p>
 
@@ -35,7 +35,7 @@ Yii::$app->formatter->locale = 'es_ES';
 
         <div class="panel-body">
 
-            <?= GridView::widget([
+            <?= GridView::widget ([
                 'dataProvider' => $dataProviderNews,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
@@ -63,7 +63,7 @@ Yii::$app->formatter->locale = 'es_ES';
 
         <div class="panel-body">
 
-            <?= GridView::widget([
+            <?= GridView::widget ([
                 'dataProvider' => $dataProviderPending,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
@@ -96,7 +96,7 @@ Yii::$app->formatter->locale = 'es_ES';
 
         <div class="panel-body">
 
-            <?= GridView::widget([
+            <?= GridView::widget ([
                 'dataProvider' => $dataProviderAccepted,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
