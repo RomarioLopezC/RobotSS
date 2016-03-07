@@ -205,7 +205,7 @@ class StudentEvidenceController extends Controller {
         date_default_timezone_set ("America/Mexico_City");
         try {
             $searchModel = new StudentEvidenceSearch();
-            $dataProviderAccepted = $searchModel->searchAccepted (Yii::$app->request->queryParams);
+            $dataProviderAccepted = $searchModel->search (Yii::$app->request->queryParams, StudentEvidence::$ACCEPTED);
 
             $registration = Registration::findOne (['student_id' => $student->id]);
             $person = Person::findOne (User::findOne (Yii::$app->user->id)->person_id);

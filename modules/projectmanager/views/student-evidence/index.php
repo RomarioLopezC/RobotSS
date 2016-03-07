@@ -18,6 +18,11 @@ use yii\helpers\Html;
 $this->title = 'Avances';
 $this->params['breadcrumbs'][] = $this->title;
 
+var_dump($dataProviderNews->getModels()[0]['student']['user_id']);
+echo '<br><br>';
+var_dump($dataProviderPending->getModels()[0]['student']['user_id']);
+echo '<br><br>';
+echo $dataProviderAccepted->getModels()[0]['student']['user_id'];
 ?>
 <div class="student-evidence-index">
 
