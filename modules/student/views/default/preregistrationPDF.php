@@ -13,7 +13,7 @@ use yii\helpers\Url;
 
 <div class="row">
     <div class="col-xs-2">
-        <?= Html::img(Url::to(['/images/uady-logo.jpg'])) ?>
+        <?= Html::img (Url::to (['/images/uady-logo.jpg'])) ?>
     </div>
     <div class="col-xs-6 center-block">
         <h4 class="text-center" style="font-weight: bold">Universidad Autónoma de Yucatán</h4>
@@ -28,7 +28,7 @@ use yii\helpers\Url;
 $formatter = \Yii::$app->formatter;
 ?>
 <p class="text-right">
-    <?= 'Mérida, Yucatán a ' . $formatter->asDate(date('Y-m-d'), 'long'); ?>
+    <?= 'Mérida, Yucatán a ' . $formatter->asDate (date ('Y-m-d'), 'long'); ?>
 </p>
 <div class="row">
     <h4 class="text-center" style="margin: 2em 0">DATOS DEL PRESTADOR</h4>
@@ -56,8 +56,8 @@ $formatter = \Yii::$app->formatter;
     </div>
     <div class="col-xs-5">
         <?= $project->id . ' - ' . $project->name ?><br>
-        <?= Person::findOne(\app\models\User::findOne($projectM->user_id)->person_id)->name . ' ' .
-        Person::findOne(\app\models\User::findOne($projectM->user_id)->person_id)->lastname ?>
+        <?= Person::findOne (\app\models\User::findOne ($projectM->user_id)->person_id)->name . ' ' .
+        Person::findOne (\app\models\User::findOne ($projectM->user_id)->person_id)->lastname ?>
         <br>
     </div>
 </div>

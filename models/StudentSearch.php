@@ -14,7 +14,7 @@ class StudentSearch extends Student {
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules () {
         return [
             [['id', 'user_id', 'faculty_id', 'current_semester'], 'integer'],
         ];
@@ -23,9 +23,9 @@ class StudentSearch extends Student {
     /**
      * @inheritdoc
      */
-    public function scenarios() {
+    public function scenarios () {
         // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
+        return Model::scenarios ();
     }
 
     /**
@@ -35,22 +35,22 @@ class StudentSearch extends Student {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
-        $query = Student::find();
+    public function search ($params) {
+        $query = Student::find ();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $this->load ($params);
 
-        if (!$this->validate()) {
+        if (!$this->validate ()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
+        $query->andFilterWhere ([
             'id' => $this->id,
             'user_id' => $this->user_id,
             'faculty_id' => $this->faculty_id,

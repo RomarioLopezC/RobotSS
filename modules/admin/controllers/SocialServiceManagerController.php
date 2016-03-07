@@ -19,10 +19,10 @@ class SocialServiceManagerController extends Controller {
     /**
      * @return array
      */
-    public function behaviors() {
+    public function behaviors () {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::className (),
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -34,11 +34,11 @@ class SocialServiceManagerController extends Controller {
      * Lists all SocialServiceManager models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex () {
         $searchModel = new SocialServiceManagerSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search (Yii::$app->request->queryParams);
 
-        return $this->render('index', [
+        return $this->render ('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -49,9 +49,9 @@ class SocialServiceManagerController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id) {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+    public function actionView ($id) {
+        return $this->render ('view', [
+            'model' => $this->findModel ($id),
         ]);
     }
 
@@ -60,33 +60,33 @@ class SocialServiceManagerController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate () {
         $model = new SocialServiceManager();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load (Yii::$app->request->post ())) {
             $person = new Person();
             $person->name = $model->name;
-            $person->lastname = $model->lastName;
+            $person->lastname = $model->last_name;
             $person->phone = $model->phone;
-            $person->save(false);
+            $person->save (false);
             $user = new User();
             $user->username = $model->username;
             $user->password = $model->password;
             $user->email = $model->email;
             $user->person_id = $person->id;
             $user->scenario = 'register';
-            if ($user->validate()) {
-                $user->register();
+            if ($user->validate ()) {
+                $user->register ();
                 $model->user_id = $user->id;
-                $model->save(false);
+                $model->save (false);
                 //set the success message
-                Yii::$app->getSession()->setFlash('success', 'Usuario creado con éxito');
-                return $this->redirect(['view', 'id' => $model->id]);
+                Yii::$app->getSession ()->setFlash ('success', 'Usuario creado con éxito');
+                return $this->redirect (['view', 'id' => $model->id]);
             } else {
-                $model->addErrors($user->errors);
+                $model->addErrors ($user->errors);
             }
         }
-        return $this->render('create', [
+        return $this->render ('create', [
             'model' => $model,
         ]);
 
@@ -98,13 +98,13 @@ class SocialServiceManagerController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id) {
-        $model = $this->findModel($id);
+    public function actionUpdate ($id) {
+        $model = $this->findModel ($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load (Yii::$app->request->post ()) && $model->save ()) {
+            return $this->redirect (['view', 'id' => $model->id]);
         } else {
-            return $this->render('update', [
+            return $this->render ('update', [
                 'model' => $model,
             ]);
         }
@@ -116,17 +116,17 @@ class SocialServiceManagerController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($user_id) {
+    public function actionDelete ($user_id) {
         //$this->findModel($user_id)->delete();
-        Yii::$app->db->createCommand()->delete('social_service_manager', 'user_id =' . $user_id . '')->execute();
-        Yii::$app->db->createCommand()->delete('user', 'id =' . $user_id . '')->execute();
-        echo Alert::widget([
+        Yii::$app->db->createCommand ()->delete ('social_service_manager', 'user_id =' . $user_id . '')->execute ();
+        Yii::$app->db->createCommand ()->delete ('user', 'id =' . $user_id . '')->execute ();
+        echo Alert::widget ([
 
             'body' => 'El usuario se eliminó exitosamente!'
         ]);
 
 
-        return $this->redirect(['index']);
+        return $this->redirect (['index']);
     }
 
     /**
@@ -136,8 +136,8 @@ class SocialServiceManagerController extends Controller {
      * @return SocialServiceManager the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
-        if (($model = SocialServiceManager::findOne($id)) !== null) {
+    protected function findModel ($id) {
+        if (($model = SocialServiceManager::findOne ($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

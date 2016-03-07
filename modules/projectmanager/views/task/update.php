@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\bootstrap\Alert;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Task */
@@ -14,11 +14,11 @@ $this->params['breadcrumbs'][] = 'Actualizar';
 <div class="task-update">
 
     <div class="well well-sm">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode ($this->title) ?></h1>
     </div>
     <?php
-    foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
-        echo Alert::widget([
+    foreach (Yii::$app->getSession ()->getAllFlashes () as $key => $message) {
+        echo Alert::widget ([
             'options' => [
                 'class' => 'alert-' . $key,
             ],
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = 'Actualizar';
     ?>
 
 
-    <?= $this->render('editform', [
+    <?= $this->render ('editform', [
         'model' => $model,
         'projectId' => $projectId
     ]) ?>

@@ -10,11 +10,11 @@ use app\models\ProjectManager;
 /**
  * ProjectManagerSearch represents the model behind the search form about `app\models\ProjectManager`.
  */
-class ProjectManagerSearch extends ProjectManager {
+class ProjectManagerSearch extends ProjectManager{
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules () {
         return [
             [['id', 'user_id'], 'integer'],
             [['organization'], 'safe'],
@@ -24,9 +24,9 @@ class ProjectManagerSearch extends ProjectManager {
     /**
      * @inheritdoc
      */
-    public function scenarios() {
+    public function scenarios () {
         // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
+        return Model::scenarios ();
     }
 
     /**
@@ -36,27 +36,27 @@ class ProjectManagerSearch extends ProjectManager {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
-        $query = ProjectManager::find();
+    public function search ($params) {
+        $query = ProjectManager::find ();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $this->load ($params);
 
-        if (!$this->validate()) {
+        if (!$this->validate ()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
+        $query->andFilterWhere ([
             'id' => $this->id,
             'user_id' => $this->user_id,
         ]);
 
-        $query->andFilterWhere(['like', 'organization', $this->organization]);
+        $query->andFilterWhere (['like', 'organization', $this->organization]);
 
         return $dataProvider;
     }

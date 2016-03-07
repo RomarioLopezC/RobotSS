@@ -5,32 +5,31 @@
  * Date: 21/02/2016
  * Time: 10:51 PM
  */
-use yii\bootstrap\Modal;
-use kartik\widgets\ActiveForm;
-use kartik\field\FieldRange;
-use yii\helpers\Html;
 use app\models\Registration;
+use kartik\field\FieldRange;
+use kartik\widgets\ActiveForm;
+use yii\bootstrap\Modal;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
-Modal::begin([
-    'id'=>'modalChooseDate',
+Modal::begin ([
+    'id' => 'modalChooseDate',
     'header' => '<h2>Selecciona las fechas para la realización de tu servicio social</h2>',
 ]);
 
 $model = new Registration();
 
-$form = ActiveForm::begin([
-    'action' =>Url::to(['/student/default/set-beginning-and-ending-dates'])
+$form = ActiveForm::begin ([
+    'action' => Url::to (['/student/default/set-beginning-and-ending-dates'])
 ]);
 
 
 ?>
 
 
-
     <div class="input-group drp-container">
 
-        <?= FieldRange::widget([
+        <?= FieldRange::widget ([
             'form' => $form,
             'model' => $model,
             'label' => 'Ingrese rango de fechas',
@@ -54,8 +53,8 @@ $form = ActiveForm::begin([
         ]); ?>
     </div>
     <br>
-<?= Html::submitButton('Establecer fechas', [
+<?= Html::submitButton ('Establecer fechas', [
     'class' => 'btn btn-success'
 ]) ?>
-<?php ActiveForm::end();?>
-<?php Modal::end();?>
+<?php ActiveForm::end (); ?>
+<?php Modal::end (); ?>

@@ -14,14 +14,14 @@ class ProjectVacancy extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName () {
         return 'project_vacancy';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules () {
         return [
             [['project_id', 'vacancy'], 'required'],
             [['project_id', 'vacancy'], 'integer']
@@ -31,14 +31,14 @@ class ProjectVacancy extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels () {
         return [
-            'project_id' => 'Project ID',
-            'vacancy' => 'Vacancy',
+            'project_id' => 'Proyecto ID',
+            'vacancy' => 'Cupo',
         ];
     }
 
-    public function getPrimaryKey($asArray = false) {
+    public function getPrimaryKey ($asArray = false) {
         return 'project_id';
     }
 }

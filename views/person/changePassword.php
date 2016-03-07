@@ -17,12 +17,15 @@ use yii\helpers\Html;
         </div>
 
         <div class="panel-body">
-            <?php $form = ActiveForm::begin([
+            <?php $form = ActiveForm::begin ([
                 'id' => 'account-form',
                 'options' => ['class' => 'form-horizontal'],
                 'action' => ['change-password', 'id' => Yii::$app->user->id],
                 'fieldConfig' => [
-                    'template' => "{label}\n<div class=\"col-lg-9\">{input}</div>\n<div class=\"col-sm-offset-3 col-lg-9\">{error}\n{hint}</div>",
+                    'template' => "{label}\n<div class=\"col-lg-9\">{input}</div>\n
+                                            <div class=\"col-sm-offset-3 col-lg-9\">
+                                                {error}\n{hint}
+                                            </div>",
                     'labelOptions' => ['class' => 'col-lg-3 control-label'],
                 ],
                 //'enableAjaxValidation' => true,
@@ -30,21 +33,21 @@ use yii\helpers\Html;
             ]); ?>
 
 
-            <?= $form->field($model, 'username') ?>
+            <?= $form->field ($model, 'username') ?>
 
-            <?= $form->field($model, 'new_password')->passwordInput() ?>
+            <?= $form->field ($model, 'new_password')->passwordInput () ?>
 
             <hr/>
 
-            <?= $form->field($model, 'current_password')->passwordInput() ?>
+            <?= $form->field ($model, 'current_password')->passwordInput () ?>
         </div>
 
     </div>
     <div class="form-group">
         <div class="col-lg-offset-3 col-lg-9">
-            <?= Html::submitButton(Yii::t('user', 'Save'), ['class' => 'btn btn-block btn-success']) ?><br>
+            <?= Html::submitButton (Yii::t ('user', 'Save'), ['class' => 'btn btn-block btn-success']) ?><br>
         </div>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php ActiveForm::end (); ?>
 </div>

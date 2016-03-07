@@ -1,10 +1,9 @@
 <?php
 
+use app\models\Degree;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use app\models\Faculty;
-use app\models\Degree;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ProjectSearch */
@@ -21,7 +20,7 @@ use app\models\Degree;
 
         <div class="panel-body">
 
-            <?php $form = ActiveForm::begin([
+            <?php $form = ActiveForm::begin ([
                 'action' => ['index'],
                 'method' => 'get',
                 'fieldConfig' => [
@@ -33,11 +32,11 @@ use app\models\Degree;
             <div class="row">
 
                 <div class="col-md-6">
-                    <?= $form->field($model, 'name') ?>
+                    <?= $form->field ($model, 'name') ?>
                 </div>
 
                 <div class="col-md-6">
-                    <?= $form->field($model, 'id')->label('ID del proyecto') ?>
+                    <?= $form->field ($model, 'id')->label ('ID del proyecto') ?>
                 </div>
 
             </div>
@@ -45,18 +44,18 @@ use app\models\Degree;
             <div class="row">
 
                 <div class="col-md-6">
-                    <?= $form->field($model, 'degree_id')->label('Licenciatura')->dropDownList(
-                        ArrayHelper::map(Degree::find()->all(), 'id', 'name')
+                    <?= $form->field ($model, 'degree_id')->label ('Licenciatura')->dropDownList (
+                        ArrayHelper::map (Degree::find ()->all (), 'id', 'name')
                     ) ?>
                 </div>
 
             </div>
 
             <div class="form-group">
-                <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary pull-right']) ?>
+                <?= Html::submitButton ('Buscar', ['class' => 'btn btn-primary pull-right']) ?>
             </div>
 
-            <?php ActiveForm::end(); ?>
+            <?php ActiveForm::end (); ?>
 
         </div>
     </div>

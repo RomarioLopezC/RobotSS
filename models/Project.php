@@ -29,14 +29,14 @@ class Project extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName () {
         return 'project';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules () {
         return [
             [['name', 'dependency', 'objective', 'goals', 'actions_by_students', 'induction', 'materials_for_students', 'economic_support', 'human_resource', 'infraestructure', 'ammount', 'manager_id', 'vacancy', 'degrees1'], 'required'],
             [['manager_id', 'vacancy', 'ammount'], 'integer'],
@@ -48,7 +48,7 @@ class Project extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels () {
         return [
             'id' => 'ID',
             'name' => 'Nombre del proyecto',
@@ -63,13 +63,13 @@ class Project extends \yii\db\ActiveRecord {
             'human_resource' => 'Recursos humanos',
             'infraestructure' => 'Infraestrctura',
             'ammount' => 'Monto',
-            'approved' => 'Approved',
+            'approved' => 'Aprobado',
             'degrees1' => 'Perfiles solicitados',
             'vacancy' => 'Cupo disponible',
         ];
     }
 
-    public function getDegrees() {
+    public function getDegrees () {
         return $this->hasMany(Degree::className(), ['id' => 'degree_id'])
             ->viaTable('student_profile', ['project_id' => 'id']);
     }
@@ -77,11 +77,11 @@ class Project extends \yii\db\ActiveRecord {
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProjectManager() {
+    public function getProjectManager () {
         return $this->hasOne(ProjectManager::className(), ['id' => 'manager_id']);
     }
 
-    public function getStudentProfiles() {
+    public function getStudentProfiles () {
         $profiles = '| ';
         foreach ($this->degrees as $degree) {
             $profiles .= $degree->name . " | ";

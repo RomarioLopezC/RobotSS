@@ -14,7 +14,7 @@ class SocialServiceManagerSearch extends SocialServiceManager {
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules () {
         return [
             [['id', 'user_id', 'faculty_id'], 'integer'],
         ];
@@ -23,9 +23,9 @@ class SocialServiceManagerSearch extends SocialServiceManager {
     /**
      * @inheritdoc
      */
-    public function scenarios() {
+    public function scenarios () {
         // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
+        return Model::scenarios ();
     }
 
     /**
@@ -35,22 +35,22 @@ class SocialServiceManagerSearch extends SocialServiceManager {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
-        $query = SocialServiceManager::find();
+    public function search ($params) {
+        $query = SocialServiceManager::find ();
 
-        $dataProvider = new ActiveDataProvider([
+        $dataProvider = new ActiveDataProvider ([
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $this->load ($params);
 
-        if (!$this->validate()) {
+        if (!$this->validate ()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
+        $query->andFilterWhere ([
             'id' => $this->id,
             'user_id' => $this->user_id,
             'faculty_id' => $this->faculty_id,
