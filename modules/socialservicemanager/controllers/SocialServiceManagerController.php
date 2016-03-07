@@ -24,6 +24,9 @@ use yii\web\NotFoundHttpException;
  * SocialServiceManagerController implements the CRUD actions for SocialServiceManager model.
  */
 class SocialServiceManagerController extends Controller {
+    /**
+     * @return array
+     */
     public function behaviors() {
         return [
             'verbs' => [
@@ -152,6 +155,9 @@ class SocialServiceManagerController extends Controller {
         }
     }
 
+    /**
+     * @return string
+     */
     public function actionViewPreregisteredStudents() {
         $dataProvider = new ActiveDataProvider([
             'query' => Registration::find()->where(['student_status' => Registration::UNASSIGNED]),
@@ -161,6 +167,11 @@ class SocialServiceManagerController extends Controller {
         ]);
     }
 
+    /**
+     * @param $id
+     * @throws NotFoundHttpException
+     * @throws \Exception
+     */
     public function actionAssignStudent($id) {
         if (($model = Registration::findOne($id)) !== null) {
             if ($model->student_status != Registration::ASSIGNED) {
@@ -202,6 +213,10 @@ class SocialServiceManagerController extends Controller {
         }
     }
 
+    /**
+     * @param $id
+     * @throws NotFoundHttpException
+     */
     public function actionCancelPreregistration($id) {
         if (($model = Registration::findOne($id)) !== null) {
             $model->student_status = Registration::PREREGISTRATION_CANCELLED;
