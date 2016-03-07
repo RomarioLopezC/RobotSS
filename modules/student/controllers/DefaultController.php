@@ -23,6 +23,9 @@ use yii\web\NotFoundHttpException;
  * StudentController implements the CRUD actions for Student model.
  */
 class DefaultController extends Controller {
+    /**
+     * @return array
+     */
     public function behaviors() {
         return [
             'verbs' => [
@@ -159,6 +162,9 @@ class DefaultController extends Controller {
         return $this->redirect(['index']);
     }
 
+    /**
+     * @return mixed|\yii\web\Response
+     */
     public function actionPrintPreregistrationPDF() {
         $student = Student::findOne(['user_id' => Yii::$app->user->id]);
         date_default_timezone_set("America/Mexico_City");
@@ -211,6 +217,9 @@ class DefaultController extends Controller {
         }
     }
 
+    /**
+     * @return mixed|\yii\web\Response
+     */
     public function actionPrintProjectAssignmentPDF() {
         $student = Student::findOne(['user_id' => Yii::$app->user->id]);
         date_default_timezone_set("America/Mexico_City");
@@ -268,6 +277,9 @@ class DefaultController extends Controller {
         }
     }
 
+    /**
+     * @throws BadRequestHttpException
+     */
     public function actionSetBeginningAndEndingDates() {
         $beginningDate = new \DateTime(Yii::$app->request->post('Registration')['beginning_date']);
         $endingDate = new \DateTime(Yii::$app->request->post('Registration')['ending_date']);

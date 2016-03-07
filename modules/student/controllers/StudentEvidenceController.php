@@ -24,6 +24,9 @@ use yii\web\UploadedFile;
  * StudentEvidenceController implements the CRUD actions for StudentEvidence model.
  */
 class StudentEvidenceController extends Controller {
+    /**
+     * @return array
+     */
     public function behaviors() {
         return [
             'verbs' => [
@@ -182,6 +185,10 @@ class StudentEvidenceController extends Controller {
     }
 
 
+    /**
+     * @param $evidence_id
+     * @throws NotFoundHttpException
+     */
     public function actionDownload($evidence_id) {
         $studentEvidence = $this->findModelByEvidence($evidence_id);
         return Yii::$app->response->sendFile(
@@ -190,6 +197,9 @@ class StudentEvidenceController extends Controller {
         )->send();
     }
 
+    /**
+     * @return mixed|\yii\web\Response
+     */
     public function actionPrintEvidenceReport() {
         $student = Student::findOne(['user_id' => Yii::$app->user->id]);
         date_default_timezone_set("America/Mexico_City");
@@ -285,6 +295,13 @@ class StudentEvidenceController extends Controller {
         }
     }
 
+    /**
+     * @param $task_id
+     * @param $project_id
+     * @param $student_id
+     * @return null|static
+     * @throws NotFoundHttpException
+     */
     protected function findModelWithoutEvidence($task_id, $project_id, $student_id) {
         if (($model = StudentEvidence::findOne(['task_id' => $task_id,
                 'project_id' => $project_id, 'student_id' => $student_id])) !== null
@@ -295,6 +312,11 @@ class StudentEvidenceController extends Controller {
         }
     }
 
+    /**
+     * @param $evidence_id
+     * @return null|static
+     * @throws NotFoundHttpException
+     */
     protected function findModelByEvidence($evidence_id) {
         if (($model = StudentEvidence::findOne(['evidence_id' => $evidence_id])) !== null) {
             return $model;
