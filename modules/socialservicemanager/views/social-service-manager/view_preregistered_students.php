@@ -13,8 +13,8 @@ $this->title = 'Asignación de estudiantes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php
-foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
-    echo Alert::widget([
+foreach (Yii::$app->getSession ()->getAllFlashes () as $key => $message) {
+    echo Alert::widget ([
         'options' => [
             'class' => 'alert-' . $key,
         ],
@@ -25,7 +25,7 @@ foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
 <div class="student-index">
 
     <div class="well well-sm">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode ($this->title) ?></h1>
     </div>
 
 
@@ -35,7 +35,7 @@ foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
             No existen alumnos Pre-registrados a proyectos.
         </div>
     <?php else: ?>
-        <?= GridView::widget([
+        <?= GridView::widget ([
             'dataProvider' => $dataProvider,
             'columns' => [
                 ['label' => 'Proyecto', 'attribute' => 'projectName'],
@@ -47,25 +47,25 @@ foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
                     'template' => '{assign-student} {cancel-preregistration}',
                     'buttons' => [
                         'assign-student' => function ($url) {
-                            return Html::a(
+                            return Html::a (
                                 '<span class="glyphicon glyphicon-ok"></span>',
                                 $url,
                                 [
                                     'title' => 'Asignar estudiante',
                                     'data-pjax' => '0',
-                                    'data-confirm' => Yii::t('app', '¿Está seguro que desea asignar al estudiante?'),
+                                    'data-confirm' => Yii::t ('app', '¿Está seguro que desea asignar al estudiante?'),
                                 ]
                             );
                         },
                         'cancel-preregistration' => function ($url) {
-                            return Html::a(
+                            return Html::a (
                                 '<span class="glyphicon glyphicon-remove"></span>',
                                 $url,
                                 [
                                     'title' => 'Cancelar preregistro',
                                     'data-pjax' => '0',
                                     'data-confirm' =>
-                                        Yii::t('app', '¿Está seguro que desea cancelar el registro del estudiante?'),
+                                        Yii::t ('app', '¿Está seguro que desea cancelar el registro del estudiante?'),
                                 ]
                             );
                         },

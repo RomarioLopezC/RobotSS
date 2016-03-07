@@ -1,13 +1,13 @@
 <?php
 
-use yii\grid\GridView;
-use yii\helpers\Html;
-use yii\bootstrap\Alert;
-use yii\bootstrap\Modal;
 use app\models\Project;
 use app\models\ProjectManager;
 use app\models\User;
+use yii\bootstrap\Alert;
+use yii\bootstrap\Modal;
+use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StudentEvidenceSearch */

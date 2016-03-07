@@ -13,11 +13,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="social-service-manager-index">
 
     <div class="well well-sm">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode ($this->title) ?></h1>
     </div>
 
 
-    <?= GridView::widget([
+    <?= GridView::widget ([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -31,10 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{delete}',
                 'buttons' => [
                     'delete' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-trash"></span>',
+                        return Html::a ('<span class="glyphicon glyphicon-trash"></span>',
                             ['delete', 'user_id' => $model['user_id']], [
-                                'title' => Yii::t('app', 'Delete'),
-                                'data-confirm' => Yii::t('app', '¿Estas seguro que deseas eliminar?'),
+                                'title' => Yii::t ('app', 'Delete'),
+                                'data-confirm' => Yii::t ('app', '¿Estas seguro que deseas eliminar?'),
                                 'data-method' => 'post'
                             ]);
                     }

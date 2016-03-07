@@ -13,10 +13,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="social-service-manager-create">
 
     <div class="well well-sm">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode ($this->title) ?></h1>
     </div>
 
-    <?= $this->render('_form', [
+    <?= $this->render ('_form', [
         'model' => $model,
     ]) ?>
 

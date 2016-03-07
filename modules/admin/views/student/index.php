@@ -51,7 +51,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'current_semester',
 
 
-
             ['class' => 'yii\grid\ActionColumn',
                 'template' => '{delete}',
                 'buttons' => [

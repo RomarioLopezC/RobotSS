@@ -20,27 +20,27 @@ use yii\helpers\Url;
 •	Avances
 
  */
-echo Nav::widget([
+echo Nav::widget ([
     'options' => ['class' => 'navbar-nav navbar-left'],
     'items' => [
         [
             'label' => 'Cuenta',
             'items' => [
                 ['label' => 'Modificar cuenta',
-                    'url' => Url::to(['/person/update', 'id' => Yii::$app->user->id])
+                    'url' => Url::to (['/person/update', 'id' => Yii::$app->user->id])
                 ],
             ],
         ],
         [
             'label' => 'Proyectos',
             'items' => [
-                ['label' => 'Mis proyectos', 'url' => Url::to(['/project_manager/project'])],
-                ['label' => 'Busqueda', 'url' => Url::to(['/project'])],
+                ['label' => 'Mis proyectos', 'url' => Url::to (['/project_manager/project'])],
+                ['label' => 'Busqueda', 'url' => Url::to (['/project'])],
             ],
         ],
         [
             'label' => 'Avances',
-            'url' => Url::to(['/project_manager/student-evidence'])
+            'url' => Url::to (['/project_manager/student-evidence'])
         ],
     ]
 ]);

@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
 
     <div class="row">
         <div class="col-lg-3">
-            <?= Html::img(Url::to(['/images/uady-logo.jpg']), ['class' => 'img-responsive']) ?>
+            <?= Html::img (Url::to (['/images/uady-logo.jpg']), ['class' => 'img-responsive']) ?>
         </div>
 
         <div class="col-lg-7">
@@ -26,24 +26,24 @@ use yii\widgets\ActiveForm;
                 </div>
 
                 <div class="panel-body">
-                    <?php $form = ActiveForm::begin(); ?>
+                    <?php $form = ActiveForm::begin (); ?>
 
-                    <?= $form->field($model, 'name')->textInput() ?>
-                    <?= $form->field($model, 'lastName')->textInput() ?>
-                    <?= $form->field($model, 'email')->textInput() ?>
-                    <?= $form->field($model, 'phone')->textInput() ?>
-                    <?= $form->field($model, 'username')->textInput() ?>
-                    <?= $form->field($model, 'password')->passwordInput() ?>
-                    <?= $form->field($model, 'faculty_id')->dropDownList(
-                        ArrayHelper::map(Faculty::find()->all(), 'id', 'name')
+                    <?= $form->field ($model, 'name')->textInput () ?>
+                    <?= $form->field ($model, 'lastName')->textInput () ?>
+                    <?= $form->field ($model, 'email')->textInput () ?>
+                    <?= $form->field ($model, 'phone')->textInput () ?>
+                    <?= $form->field ($model, 'username')->textInput () ?>
+                    <?= $form->field ($model, 'password')->passwordInput () ?>
+                    <?= $form->field ($model, 'faculty_id')->dropDownList (
+                        ArrayHelper::map (Faculty::find ()->all (), 'id', 'name')
                     ) ?>
                 </div>
             </div>
             <div class="form-group pull-right">
-                <?= Html::submitButton($model->isNewRecord ? 'Completar Registro' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                <?= Html::submitButton ($model->isNewRecord ? 'Completar Registro' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
 
-            <?php ActiveForm::end(); ?>
+            <?php ActiveForm::end (); ?>
         </div>
     </div>
 </div>

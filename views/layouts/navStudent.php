@@ -5,10 +5,10 @@
  * Date: 27/01/2016
  * Time: 03:44 AM
  */
+use app\models\Registration;
+use app\models\Student;
 use yii\bootstrap\Nav;
 use yii\helpers\Url;
-use app\models\Student;
-use app\models\Registration;
 
 /*
  *
@@ -21,8 +21,8 @@ use app\models\Registration;
 
  */
 
-$student = Student::findOne(['user_id' => Yii::$app->user->id]);
-$registration = Registration::findOne(['student_id' => $student->id]);
+$student = Student::findOne (['user_id' => Yii::$app->user->id]);
+$registration = Registration::findOne (['student_id' => $student->id]);
 
 $item = "";
 if (isset($registration)) {
@@ -31,31 +31,31 @@ if (isset($registration)) {
 </li>' :
         [
             'label' => 'Imprimir hoja de asignación',
-            'url' => Url::to(['/student/default/print-project-assignment-p-d-f'])
+            'url' => Url::to (['/student/default/print-project-assignment-p-d-f'])
         ];
 }
 
 
-echo Nav::widget([
+echo Nav::widget ([
     'options' => ['class' => 'navbar-nav navbar-left'],
     'items' => [
         [
             'label' => 'Cuenta',
             'items' => [
                 ['label' => 'Modificar cuenta',
-                    'url' => Url::to(['/person/update', 'id' => Yii::$app->user->id])
+                    'url' => Url::to (['/person/update', 'id' => Yii::$app->user->id])
                 ],
             ],
         ],
         [
             'label' => 'Proyectos',
             'items' => [
-                ['label' => 'Busqueda', 'url' => Url::to(['/project'])],
+                ['label' => 'Busqueda', 'url' => Url::to (['/project'])],
             ],
         ],
         [
             'label' => 'Avances',
-            'url' => Url::to(['/student/student-evidence'])
+            'url' => Url::to (['/student/student-evidence'])
         ],
         [
 
@@ -63,7 +63,7 @@ echo Nav::widget([
             'items' => [
                 [
                     'label' => 'Imprimir hoja de preinscripción',
-                    'url' => Url::to(['/student/default/print-preregistration-p-d-f'])
+                    'url' => Url::to (['/student/default/print-preregistration-p-d-f'])
                 ],
                 $item
             ]

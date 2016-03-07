@@ -17,14 +17,14 @@ use yii\helpers\Url;
     o	Búsqueda
 
  */
-echo Nav::widget([
+echo Nav::widget ([
     'options' => ['class' => 'navbar-nav navbar-left'],
     'items' => [
         [
             'label' => 'Cuenta',
             'items' => [
                 ['label' => 'Modificar cuenta',
-                    'url' => Url::to(['/person/update', 'id' => Yii::$app->user->id])
+                    'url' => Url::to (['/person/update', 'id' => Yii::$app->user->id])
                 ],
             ],
         ],
@@ -32,13 +32,13 @@ echo Nav::widget([
             'label' => 'Alumnos',
             'items' => [
                 ['label' => 'Asignación de alumnos',
-                    'url' => Url::to(['/social_service_manager/social-service-manager/view-preregistered-students'])],
+                    'url' => Url::to (['/social_service_manager/social-service-manager/view-preregistered-students'])],
             ],
         ],
         [
             'label' => 'Proyectos',
             'items' => [
-                ['label' => 'Busqueda', 'url' => Url::to(['/project'])],
+                ['label' => 'Busqueda', 'url' => Url::to (['/project'])],
             ],
         ],
     ]
