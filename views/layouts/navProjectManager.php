@@ -7,6 +7,7 @@
  */
 use yii\bootstrap\Nav;
 use yii\helpers\Url;
+
 /*
  *
 •	Cuenta
@@ -26,21 +27,19 @@ echo Nav::widget([
             'label' => 'Cuenta',
             'items' => [
                 ['label' => 'Modificar cuenta',
-                    'url' => Url::to(['/person/update','id'=>Yii::$app->user->id])
+                    'url' => Url::to(['/person/update', 'id' => Yii::$app->user->id])
                 ],
             ],
         ],
         [
             'label' => 'Proyectos',
             'items' => [
-                ['label' => 'Mis proyectos', 'url' =>Url::to(['/project_manager/project'])],
-                //['label' => 'Editar proyecto', 'url' => '#'],
-                //['label' => 'Eliminar proyecto', 'url' => '#'],
+                ['label' => 'Mis proyectos', 'url' => Url::to(['/project_manager/project'])],
                 ['label' => 'Busqueda', 'url' => Url::to(['/project'])],
             ],
         ],
         [
-            'label'=>'Avances',
+            'label' => 'Avances',
             'url' => Url::to(['/project_manager/student-evidence'])
         ],
     ]

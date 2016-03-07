@@ -1,6 +1,7 @@
 <?php
 use yii\bootstrap\Nav;
 use yii\helpers\Url;
+
 /**
  * Created by PhpStorm.
  * User: David Cocom
@@ -17,14 +18,15 @@ echo Nav::widget([
                 ['label' => 'Eliminar Responsables de SS', 'url' => Url::to(['/admin/social-service-manager/index'])],
                 ['label' => 'Eliminar Alumnos', 'url' => Url::to(['/admin/student/index'])],
                 ['label' => 'Aprobación de proyectos', 'url' => Url::to(['/admin/project/view-projects'])],
-                ['label' => 'Registrar encargado de servicio social', 'url' => Url::to(['/admin/social-service-manager/create'])],
+                ['label' => 'Registrar encargado de servicio social',
+                    'url' => Url::to(['/admin/social-service-manager/create'])],
             ],
         ],
         [
             'label' => 'Cuenta',
             'items' => [
                 ['label' => 'Modificar cuenta',
-                    'url' => Url::to(['/person/update','id'=>Yii::$app->user->id])
+                    'url' => Url::to(['/person/update', 'id' => Yii::$app->user->id])
                 ],
             ],
         ],
