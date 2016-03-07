@@ -16,10 +16,14 @@ $this->title = /** @lang text */
 <div class="site-index">
     <div class="wide">
         <div class="row">
-            <div class="col-xs-5 line"><hr></div>
-            <div class="col-xs-2 logo"><?= Html::img(Url::to(['/images/uady-logo-small.jpg']),
+            <div class="col-xs-5 line">
+                <hr>
+            </div>
+            <div class="col-xs-2 logo"><?= Html::img (Url::to (['/images/uady-logo-small.jpg']),
                     ['class' => 'img-responsive center-block']) ?></div>
-            <div class="col-xs-5 line"><hr></div>
+            <div class="col-xs-5 line">
+                <hr>
+            </div>
         </div>
     </div>
     <div class="body-content center-block">
@@ -27,14 +31,14 @@ $this->title = /** @lang text */
             <div class="row">
                 <div class="col-xs-3"></div>
                 <div class="col-xs-6">
-                    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
+                    <h1 class="text-center"><?= Html::encode ($this->title) ?></h1>
                 </div>
                 <div class="col-xs-3"></div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
                     <h1 class="text-center">
-                        <?= Html::img(Url::to(['/images/slogan.jpg']), ['class' => 'img-responsive center-block']) ?>
+                        <?= Html::img (Url::to (['/images/slogan.jpg']), ['class' => 'img-responsive center-block']) ?>
                     </h1>
                 </div>
             </div>

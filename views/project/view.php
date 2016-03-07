@@ -1,12 +1,12 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\DetailView;
-use yii\bootstrap\Alert;
-use app\models\Registration;
 use app\models\ProjectVacancy;
+use app\models\Registration;
 use app\models\Student;
 use app\models\User;
+use yii\bootstrap\Alert;
+use yii\helpers\Html;
+use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Project */
@@ -19,11 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="container-fluid">
 
     <div class="well well-sm">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode ($this->title) ?></h1>
     </div>
     <?php
-    foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
-        echo Alert::widget([
+    foreach (Yii::$app->getSession ()->getAllFlashes () as $key => $message) {
+        echo Alert::widget ([
             'options' => [
                 'class' => 'alert-' . $key,
             ],
@@ -216,7 +216,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
 
                         <div class="col-lg-6">
-                            <p><?= Yii::$app->formatter->asCurrency($model->ammount) ?></p>
+                            <p><?= Yii::$app->formatter->asCurrency ($model->ammount) ?></p>
                         </div>
                     </div>
 
@@ -224,31 +224,31 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
 
             <div class="pull-right">
-                <?= Html::a('Cancelar', ['index'], ['class' => 'btn btn-danger']) ?>
+                <?= Html::a ('Cancelar', ['index'], ['class' => 'btn btn-danger']) ?>
 
-                <?php if (Yii::$app->user->can('student')) {
-                    $vacancy = ProjectVacancy::find()
-                        ->where("project_id=" . $model->id)
-                        ->one();
+                <?php if (Yii::$app->user->can ('student')) {
+                    $vacancy = ProjectVacancy::find ()
+                        ->where ("project_id=" . $model->id)
+                        ->one ();
                     //$vacancyValue=ArrayHelper::getColumn($vacancy, 'vacancy')[0];
                     $vacancyValue = $vacancy->vacancy;
                     if ($vacancyValue > 0) {
-                        $user = User::find()
-                            ->where("id=" . Yii::$app->user->id)
-                            ->one();
+                        $user = User::find ()
+                            ->where ("id=" . Yii::$app->user->id)
+                            ->one ();
                         $user_id = $user->id;
-                        $student = Student::find()
-                            ->where("user_id=" . $user_id)
-                            ->one();
+                        $student = Student::find ()
+                            ->where ("user_id=" . $user_id)
+                            ->one ();
                         $student_id = $student->id;
-                        if (Registration::find()->where(['student_id' => $student_id])->one()) {
-                            echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success', 'disabled' => 'disabled']);
+                        if (Registration::find ()->where (['student_id' => $student_id])->one ()) {
+                            echo Html::a ('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success', 'disabled' => 'disabled']);
                         } else {
-                            echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success']);
+                            echo Html::a ('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success']);
                         }
 
                     } else {
-                        echo Html::a('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success', 'disabled' => 'disabled']);
+                        echo Html::a ('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success', 'disabled' => 'disabled']);
                     }
                 } ?>
 

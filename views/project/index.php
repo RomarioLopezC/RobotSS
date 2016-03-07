@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProjectSearch */
@@ -13,12 +13,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="container-fluid">
 
     <div class="well well-sm">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode ($this->title) ?></h1>
     </div>
 
-    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php echo $this->render ('_search', ['model' => $searchModel]); ?>
 
-    <?= GridView::widget([
+    <?= GridView::widget ([
         'dataProvider' => $dataProvider,
         'columns' => [
             'id',

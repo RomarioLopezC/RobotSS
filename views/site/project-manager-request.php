@@ -10,9 +10,9 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\LoginForm */
 
-use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Alert;
+use yii\helpers\Html;
 
 $this->title = 'Solicitud de Cuenta';
 $this->params['breadcrumbs'][] = $this->title;
@@ -21,12 +21,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="container-fluid">
 
     <div class="well well-sm">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode ($this->title) ?></h1>
     </div>
 
     <?php
-    foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
-        echo Alert::widget([
+    foreach (Yii::$app->getSession ()->getAllFlashes () as $key => $message) {
+        echo Alert::widget ([
             'options' => [
                 'class' => 'alert-' . $key,
             ],
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
         <div class="col-lg-3">
-            <?= Html::img('../images/uady-logo.jpg', ['class' => 'img-responsive']) ?>
+            <?= Html::img ('../images/uady-logo.jpg', ['class' => 'img-responsive']) ?>
         </div>
 
         <div class="col-lg-7">
@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <div class="panel-body">
 
-                    <?php $form = ActiveForm::begin([
+                    <?php $form = ActiveForm::begin ([
                         'id' => 'project-manager-form',
                         'options' => ['class' => 'form-horizontal'],
                         'fieldConfig' => [
@@ -58,32 +58,32 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ]); ?>
 
-                    <?= $form->field($person, 'name') ?>
+                    <?= $form->field ($person, 'name') ?>
 
-                    <?= $form->field($person, 'lastname') ?>
+                    <?= $form->field ($person, 'lastname') ?>
 
-                    <?= $form->field($user, 'email') ?>
+                    <?= $form->field ($user, 'email') ?>
 
-                    <?= $form->field($person, 'phone') ?>
+                    <?= $form->field ($person, 'phone') ?>
 
-                    <?= $form->field($user, 'username') ?>
+                    <?= $form->field ($user, 'username') ?>
 
-                    <?= $form->field($user, 'password_hash')->passwordInput()->label('Password') ?>
+                    <?= $form->field ($user, 'password_hash')->passwordInput ()->label ('Password') ?>
 
-                    <?= $form->field($projectManager, 'organization') ?>
+                    <?= $form->field ($projectManager, 'organization') ?>
 
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="pull-right">
-                    <?= Html::a('Cancelar', '../user/login', ['class' => 'btn btn-danger']) ?>
-                    <?= Html::submitButton('Completar Solicitud', ['class' => 'btn btn-primary',
+                    <?= Html::a ('Cancelar', '../user/login', ['class' => 'btn btn-danger']) ?>
+                    <?= Html::submitButton ('Completar Solicitud', ['class' => 'btn btn-primary',
                         'name' => 'login-button']) ?>
                 </div>
             </div>
 
-            <?php ActiveForm::end(); ?>
+            <?php ActiveForm::end (); ?>
         </div>
     </div>
 
