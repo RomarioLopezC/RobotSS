@@ -41,9 +41,9 @@ class StudentEvidenceController extends Controller {
      */
     public function actionIndex() {
         $searchModel = new StudentEvidenceSearch();
-        $dataProviderNews = $searchModel->searchNews(Yii::$app->request->queryParams);
-        $dataProviderPending = $searchModel->searchPending(Yii::$app->request->queryParams);
-        $dataProviderAccepted = $searchModel->searchAccepted(Yii::$app->request->queryParams);
+        $dataProviderNews = $searchModel->search(Yii::$app->request->queryParams, StudentEvidence::$NEW);
+        $dataProviderPending = $searchModel->search(Yii::$app->request->queryParams, StudentEvidence::$PENDING);
+        $dataProviderAccepted = $searchModel->search(Yii::$app->request->queryParams, StudentEvidence::$ACCEPTED);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

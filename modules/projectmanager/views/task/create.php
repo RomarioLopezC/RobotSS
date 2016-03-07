@@ -14,11 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="task-create">
 
     <div class="well well-sm">
-        <h1><?= Html::encode ($this->title) ?></h1>
+        <h1><?= Html::encode($this->title) ?></h1>
     </div>
     <?php
-    foreach (Yii::$app->getSession ()->getAllFlashes () as $key => $message) {
-        echo Alert::widget ([
+    foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
+        echo Alert::widget([
             'options' => [
                 'class' => 'alert-' . $key,
             ],
@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
     }
     ?>
 
-    <?= $this->render ('form', [
+    <?= $this->render('form', [
         'model' => $model,
         'projectId' => $projectId,
     ]) ?>

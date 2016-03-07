@@ -55,7 +55,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="panel-footer text-right">
                     <?php if ($model->evidence_id): ?>
                         <h4 style="display: inline">
-                            Archivo:</h4> <?= Html::a('Descarga ' . $model->evidence->attachment_name, ['download', 'evidence_id' => $model->evidence_id]) ?>
+                            Archivo:</h4> <?= Html::a('Descarga ' . $model->evidence->attachment_name,
+                            ['download', 'evidence_id' => $model->evidence_id]) ?>
                     <?php endif; ?>
                 </div>
             </div>

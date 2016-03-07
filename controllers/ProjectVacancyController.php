@@ -2,10 +2,15 @@
 
 namespace app\controllers;
 
-class ProjectVacancyController extends \yii\web\Controller
-{
-    public function actionIndex()
-    {
+/**
+ * Class ProjectVacancyController
+ * @package app\controllers
+ */
+class ProjectVacancyController extends \yii\web\Controller {
+    /**
+     * @return string
+     */
+    public function actionIndex() {
         return $this->render('index');
     }
 

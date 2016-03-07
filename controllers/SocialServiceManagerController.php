@@ -13,6 +13,9 @@ use yii\filters\VerbFilter;
  * SocialServiceManagerController implements the CRUD actions for SocialServiceManager model.
  */
 class SocialServiceManagerController extends Controller {
+    /**
+     * @return array
+     */
     public function behaviors() {
         return [
             'verbs' => [

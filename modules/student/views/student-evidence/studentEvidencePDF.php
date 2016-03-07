@@ -33,7 +33,7 @@ $formatter = \Yii::$app->formatter;
         <strong>Fecha inicio:</strong><br>
     </div>
     <div class="col-xs-2">
-        <?= Yii::$app->formatter->asDate($registration->beginning_date , 'php: d/F/Y') ?><br>
+        <?= Yii::$app->formatter->asDate($registration->beginning_date, 'php: d/F/Y') ?><br>
     </div>
 </div>
 
@@ -48,7 +48,7 @@ $formatter = \Yii::$app->formatter;
         <strong>Fecha término:</strong><br>
     </div>
     <div class="col-xs-2">
-        <?= Yii::$app->formatter->asDate($registration->ending_date , 'php: d/F/Y') ?><br>
+        <?= Yii::$app->formatter->asDate($registration->ending_date, 'php: d/F/Y') ?><br>
     </div>
 </div>
 

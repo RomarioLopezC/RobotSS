@@ -16,6 +16,9 @@ use yii\web\NotFoundHttpException;
  * SocialServiceManagerController implements the CRUD actions for SocialServiceManager model.
  */
 class SocialServiceManagerController extends Controller {
+    /**
+     * @return array
+     */
     public function behaviors() {
         return [
             'verbs' => [
@@ -63,7 +66,7 @@ class SocialServiceManagerController extends Controller {
         if ($model->load(Yii::$app->request->post())) {
             $person = new Person();
             $person->name = $model->name;
-            $person->lastname = $model->lastName;
+            $person->lastname = $model->last_name;
             $person->phone = $model->phone;
             $person->save(false);
             $user = new User();
