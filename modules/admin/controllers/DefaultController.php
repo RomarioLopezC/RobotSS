@@ -12,13 +12,6 @@ class DefaultController extends Controller {
     /**
      * @return string
      */
-    public function actionIndex () {
-        return $this->render ('index');
-    }
-
-    /**
-     * @return string
-     */
     public function actionListSocialServiceManagers () {
         $dataProvider = new ActiveDataProvider([
             'query' => SocialServiceManager::find (),

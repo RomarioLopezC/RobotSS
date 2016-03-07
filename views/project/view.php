@@ -242,13 +242,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             ->one ();
                         $student_id = $student->id;
                         if (Registration::find ()->where (['student_id' => $student_id])->one ()) {
-                            echo Html::a ('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success', 'disabled' => 'disabled']);
+                            echo Html::a ('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id],
+                                ['class' => 'btn btn-success', 'disabled' => 'disabled']);
                         } else {
-                            echo Html::a ('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success']);
+                            echo Html::a ('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id],
+                                ['class' => 'btn btn-success']);
                         }
 
                     } else {
-                        echo Html::a ('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id], ['class' => 'btn btn-success', 'disabled' => 'disabled']);
+                        echo Html::a ('Pre-registrarse al proyecto', ['preregister', 'id' => $model->id],
+                            ['class' => 'btn btn-success', 'disabled' => 'disabled']);
                     }
                 } ?>
 
