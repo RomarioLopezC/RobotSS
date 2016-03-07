@@ -126,7 +126,6 @@ class SocialServiceManagerController extends Controller {
      * @return mixed
      */
     public function actionDelete($user_id) {
-        //$this->findModel($user_id)->delete();
         Yii::$app->db->createCommand()->delete('social_service_manager', 'user_id =' . $user_id . '')->execute();
         Yii::$app->db->createCommand()->delete('user', 'id =' . $user_id . '')->execute();
         echo Alert::widget([

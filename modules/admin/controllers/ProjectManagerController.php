@@ -95,11 +95,9 @@ class ProjectManagerController extends Controller {
      * @return mixed
      */
     public function actionDelete($user_id) {
-        //$this->findModel($id)->delete();
         Yii::$app->db->createCommand()->delete('project_manager', 'user_id =' . $user_id . '')->execute();
         Yii::$app->db->createCommand()->delete('user', 'id =' . $user_id . '')->execute();
         echo Alert::widget([
-
             'body' => 'El usuario se eliminó exitosamente!'
         ]);
 
