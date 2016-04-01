@@ -12,7 +12,7 @@ use yii\helpers\Url;
 ?>
 <div class="row">
     <div class="col-xs-2">
-        <?= Html::img(Url::to(['/images/uady-logo.jpg'])) ?>
+        <?= Html::img (Url::to (['/images/uady-logo.jpg'])) ?>
     </div>
     <div class="col-xs-6 center-block">
         <h4 class="text-center" style="font-weight: bold">Universidad Autónoma de Yucatán</h4>
@@ -34,7 +34,7 @@ use yii\helpers\Url;
     <div class="col-xs-5">
         <?= $student->enrollment_id ?><br>
         <?= $person->name . ' ' . $person->lastname ?><br>
-        <?= $student->getFaculty()->all()[0]['name'] ?><br>
+        <?= $student->getFaculty ()->all ()[0]['name'] ?><br>
         <?= $degree->name ?><br>
     </div>
 </div>
@@ -70,11 +70,11 @@ use yii\helpers\Url;
     <div class="col-xs-4">
         <?= $projectM->organization ?><br>
         <?= $project->dependency ?><br>
-        <?= Person::findOne(\app\models\User::findOne($projectM->user_id)->person_id)->name . ' ' .
-        Person::findOne(\app\models\User::findOne($projectM->user_id)->person_id)->lastname ?>
+        <?= Person::findOne (\app\models\User::findOne ($projectM->user_id)->person_id)->name . ' ' .
+        Person::findOne (\app\models\User::findOne ($projectM->user_id)->person_id)->lastname ?>
         <br>
-        <?= Person::findOne(\app\models\User::findOne($projectM->user_id)->person_id)->name . ' ' .
-        Person::findOne(\app\models\User::findOne($projectM->user_id)->person_id)->lastname ?>
+        <?= Person::findOne (\app\models\User::findOne ($projectM->user_id)->person_id)->name . ' ' .
+        Person::findOne (\app\models\User::findOne ($projectM->user_id)->person_id)->lastname ?>
         <br>
     </div>
 </div>

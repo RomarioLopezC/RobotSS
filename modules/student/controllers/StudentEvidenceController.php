@@ -4,7 +4,6 @@ namespace app\modules\student\controllers;
 
 use app\models\Evidence;
 use app\models\Notification;
-use yii\helpers\Url;
 use app\models\Person;
 use app\models\Project;
 use app\models\ProjectManager;
@@ -16,6 +15,7 @@ use app\models\User;
 use kartik\mpdf\Pdf;
 use Yii;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -24,6 +24,9 @@ use yii\web\UploadedFile;
  * StudentEvidenceController implements the CRUD actions for StudentEvidence model.
  */
 class StudentEvidenceController extends Controller {
+    /**
+     * @return array
+     */
     public function behaviors() {
         return [
             'verbs' => [
@@ -182,6 +185,10 @@ class StudentEvidenceController extends Controller {
     }
 
 
+    /**
+     * @param $evidence_id
+     * @throws NotFoundHttpException
+     */
     public function actionDownload($evidence_id) {
         $studentEvidence = $this->findModelByEvidence($evidence_id);
         return Yii::$app->response->sendFile(
@@ -190,12 +197,15 @@ class StudentEvidenceController extends Controller {
         )->send();
     }
 
+    /**
+     * @return mixed|\yii\web\Response
+     */
     public function actionPrintEvidenceReport() {
         $student = Student::findOne(['user_id' => Yii::$app->user->id]);
         date_default_timezone_set("America/Mexico_City");
         try {
             $searchModel = new StudentEvidenceSearch();
-            $dataProviderAccepted = $searchModel->searchAccepted(Yii::$app->request->queryParams);
+            $dataProviderAccepted = $searchModel->search (Yii::$app->request->queryParams, StudentEvidence::$ACCEPTED);
 
             $registration = Registration::findOne(['student_id' => $student->id]);
             $person = Person::findOne(User::findOne(Yii::$app->user->id)->person_id);
@@ -285,6 +295,13 @@ class StudentEvidenceController extends Controller {
         }
     }
 
+    /**
+     * @param $task_id
+     * @param $project_id
+     * @param $student_id
+     * @return null|static
+     * @throws NotFoundHttpException
+     */
     protected function findModelWithoutEvidence($task_id, $project_id, $student_id) {
         if (($model = StudentEvidence::findOne(['task_id' => $task_id,
                 'project_id' => $project_id, 'student_id' => $student_id])) !== null
@@ -295,6 +312,11 @@ class StudentEvidenceController extends Controller {
         }
     }
 
+    /**
+     * @param $evidence_id
+     * @return null|static
+     * @throws NotFoundHttpException
+     */
     protected function findModelByEvidence($evidence_id) {
         if (($model = StudentEvidence::findOne(['evidence_id' => $evidence_id])) !== null) {
             return $model;
@@ -307,6 +329,9 @@ class StudentEvidenceController extends Controller {
      * @param $evidence
      */
     private function saveEvidenceFile($evidence) {
+        if (!file_exists(Yii::getAlias('@webroot') . '/uploads/evidence')) {
+            mkdir(Yii::getAlias('@webroot') . '/uploads/evidence', 0777, true);
+        }
         $evidence->
         file->
         saveAs(Yii::getAlias('@webroot') . '/uploads/evidence/' . $evidence->id . '.' .

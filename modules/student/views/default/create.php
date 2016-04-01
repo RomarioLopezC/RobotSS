@@ -11,14 +11,14 @@ $this->title = 'Solicitud cuenta de Alumno';
 ?>
 <div class="student-create">
     <div class="well well-sm col-md-12">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode ($this->title) ?></h1>
     </div>
 
     <br>
 
     <?php
-    foreach (Yii::$app->getSession()->getAllFlashes() as $key => $message) {
-        echo Alert::widget([
+    foreach (Yii::$app->getSession ()->getAllFlashes () as $key => $message) {
+        echo Alert::widget ([
             'options' => [
                 'class' => 'alert-' . $key,
             ],
@@ -29,7 +29,7 @@ $this->title = 'Solicitud cuenta de Alumno';
 
     <div class="row">
         <div class="col-md-4">
-            <?= Html::img('../../images/uady-logo.jpg', ['class' => 'img-responsive']) ?>
+            <?= Html::img ('../../images/uady-logo.jpg', ['class' => 'img-responsive']) ?>
         </div>
 
         <div class="col-md-7 col-md-offset-1">
@@ -40,7 +40,7 @@ $this->title = 'Solicitud cuenta de Alumno';
                 </div>
 
                 <div class="panel-body">
-                    <?= $this->render('_form', [
+                    <?= $this->render ('_form', [
                         'student' => $student,
                         'person' => $person,
                         'user' => $user

@@ -13,7 +13,7 @@ use yii\helpers\Url;
 Yii::$app->formatter->locale = 'es_ES';
 ?>
 <div class="wide">
-    <?= Html::img(Url::to(['/images/uady-pdf.jpg']), ['class' => 'img-responsive']) ?>
+    <?= Html::img (Url::to (['/images/uady-pdf.jpg']), ['class' => 'img-responsive']) ?>
 </div>
 <div class="row">
     <h3 class="text-center" style="font-weight: bold;">REPORTE DE AVANCES</h3><br>
@@ -33,7 +33,7 @@ $formatter = \Yii::$app->formatter;
         <strong>Fecha inicio:</strong><br>
     </div>
     <div class="col-xs-2">
-        <?= Yii::$app->formatter->asDate($registration->beginning_date, 'php: d/F/Y') ?><br>
+        <?= Yii::$app->formatter->asDate ($registration->beginning_date, 'php: d/F/Y') ?><br>
     </div>
 </div>
 
@@ -48,7 +48,7 @@ $formatter = \Yii::$app->formatter;
         <strong>Fecha término:</strong><br>
     </div>
     <div class="col-xs-2">
-        <?= Yii::$app->formatter->asDate($registration->ending_date, 'php: d/F/Y') ?><br>
+        <?= Yii::$app->formatter->asDate ($registration->ending_date, 'php: d/F/Y') ?><br>
     </div>
 </div>
 
@@ -57,8 +57,8 @@ $formatter = \Yii::$app->formatter;
         <strong>Responsable de proyecto:</strong><br>
     </div>
     <div class="col-xs-2">
-        <?= Person::findOne(\app\models\User::findOne($projectM->user_id)->person_id)->name . ' ' .
-        Person::findOne(\app\models\User::findOne($projectM->user_id)->person_id)->lastname ?><br><br>
+        <?= Person::findOne (\app\models\User::findOne ($projectM->user_id)->person_id)->name . ' ' .
+        Person::findOne (\app\models\User::findOne ($projectM->user_id)->person_id)->lastname ?><br><br>
     </div>
 </div>
 <br><br>
@@ -67,7 +67,7 @@ $formatter = \Yii::$app->formatter;
         <h4 class="text-center" style="font-weight: bold;">Lista de avances completados</h4>
     </div>
     <div class="panel-body">
-        <?= GridView::widget([
+        <?= GridView::widget ([
             'dataProvider' => $dataProviderAccepted,
             'columns' => [
                 [

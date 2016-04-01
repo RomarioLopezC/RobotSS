@@ -4,11 +4,12 @@ namespace app\modules\projectmanager\controllers;
 
 use app\models\Person;
 use app\models\Registration;
-use app\models\Task;
 use app\models\StudentEvidence;
 use app\models\StudentEvidenceSearch;
+use app\models\Task;
 use app\models\User;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -44,17 +45,10 @@ class StudentEvidenceController extends Controller {
         $dataProviderAccepted = $searchModel->search(Yii::$app->request->queryParams,
             StudentEvidence::$ACCEPTED, false);
 
-        if ($userId = $dataProviderNews->getModels()) {
-            $userId = $dataProviderNews->getModels()[0]['student']['user_id'];
 
-            $user = User::findOne($userId);
-            $person = Person::findOne($user->person_id);
-
-            $dataProviderNews->getModels()[0]['student']['user_id'] = $person->name;
-            $dataProviderPending->getModels()[0]['student']['user_id'] = $person->name;
-            $dataProviderAccepted->getModels()[0]['student']['user_id'] = $person->name;
-        }
-
+        $dataProviderNews = $this->setPersonName($dataProviderNews);
+        $dataProviderPending = $this->setPersonName($dataProviderPending);
+        //$dataProviderAccepted = $this->setPersonName($dataProviderAccepted);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -170,5 +164,22 @@ class StudentEvidenceController extends Controller {
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    /**
+     * @param ActiveDataProvider $dataProvider
+     * @return ActiveDataProvider
+     */
+    private function setPersonName($dataProvider) {
+        for ($i = 0; $i < sizeof($dataProvider->getModels()); $i++) {
+            $userId = $dataProvider->getModels()[$i]['student']['user_id'];
+
+            $user = User::findOne($userId);
+            $person = Person::findOne($user->person_id);
+
+            $dataProvider->getModels()[$i]['student']['user_id'] = $person->name;
+
+        }
+        return $dataProvider;
     }
 }

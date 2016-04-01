@@ -1,19 +1,18 @@
 <?php
 namespace app\modules\projectmanager\controllers;
 
-use Yii;
+use app\models\Evidence;
 use app\models\Notification;
+use app\models\Registration;
 use app\models\Student;
-use yii\helpers\Url;
+use app\models\StudentEvidence;
 use app\models\Task;
-use app\models\TaskSearch;
+use Yii;
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\models\StudentEvidence;
-use app\models\Registration;
-use app\models\Evidence;
-use yii\helpers\ArrayHelper;
 
 /**
  * TaskController implements the CRUD actions for Task model.

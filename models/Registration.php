@@ -33,7 +33,7 @@ class Registration extends \yii\db\ActiveRecord {
      */
     public function rules () {
         return [
-            [['project_id', 'student_id', 'student_status', 'begining_date', 'endind_date'], 'required'],
+            [['project_id', 'student_id', 'student_status'], 'required'],
             [['project_id', 'student_id'], 'integer'],
             [['student_status'], 'string', 'max' => 255]
         ];

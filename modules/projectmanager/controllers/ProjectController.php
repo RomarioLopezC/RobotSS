@@ -23,10 +23,10 @@ class ProjectController extends Controller {
     /**
      * @return array
      */
-    public function behaviors() {
+    public function behaviors () {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::className (),
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -38,11 +38,11 @@ class ProjectController extends Controller {
      * Lists all Project models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex () {
         $searchModel = new ProjectSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search (Yii::$app->request->queryParams);
 
-        return $this->render('index', [
+        return $this->render ('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -53,9 +53,9 @@ class ProjectController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id) {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+    public function actionView ($id) {
+        return $this->render ('view', [
+            'model' => $this->findModel ($id),
         ]);
     }
 
@@ -64,34 +64,34 @@ class ProjectController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate () {
         $model = new Project();
 
-        $user_id = User::find()
-            ->where("id=" . Yii::$app->user->id)
-            ->one()->id;
+        $user_id = User::find ()
+            ->where ("id=" . Yii::$app->user->id)
+            ->one ()->id;
 
-        $manager_id = ProjectManager::find()
-            ->where("user_id=" . $user_id)
-            ->one()->id;
+        $manager_id = ProjectManager::find ()
+            ->where ("user_id=" . $user_id)
+            ->one ()->id;
         $model->manager_id = $manager_id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load (Yii::$app->request->post ()) && $model->save ()) {
 
             $vacancyValue = $_POST['Project']['vacancy'];
             $newVacancy = new ProjectVacancy();
             $newVacancy->project_id = $model->id;
             $newVacancy->vacancy = $vacancyValue;
-            $newVacancy->save();
+            $newVacancy->save ();
 
             $degreesList = $_POST['Project']['degrees1'];
             foreach ($degreesList as $value) {
-                $this->createStudentProfile($model->id,$value);
+                $this->createStudentProfile ($model->id, $value);
             }
-            Yii::$app->getSession()->setFlash('success', 'El proyecto se ha creado exitosamente');
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->getSession ()->setFlash ('success', 'El proyecto se ha creado exitosamente');
+            return $this->redirect (['view', 'id' => $model->id]);
         } else {
-            return $this->render('create', [
+            return $this->render ('create', [
                 'model' => $model,
             ]);
         }
@@ -102,11 +102,11 @@ class ProjectController extends Controller {
      * @param $modelId
      * @param $value
      */
-    private function createStudentProfile($modelId, $value){
+    private function createStudentProfile ($modelId, $value) {
         $newProfile = new StudentProfile();
-        $newProfile->project_id =$modelId;
-        $newProfile->degree_id =$value;
-        $newProfile->save();
+        $newProfile->project_id = $modelId;
+        $newProfile->degree_id = $value;
+        $newProfile->save ();
     }
 
     /**
@@ -115,47 +115,47 @@ class ProjectController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id) {
-        $model = $this->findModel($id);
-        $user_id = User::find()
-            ->where("id=" . Yii::$app->user->id)
-            ->one()->id;
+    public function actionUpdate ($id) {
+        $model = $this->findModel ($id);
+        $user_id = User::find ()
+            ->where ("id=" . Yii::$app->user->id)
+            ->one ()->id;
 
-        $manager_id = ProjectManager::find()
-            ->where("user_id=" . $user_id)
-            ->one()->id;
+        $manager_id = ProjectManager::find ()
+            ->where ("user_id=" . $user_id)
+            ->one ()->id;
         $model->manager_id = $manager_id;
 
-        $degreeIds = StudentProfile::find()
-            ->where("project_id=" . $model->id)
-            ->all();
-        $cupoValor = ProjectVacancy::find()
-            ->where("project_id=" . $model->id)
-            ->all();
+        $degreeIds = StudentProfile::find ()
+            ->where ("project_id=" . $model->id)
+            ->all ();
+        $cupoValor = ProjectVacancy::find ()
+            ->where ("project_id=" . $model->id)
+            ->all ();
 
-        $ids = ArrayHelper::getColumn($degreeIds, 'degree_id');
-        $cupo = ArrayHelper::getColumn($cupoValor, 'vacancy')[0];
+        $ids = ArrayHelper::getColumn ($degreeIds, 'degree_id');
+        $cupo = ArrayHelper::getColumn ($cupoValor, 'vacancy')[0];
         $model->degrees1 = $ids;
         $model->vacancy = $cupo;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            StudentProfile::deleteAll('project_id=' . $model->id);
-            ProjectVacancy::deleteAll('project_id=' . $model->id);
+        if ($model->load (Yii::$app->request->post ()) && $model->save ()) {
+            StudentProfile::deleteAll ('project_id=' . $model->id);
+            ProjectVacancy::deleteAll ('project_id=' . $model->id);
             $vacancyValue = $_POST['Project']['vacancy'];
             $newVacancy = new ProjectVacancy();
             $newVacancy->project_id = $model->id;
             $newVacancy->vacancy = $vacancyValue;
-            $newVacancy->save();
+            $newVacancy->save ();
 
             $degreesList = $_POST['Project']['degrees1'];
 
             foreach ($degreesList as $value) {
-                $this->createStudentProfile($model->id,$value);
+                $this->createStudentProfile ($model->id, $value);
             }
-            Yii::$app->getSession()->setFlash('success', 'Los cambios se han guardado exitosamente');
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->getSession ()->setFlash ('success', 'Los cambios se han guardado exitosamente');
+            return $this->redirect (['view', 'id' => $model->id]);
         } else {
-            return $this->render('update', [
+            return $this->render ('update', [
                 'model' => $model,
             ]);
         }
@@ -167,12 +167,12 @@ class ProjectController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id) {
-        $this->findModel($id)->delete();
-        Registration::deleteAll(['project_id' => $id]);
-        ProjectVacancy::deleteAll(['project_id' => $id]);
-        Yii::$app->getSession()->setFlash('success', 'El proyecto se ha eliminado exitosamente.');
-        return $this->redirect(['index']);
+    public function actionDelete ($id) {
+        $this->findModel ($id)->delete ();
+        Registration::deleteAll (['project_id' => $id]);
+        ProjectVacancy::deleteAll (['project_id' => $id]);
+        Yii::$app->getSession ()->setFlash ('success', 'El proyecto se ha eliminado exitosamente.');
+        return $this->redirect (['index']);
     }
 
     /**
@@ -182,8 +182,8 @@ class ProjectController extends Controller {
      * @return Project the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
-        if (($model = Project::findOne($id)) !== null) {
+    protected function findModel ($id) {
+        if (($model = Project::findOne ($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -197,24 +197,24 @@ class ProjectController extends Controller {
      * @throws NotFoundHttpException
      * @throws \yii\db\Exception
      */
-    public function actionPreregister($id) {
-        $model = $this->findModel($id);
-        $user = User::find()
-            ->where("id=" . Yii::$app->user->id)
-            ->one();
+    public function actionPreregister ($id) {
+        $model = $this->findModel ($id);
+        $user = User::find ()
+            ->where ("id=" . Yii::$app->user->id)
+            ->one ();
         $user_id = $user->id;
-        $student = Student::find()
-            ->where("user_id=" . $user_id)
-            ->one();
+        $student = Student::find ()
+            ->where ("user_id=" . $user_id)
+            ->one ();
         $student_id = $student->id;
 
-        $vacancy = ProjectVacancy::find()
-            ->where("project_id=" . $id)
-            ->one();
+        $vacancy = ProjectVacancy::find ()
+            ->where ("project_id=" . $id)
+            ->one ();
 
         $vacancyValue = $vacancy->vacancy;
 
-        if ($existe = StudentProfile::find()->where(['project_id' => $id, 'degree_id' => $student->degree_id])->one()) {
+        if ($existe = StudentProfile::find ()->where (['project_id' => $id, 'degree_id' => $student->degree_id])->one ()) {
 
 
             if ($vacancyValue > 0) {
@@ -223,22 +223,22 @@ class ProjectController extends Controller {
                 $newRegistration->project_id = $id;
                 $newRegistration->student_id = $student_id;
                 $newRegistration->student_status = "preregistered";
-                $newRegistration->save();
+                $newRegistration->save ();
 
 
-                Yii::$app->db->createCommand()->update('project_vacancy', ['vacancy' => $vacancy->vacancy - 1],
-                    'project_id=' . $id)->execute();
+                Yii::$app->db->createCommand ()->update ('project_vacancy', ['vacancy' => $vacancy->vacancy - 1],
+                    'project_id=' . $id)->execute ();
 
 
-                Yii::$app->getSession()->setFlash('success', 'Te has pre-registrado al proyecto');
-                return $this->redirect(['view', 'id' => $model->id]);
+                Yii::$app->getSession ()->setFlash ('success', 'Te has pre-registrado al proyecto');
+                return $this->redirect (['view', 'id' => $model->id]);
             } else {
-                Yii::$app->getSession()->setFlash('danger', 'No hay cupo para este proyecto. Escoge otro.');
-                return $this->redirect(['view', 'id' => $model->id]);
+                Yii::$app->getSession ()->setFlash ('danger', 'No hay cupo para este proyecto. Escoge otro.');
+                return $this->redirect (['view', 'id' => $model->id]);
             }
         } else {
-            Yii::$app->getSession()->setFlash('danger', 'No cuentas con el perfil solicitado');
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->getSession ()->setFlash ('danger', 'No cuentas con el perfil solicitado');
+            return $this->redirect (['view', 'id' => $model->id]);
         }
 
 

@@ -20,15 +20,15 @@ use yii\widgets\ActiveForm;
                 </div>
 
                 <div class="panel-body">
-                    <?php $form = ActiveForm::begin(); ?>
+                    <?php $form = ActiveForm::begin (); ?>
 
-                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field ($model, 'name')->textInput (['maxlength' => true]) ?>
 
-                    <?= $form->field($model, 'dependency')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field ($model, 'dependency')->textInput (['maxlength' => true]) ?>
 
                     <?php
 
-                    Modal::begin([
+                    Modal::begin ([
                         'header' => '<h2>Perfiles solicitados</h2>',
                         'toggleButton' => [
                             'label' => 'Perfiles solicitados',
@@ -36,20 +36,20 @@ use yii\widgets\ActiveForm;
                         ],
                     ]);
 
-                    echo $form->field($model, 'degrees1')->checkboxList(ArrayHelper::map(Degree::find()->all(), 'id', 'name'));
+                    echo $form->field ($model, 'degrees1')->checkboxList (ArrayHelper::map (Degree::find ()->all (), 'id', 'name'));
 
-                    Modal::end();
+                    Modal::end ();
 
                     ?>
 
                     <br><br>
 
-                    <?= $form->field($model, 'vacancy')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field ($model, 'vacancy')->textInput (['maxlength' => true]) ?>
 
 
-                    <?= $form->field($model, 'objective')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field ($model, 'objective')->textInput (['maxlength' => true]) ?>
 
-                    <?= $form->field($model, 'goals')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field ($model, 'goals')->textInput (['maxlength' => true]) ?>
 
                 </div>
             </div>
@@ -63,29 +63,29 @@ use yii\widgets\ActiveForm;
 
                 <div class="panel-body">
 
-                    <?= $form->field($model, 'actions_by_students')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field ($model, 'actions_by_students')->textInput (['maxlength' => true]) ?>
 
-                    <?= $form->field($model, 'induction')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field ($model, 'induction')->textInput (['maxlength' => true]) ?>
 
-                    <?= $form->field($model, 'materials_for_students')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field ($model, 'materials_for_students')->textInput (['maxlength' => true]) ?>
 
-                    <?= $form->field($model, 'economic_support')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field ($model, 'economic_support')->textInput (['maxlength' => true]) ?>
 
-                    <?= $form->field($model, 'human_resource')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field ($model, 'human_resource')->textInput (['maxlength' => true]) ?>
 
-                    <?= $form->field($model, 'infraestructure')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field ($model, 'infraestructure')->textInput (['maxlength' => true]) ?>
 
-                    <?= $form->field($model, 'ammount')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field ($model, 'ammount')->textInput (['maxlength' => true]) ?>
 
                 </div>
             </div>
             <div class="form-group">
-                <?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Guardar cambios', ['class' => $model->isNewRecord ? 'btn btn-success pull-right' : 'btn btn-primary pull-right']) ?>
+                <?= Html::submitButton ($model->isNewRecord ? 'Guardar' : 'Guardar cambios', ['class' => $model->isNewRecord ? 'btn btn-success pull-right' : 'btn btn-primary pull-right']) ?>
             </div>
         </div>
 
 
-        <?php ActiveForm::end(); ?>
+        <?php ActiveForm::end (); ?>
     </div>
 
 </div>
