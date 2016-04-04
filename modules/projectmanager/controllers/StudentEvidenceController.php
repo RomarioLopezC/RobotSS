@@ -46,15 +46,20 @@ class StudentEvidenceController extends Controller {
             StudentEvidence::$ACCEPTED, false);
 
 
+
         $dataProviderNews = $this->setPersonName($dataProviderNews);
         $dataProviderPending = $this->setPersonName($dataProviderPending);
-        //$dataProviderAccepted = $this->setPersonName($dataProviderAccepted);
+        $dataProviderAccepted = $this->setPersonName($dataProviderAccepted);
+
+        $user = User::findOne($dataProviderNews->getModels()[5]['student']['user_id']);
+        $person = Person::findOne($user['person_id']);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProviderNews' => $dataProviderNews,
             'dataProviderPending' => $dataProviderPending,
             'dataProviderAccepted' => $dataProviderAccepted,
+            'data' => $person['name']
         ]);
     }
 
@@ -171,15 +176,17 @@ class StudentEvidenceController extends Controller {
      * @return ActiveDataProvider
      */
     private function setPersonName($dataProvider) {
+        $copy = clone $dataProvider;
+
         for ($i = 0; $i < sizeof($dataProvider->getModels()); $i++) {
             $userId = $dataProvider->getModels()[$i]['student']['user_id'];
 
             $user = User::findOne($userId);
-            $person = Person::findOne($user->person_id);
+            $person = Person::findOne($user['person_id']);
 
-            $dataProvider->getModels()[$i]['student']['user_id'] = $person->name;
+            $copy->getModels()[$i]['student']['user_id'] = $person['name'];
 
         }
-        return $dataProvider;
+        return $copy;
     }
 }
