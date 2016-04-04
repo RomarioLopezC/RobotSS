@@ -58,8 +58,7 @@ class StudentEvidenceController extends Controller {
             'searchModel' => $searchModel,
             'dataProviderNews' => $dataProviderNews,
             'dataProviderPending' => $dataProviderPending,
-            'dataProviderAccepted' => $dataProviderAccepted,
-            'data' => $person['name']
+            'dataProviderAccepted' => $dataProviderAccepted
         ]);
     }
 

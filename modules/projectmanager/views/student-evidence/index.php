@@ -18,8 +18,6 @@ use yii\helpers\Html;
 $this->title = 'Avances';
 $this->params['breadcrumbs'][] = $this->title;
 
-echo var_dump($data);
-
 ?>
 <div class="student-evidence-index">
 
